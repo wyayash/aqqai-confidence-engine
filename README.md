@@ -1,7 +1,7 @@
 # AQQAI: AI Orchestration & Fusion Pipeline
 
 ## Overview
-This repository contains the core orchestration layer for the Aqua AI (AQQAI) architecture. It is a multi-model pipeline designed to route user queries to specialized live AI models, mathematically evaluate their outputs in real-time using a continuously updating Bayesian trust system, and synthesize the results into a cohesive final answer.
+This repository contains the core orchestration layer for the AQQAI architecture. It is a multi-model pipeline designed to route user queries to specialized live AI models, mathematically evaluate their outputs in real-time using a continuously updating Bayesian trust system, and synthesize the results into a cohesive final answer.
 
 ## Core Architecture
 
