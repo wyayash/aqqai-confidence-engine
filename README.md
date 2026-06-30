@@ -1,60 +1,54 @@
-AQQAI: Bayesian Confidence Engine
+# AQQAI: AI Orchestration & Fusion Pipeline
 
-Overview
+## Overview
+This repository contains the core orchestration layer for the Aqua AI (AQQAI) architecture. It is a multi-model pipeline designed to route user queries to specialized live AI models, mathematically evaluate their outputs in real-time using a continuously updating Bayesian trust system, and synthesize the results into a cohesive final answer.
 
-The Confidence Engine is a core component of the Aqua AI Orchestration pipeline. It acts as the mathematical memory of the system, tracking the historical reliability (Prior) of parallel AI models across different task types (e.g., coding, reasoning).
+## Core Architecture
 
-It uses Bayes' Theorem combined with an Exponential Moving Average (EMA) learning rate to update trust scores after every query, ensuring the Orchestrator continuously learns which models to trust without overreacting to single-query anomalies.
+The pipeline consists of three primary nodes working in tandem:
 
-Core Features
+### 1. The Brain: `orchestrator.py`
+* **Asynchronous Fan-Out:** Uses `asyncio` to simultaneously query multiple live LLM APIs (Google Gemini, Meta Llama-3 via Groq, Mistral), reducing overall latency to the speed of the slowest model.
+* **Traffic Routing:** Manages the flow of data between the generation, evaluation, and synthesis layers.
+* **Fault Tolerance:** Gracefully catches API timeouts or quota limits without crashing the pipeline.
 
-Dynamic Model Ingestion: Automatically registers and tracks any new models passed via the evaluation payload.
+### 2. The Memory: `bayesian_confidence_layer.py`
+* **Bayesian Trust Updates:** Uses Bayes' Theorem to adjust the historical reliability (Prior) of each model based on incoming evaluation scores.
+* **Volatility Dampening:** Applies an Exponential Moving Average (EMA) learning rate (`0.20`) to prevent single-query hallucinations from destroying a model's reputation.
+* **Weight Normalization:** Converts raw Bayesian posteriors into percentage-based trust weights that sum to 1.0 for the Fusion Engine.
+* **Audit Logging:** Maintains a rolling history of the last 50 updates per model/task type.
 
-Fault-Tolerant Math: Safeguards against division-by-zero anomalies and clamps float boundaries.
+### 3. The Synthesizer: `fusion_engine_v1.py`
+* **Heuristic Sentence Blending (v1):** Sorts responses by their Bayesian trust weight.
+* **Base Selection:** The highest-trusted model's response is selected as the structural Base Answer.
+* **Novelty Extraction:** Sentences from lower-weighted models are scanned for semantic overlap. Novel information is appended; redundant information is discarded.
 
-Volatility Dampening: Applies a 0.20 learning rate to prevent a single hallucination from crashing a model's historical prior.
+---
 
-Audit Logging: Maintains a rolling history of the last 50 updates per model/task type, capturing timestamps, previous priors, evaluation scores, and the new updated prior.
+## Setup & Installation
 
-Backward Compatibility: Automatically detects and upgrades legacy priors.json schema formats.
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/wyayash/aqqai-confidence-engine.git](https://github.com/wyayash/aqqai-confidence-engine.git)
+   cd aqqai-confidence-engine
+   ```
 
-System Interface
+2. **Install dependencies:**
+   ```bash
+   pip install openai mistralai google-generativeai python-dotenv sentence-transformers
+   ```
 
-The engine exposes a single, clean entry point (process_confidence_request) designed to integrate directly with the downstream Fusion Engine.
+3. **Environment Variables:**
+   Create a `.env` file in the root directory and add your API keys:
+   ```env
+   GEMINI_API_KEY=your_google_key
+   GROQ_API_KEY=your_groq_key
+   MISTRAL_API_KEY=your_mistral_key
+   ```
 
-Expected Input (From Evaluation Layer)
+## Usage
 
-{
-  "task_type": "coding",
-  "eval_scores": {
-    "model_1": 0.91,
-    "model_2": 0.74,
-    "model_3": 0.63
-  },
-  "query_id": "q_001"
-}
-
-
-Output (To Fusion Engine)
-
-Returns the normalized weights (summing to 1.0) and the newly updated priors.
-
-{
-  "weights": {
-    "model_1": 0.40,
-    "model_2": 0.32,
-    "model_3": 0.28
-  },
-  "updated_priors": {
-    "model_1": 0.72,
-    "model_2": 0.68,
-    "model_3": 0.55
-  }
-}
-
-
-Running the Demo
-
-A standalone demo is included to simulate processing a payload and updating the persistence layer.
-
-python bayesian_confidence_layer2.py
+Run the main orchestrator to execute a full 5-stage pipeline simulation:
+```bash
+python orchestrator.py
+```
