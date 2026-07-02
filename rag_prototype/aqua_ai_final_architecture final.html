@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aqua AI — Final Architecture</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Courier New', monospace; background: #f8f7f4; color: #1a1a18; padding: 24px; font-size: 12px; max-width: 680px; }
+h1  { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.sub { font-size: 11px; color: #888780; margin-bottom: 20px; }
+
+/* Flow */
+.flow { display: flex; flex-direction: column; align-items: center; }
+.down { font-size: 16px; color: #888780; line-height: 1.6; }
+
+/* Generic boxes */
+.box { border-radius: 8px; padding: 10px 16px; text-align: center; border: 0.5px solid; }
+.box-name { font-size: 12px; font-weight: 700; }
+.box-sub  { font-size: 10px; color: #5f5e5a; margin-top: 3px; line-height: 1.6; }
+
+.io   { background: #fff; border-color: #d3d1c7; width: 200px; }
+.teal { background: #E1F5EE; border-color: #5DCAA5; width: 400px; }
+.teal .box-name { color: #0F6E56; }
+
+/* 5-model / 5-response rows */
+.five-row { display: grid; grid-template-columns: repeat(5, 1fr); width: 600px; }
+.mini {
+  margin: 0 2px; border-radius: 6px; padding: 8px 4px;
+  text-align: center; font-size: 14px; font-weight: 700; border: 0.5px solid;
+}
+.m-purple { background: #EEEDFE; border-color: #9A94E8; color: #3B34A0; }
+.m-gray   { background: #fff;    border-color: #d3d1c7; color: #1a1a18; }
+
+/* Evaluation container */
+.eval-outer {
+  width: 620px; border: 1px solid #5DCAA5; border-radius: 10px;
+  padding: 12px 10px 10px; background: rgba(225,245,238,0.12);
+}
+.eval-title {
+  font-size: 10px; font-weight: 700; color: #0F6E56; text-align: center;
+  letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 8px;
+}
+.eval-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 8px; }
+
+.l1, .l2 { border-radius: 7px; padding: 10px 12px; }
+.l1 { background: #E1F5EE; border: 0.5px solid #5DCAA5; }
+.l2 { background: #EEEDFE; border: 0.5px solid #9A94E8; }
+.layer-title { font-size: 11px; font-weight: 700; margin-bottom: 5px; }
+.l1 .layer-title { color: #0F6E56; }
+.l2 .layer-title { color: #3B34A0; }
+.layer-body { font-size: 10px; color: #5f5e5a; line-height: 1.8; }
+.layer-note { font-size: 10px; color: #888780; margin-top: 4px; font-style: italic; }
+
+.eval-footer {
+  font-size: 10px; color: #0F6E56; text-align: center; font-weight: 600;
+  border-top: 0.5px solid #ACDFCF; padding-top: 8px;
+}
+
+/* Bayesian + Redis */
+.bayes-row { display: flex; align-items: center; gap: 8px; width: 620px; }
+.bayes-box {
+  flex: 1; border-radius: 8px; background: #E1F5EE;
+  border: 0.5px solid #5DCAA5; padding: 10px 14px; text-align: center;
+}
+.bayes-name    { font-size: 12px; font-weight: 700; color: #0F6E56; margin-bottom: 3px; }
+.bayes-formula { font-size: 10px; color: #5f5e5a; }
+.bidir { font-size: 20px; color: #888780; flex-shrink: 0; }
+.redis-box {
+  width: 116px; flex-shrink: 0; border-radius: 8px;
+  background: #fff; border: 0.5px solid #d3d1c7; padding: 10px 8px; text-align: center;
+}
+.redis-name { font-size: 11px; font-weight: 700; color: #1a1a18; margin-bottom: 2px; }
+.redis-sub  { font-size: 10px; color: #888780; }
+
+/* Fusion */
+.fusion-box {
+  width: 400px; border-radius: 8px; background: #E1F5EE;
+  border: 0.5px solid #5DCAA5; padding: 10px 16px; text-align: center;
+}
+.fusion-name    { font-size: 12px; font-weight: 700; color: #0F6E56; margin-bottom: 3px; }
+.fusion-formula { font-size: 10px; color: #5f5e5a; }
+
+/* Feedback */
+.feedback {
+  width: 620px; font-size: 10px; color: #888780;
+  text-align: right; padding: 8px 4px 0;
+  border-top: 0.5px dashed #d3d1c7; margin-top: 8px; font-style: italic;
+}
+
+/* Legend */
+.legend { display: flex; gap: 18px; flex-wrap: wrap; margin-bottom: 20px; font-size: 11px; color: #5f5e5a; }
+.li { display: flex; align-items: center; gap: 5px; }
+.ld { width: 8px; height: 8px; border-radius: 50%; }
+</style>
+</head>
+<body>
+
+<h1>Aqua AI — final architecture</h1>
+<div class="sub">Full pipeline · query to synthesized response · 10 components</div>
+
+<div class="legend">
+  <div class="li"><div class="ld" style="background:#1D9E75"></div>Pipeline stages</div>
+  <div class="li"><div class="ld" style="background:#7F77DD"></div>AI models</div>
+  <div class="li"><div class="ld" style="background:#d3d1c7"></div>Data / I·O</div>
+</div>
+
+<div class="flow">
+
+  <!-- User Query -->
+  <div class="box io"><div class="box-name">User query</div></div>
+  <div class="down">↓</div>
+
+  <!-- Task Analyzer -->
+  <div class="box teal">
+    <div class="box-name">Task Analyzer</div>
+    <div class="box-sub">Reads query · classifies task type<br>coding · factual · reasoning · summary · creative</div>
+  </div>
+  <div class="down">↓</div>
+
+  <!-- Orchestrator -->
+  <div class="box teal">
+    <div class="box-name">Aqua Orchestrator</div>
+    <div class="box-sub">Routes query to 5 models simultaneously</div>
+  </div>
+
+  <!-- Fan-out: Orchestrator → 5 Models -->
+  <svg viewBox="0 0 600 44" height="44" style="width:600px;display:block">
+    <line x1="300" y1="0"  x2="300" y2="20" stroke="#888780" stroke-width="1"/>
+    <line x1="60"  y1="20" x2="540" y2="20" stroke="#888780" stroke-width="1"/>
+    <line x1="60"  y1="20" x2="60"  y2="40" stroke="#888780" stroke-width="1"/>
+    <line x1="180" y1="20" x2="180" y2="40" stroke="#888780" stroke-width="1"/>
+    <line x1="300" y1="20" x2="300" y2="40" stroke="#888780" stroke-width="1"/>
+    <line x1="420" y1="20" x2="420" y2="40" stroke="#888780" stroke-width="1"/>
+    <line x1="540" y1="20" x2="540" y2="40" stroke="#888780" stroke-width="1"/>
+    <polygon points="56,37 60,40 64,37"    fill="#888780"/>
+    <polygon points="176,37 180,40 184,37" fill="#888780"/>
+    <polygon points="296,37 300,40 304,37" fill="#888780"/>
+    <polygon points="416,37 420,40 424,37" fill="#888780"/>
+    <polygon points="536,37 540,40 544,37" fill="#888780"/>
+    <text x="300" y="13" text-anchor="middle" font-family="Courier New" font-size="9" fill="#888780">parallel</text>
+  </svg>
+
+  <!-- 5 AI Models -->
+  <div class="five-row">
+    <div class="mini m-purple">m₁</div>
+    <div class="mini m-purple">m₂</div>
+    <div class="mini m-purple">m₃</div>
+    <div class="mini m-purple">m₄</div>
+    <div class="mini m-purple">m₅</div>
+  </div>
+
+  <!-- Arrows: models → responses -->
+  <svg viewBox="0 0 600 20" height="20" style="width:600px;display:block">
+    <line x1="60"  y1="0" x2="60"  y2="16" stroke="#888780" stroke-width="1"/>
+    <line x1="180" y1="0" x2="180" y2="16" stroke="#888780" stroke-width="1"/>
+    <line x1="300" y1="0" x2="300" y2="16" stroke="#888780" stroke-width="1"/>
+    <line x1="420" y1="0" x2="420" y2="16" stroke="#888780" stroke-width="1"/>
+    <line x1="540" y1="0" x2="540" y2="16" stroke="#888780" stroke-width="1"/>
+    <polygon points="56,13 60,16 64,13"    fill="#888780"/>
+    <polygon points="176,13 180,16 184,13" fill="#888780"/>
+    <polygon points="296,13 300,16 304,13" fill="#888780"/>
+    <polygon points="416,13 420,16 424,13" fill="#888780"/>
+    <polygon points="536,13 540,16 544,13" fill="#888780"/>
+  </svg>
+
+  <!-- 5 Responses -->
+  <div class="five-row">
+    <div class="mini m-gray">o₁</div>
+    <div class="mini m-gray">o₂</div>
+    <div class="mini m-gray">o₃</div>
+    <div class="mini m-gray">o₄</div>
+    <div class="mini m-gray">o₅</div>
+  </div>
+
+  <!-- Fan-in: 5 Responses → Evaluation -->
+  <svg viewBox="0 0 600 44" height="44" style="width:600px;display:block">
+    <line x1="60"  y1="0"  x2="60"  y2="20" stroke="#888780" stroke-width="1"/>
+    <line x1="180" y1="0"  x2="180" y2="20" stroke="#888780" stroke-width="1"/>
+    <line x1="300" y1="0"  x2="300" y2="20" stroke="#888780" stroke-width="1"/>
+    <line x1="420" y1="0"  x2="420" y2="20" stroke="#888780" stroke-width="1"/>
+    <line x1="540" y1="0"  x2="540" y2="20" stroke="#888780" stroke-width="1"/>
+    <line x1="60"  y1="20" x2="540" y2="20" stroke="#888780" stroke-width="1"/>
+    <line x1="300" y1="20" x2="300" y2="40" stroke="#888780" stroke-width="1"/>
+    <polygon points="296,37 300,40 304,37" fill="#888780"/>
+    <text x="300" y="13" text-anchor="middle" font-family="Courier New" font-size="9" fill="#888780">converge</text>
+  </svg>
+
+  <!-- Evaluation Layer (2-layer container) -->
+  <div class="eval-outer">
+    <div class="eval-title">Evaluation layer</div>
+    <div class="eval-grid">
+
+      <div class="l1">
+        <div class="layer-title">Layer 1 — universal</div>
+        <div class="layer-body">
+          R · relevance<br>
+          C · coherence<br>
+          K · completeness<br>
+          S · consistency
+        </div>
+        <div class="layer-note">heuristics + embeddings + NLI<br>runs on every query, every task</div>
+      </div>
+
+      <div class="l2">
+        <div class="layer-title">Layer 2 — task-specific</div>
+        <div class="layer-body">
+          Coding → runs? correct output?<br>
+          Factual → claim verifiable?<br>
+          Reasoning → logic valid?<br>
+          Summary → no hallucinations?<br>
+          Creative → format met?
+        </div>
+        <div class="layer-note">activated by Task Analyzer<br>catches what Layer 1 can't see</div>
+      </div>
+
+    </div>
+    <div class="eval-footer">
+      Combined Score(oᵢ) = L1 weighted + L2 modifier · one score per model response
+    </div>
+  </div>
+  <div class="down">↓</div>
+
+  <!-- Bayesian Confidence Engine + Redis -->
+  <div class="bayes-row">
+    <div class="bayes-box">
+      <div class="bayes-name">Confidence engine</div>
+      <div class="bayes-formula">P(mᵢ|oᵢ) ∝ P(oᵢ|mᵢ) · P(mᵢ)<br>scores → likelihood · updates model trust over time</div>
+    </div>
+    <div class="bidir">⟷</div>
+    <div class="redis-box">
+      <div class="redis-name">Prior store</div>
+      <div class="redis-sub">Redis<br>P(mᵢ) per task type</div>
+    </div>
+  </div>
+  <div class="down">↓</div>
+
+  <!-- Fusion Engine -->
+  <div class="fusion-box">
+    <div class="fusion-name">Fusion engine</div>
+    <div class="fusion-formula">O* = Σ P(mᵢ|oᵢ) · oᵢ<br>weighted synthesis · not picking a winner · building a collective answer</div>
+  </div>
+  <div class="down">↓</div>
+
+  <!-- Final Response -->
+  <div class="box io"><div class="box-name">Final response</div></div>
+
+  <!-- Feedback loop note -->
+  <div class="feedback">
+    ↑ feedback loop — response quality updates model priors in Redis — system improves over time
+  </div>
+
+</div>
+</body>
+</html>
+
