@@ -1,0 +1,338 @@
+{
+  "gemini-3.1-flash-lite": {
+    "reasoning": {
+      "prior": 0.505962,
+      "history": [
+        {
+          "model": "gemini-3.1-flash-lite",
+          "task_type": "reasoning",
+          "old_prior": 0.7,
+          "eval_score": 0.91,
+          "new_prior": 0.644651,
+          "timestamp": "2026-06-23T12:42:28.330504+00:00"
+        },
+        {
+          "model": "gemini-3.1-flash-lite",
+          "task_type": "reasoning",
+          "old_prior": 0.644651,
+          "eval_score": 0.88,
+          "new_prior": 0.596009,
+          "timestamp": "2026-06-23T12:42:28.368802+00:00"
+        },
+        {
+          "model": "gemini-3.1-flash-lite",
+          "task_type": "reasoning",
+          "old_prior": 0.596009,
+          "eval_score": 0.91,
+          "new_prior": 0.564994,
+          "timestamp": "2026-06-23T14:46:29.373523+00:00"
+        },
+        {
+          "model": "gemini-3.1-flash-lite",
+          "task_type": "reasoning",
+          "old_prior": 0.564994,
+          "eval_score": 0.88,
+          "new_prior": 0.536237,
+          "timestamp": "2026-06-23T14:46:30.042448+00:00"
+        },
+        {
+          "model": "gemini-3.1-flash-lite",
+          "task_type": "reasoning",
+          "old_prior": 0.536237,
+          "eval_score": 0.91,
+          "new_prior": 0.521395,
+          "timestamp": "2026-06-23T14:47:26.408050+00:00"
+        },
+        {
+          "model": "gemini-3.1-flash-lite",
+          "task_type": "reasoning",
+          "old_prior": 0.521395,
+          "eval_score": 0.88,
+          "new_prior": 0.505962,
+          "timestamp": "2026-06-23T14:47:26.972239+00:00"
+        }
+      ]
+    },
+    "coding": {
+      "prior": 0.413229,
+      "history": [
+        {
+          "model": "gemini-3.1-flash-lite",
+          "task_type": "coding",
+          "old_prior": 0.7,
+          "eval_score": 0.48,
+          "new_prior": 0.606602,
+          "timestamp": "2026-06-23T12:42:28.345970+00:00"
+        },
+        {
+          "model": "gemini-3.1-flash-lite",
+          "task_type": "coding",
+          "old_prior": 0.606602,
+          "eval_score": 0.91,
+          "new_prior": 0.562702,
+          "timestamp": "2026-06-23T12:42:28.396160+00:00"
+        },
+        {
+          "model": "gemini-3.1-flash-lite",
+          "task_type": "coding",
+          "old_prior": 0.562702,
+          "eval_score": 0.48,
+          "new_prior": 0.496028,
+          "timestamp": "2026-06-23T14:46:29.473081+00:00"
+        },
+        {
+          "model": "gemini-3.1-flash-lite",
+          "task_type": "coding",
+          "old_prior": 0.496028,
+          "eval_score": 0.91,
+          "new_prior": 0.472939,
+          "timestamp": "2026-06-23T14:46:31.926605+00:00"
+        },
+        {
+          "model": "gemini-3.1-flash-lite",
+          "task_type": "coding",
+          "old_prior": 0.472939,
+          "eval_score": 0.48,
+          "new_prior": 0.423277,
+          "timestamp": "2026-06-23T14:47:26.728601+00:00"
+        },
+        {
+          "model": "gemini-3.1-flash-lite",
+          "task_type": "coding",
+          "old_prior": 0.423277,
+          "eval_score": 0.91,
+          "new_prior": 0.413229,
+          "timestamp": "2026-06-23T14:47:28.179661+00:00"
+        }
+      ]
+    },
+    "creative": {
+      "prior": 0.7,
+      "history": []
+    }
+  },
+  "gpt-oss-120b": {
+    "reasoning": {
+      "prior": 0.402634,
+      "history": [
+        {
+          "model": "gpt-oss-120b",
+          "task_type": "reasoning",
+          "old_prior": 0.7,
+          "eval_score": 0.7,
+          "new_prior": 0.625116,
+          "timestamp": "2026-06-23T12:42:28.332296+00:00"
+        },
+        {
+          "model": "gpt-oss-120b",
+          "task_type": "reasoning",
+          "old_prior": 0.625116,
+          "eval_score": 0.66,
+          "new_prior": 0.558484,
+          "timestamp": "2026-06-23T12:42:28.374871+00:00"
+        },
+        {
+          "model": "gpt-oss-120b",
+          "task_type": "reasoning",
+          "old_prior": 0.558484,
+          "eval_score": 0.7,
+          "new_prior": 0.510352,
+          "timestamp": "2026-06-23T14:46:29.410458+00:00"
+        },
+        {
+          "model": "gpt-oss-120b",
+          "task_type": "reasoning",
+          "old_prior": 0.510352,
+          "eval_score": 0.66,
+          "new_prior": 0.465352,
+          "timestamp": "2026-06-23T14:46:30.478983+00:00"
+        },
+        {
+          "model": "gpt-oss-120b",
+          "task_type": "reasoning",
+          "old_prior": 0.465352,
+          "eval_score": 0.7,
+          "new_prior": 0.433966,
+          "timestamp": "2026-06-23T14:47:26.414555+00:00"
+        },
+        {
+          "model": "gpt-oss-120b",
+          "task_type": "reasoning",
+          "old_prior": 0.433966,
+          "eval_score": 0.66,
+          "new_prior": 0.402634,
+          "timestamp": "2026-06-23T14:47:27.069415+00:00"
+        }
+      ]
+    },
+    "coding": {
+      "prior": 0.488433,
+      "history": [
+        {
+          "model": "gpt-oss-120b",
+          "task_type": "coding",
+          "old_prior": 0.7,
+          "eval_score": 0.95,
+          "new_prior": 0.652233,
+          "timestamp": "2026-06-23T12:42:28.349103+00:00"
+        },
+        {
+          "model": "gpt-oss-120b",
+          "task_type": "coding",
+          "old_prior": 0.652233,
+          "eval_score": 0.74,
+          "new_prior": 0.58948,
+          "timestamp": "2026-06-23T12:42:28.400244+00:00"
+        },
+        {
+          "model": "gpt-oss-120b",
+          "task_type": "coding",
+          "old_prior": 0.58948,
+          "eval_score": 0.95,
+          "new_prior": 0.566682,
+          "timestamp": "2026-06-23T14:46:29.517906+00:00"
+        },
+        {
+          "model": "gpt-oss-120b",
+          "task_type": "coding",
+          "old_prior": 0.566682,
+          "eval_score": 0.74,
+          "new_prior": 0.524059,
+          "timestamp": "2026-06-23T14:46:31.945935+00:00"
+        },
+        {
+          "model": "gpt-oss-120b",
+          "task_type": "coding",
+          "old_prior": 0.524059,
+          "eval_score": 0.95,
+          "new_prior": 0.517773,
+          "timestamp": "2026-06-23T14:47:26.814623+00:00"
+        },
+        {
+          "model": "gpt-oss-120b",
+          "task_type": "coding",
+          "old_prior": 0.517773,
+          "eval_score": 0.74,
+          "new_prior": 0.488433,
+          "timestamp": "2026-06-23T14:47:28.227163+00:00"
+        }
+      ]
+    },
+    "creative": {
+      "prior": 0.7,
+      "history": []
+    }
+  },
+  "mistral-small-latest": {
+    "reasoning": {
+      "prior": 0.379761,
+      "history": [
+        {
+          "model": "mistral-small-latest",
+          "task_type": "reasoning",
+          "old_prior": 0.7,
+          "eval_score": 0.54,
+          "new_prior": 0.610233,
+          "timestamp": "2026-06-23T12:42:28.340161+00:00"
+        },
+        {
+          "model": "mistral-small-latest",
+          "task_type": "reasoning",
+          "old_prior": 0.610233,
+          "eval_score": 0.71,
+          "new_prior": 0.549506,
+          "timestamp": "2026-06-23T12:42:28.380868+00:00"
+        },
+        {
+          "model": "mistral-small-latest",
+          "task_type": "reasoning",
+          "old_prior": 0.549506,
+          "eval_score": 0.54,
+          "new_prior": 0.487853,
+          "timestamp": "2026-06-23T14:46:29.433393+00:00"
+        },
+        {
+          "model": "mistral-small-latest",
+          "task_type": "reasoning",
+          "old_prior": 0.487853,
+          "eval_score": 0.71,
+          "new_prior": 0.44897,
+          "timestamp": "2026-06-23T14:46:30.884435+00:00"
+        },
+        {
+          "model": "mistral-small-latest",
+          "task_type": "reasoning",
+          "old_prior": 0.44897,
+          "eval_score": 0.54,
+          "new_prior": 0.405086,
+          "timestamp": "2026-06-23T14:47:26.462646+00:00"
+        },
+        {
+          "model": "mistral-small-latest",
+          "task_type": "reasoning",
+          "old_prior": 0.405086,
+          "eval_score": 0.71,
+          "new_prior": 0.379761,
+          "timestamp": "2026-06-23T14:47:27.169294+00:00"
+        }
+      ]
+    },
+    "coding": {
+      "prior": 0.386696,
+      "history": [
+        {
+          "model": "mistral-small-latest",
+          "task_type": "coding",
+          "old_prior": 0.7,
+          "eval_score": 0.63,
+          "new_prior": 0.621165,
+          "timestamp": "2026-06-23T12:42:28.353282+00:00"
+        },
+        {
+          "model": "mistral-small-latest",
+          "task_type": "coding",
+          "old_prior": 0.621165,
+          "eval_score": 0.63,
+          "new_prior": 0.551818,
+          "timestamp": "2026-06-23T12:42:28.407182+00:00"
+        },
+        {
+          "model": "mistral-small-latest",
+          "task_type": "coding",
+          "old_prior": 0.551818,
+          "eval_score": 0.63,
+          "new_prior": 0.50049,
+          "timestamp": "2026-06-23T14:46:29.553234+00:00"
+        },
+        {
+          "model": "mistral-small-latest",
+          "task_type": "coding",
+          "old_prior": 0.50049,
+          "eval_score": 0.63,
+          "new_prior": 0.453562,
+          "timestamp": "2026-06-23T14:46:31.954612+00:00"
+        },
+        {
+          "model": "mistral-small-latest",
+          "task_type": "coding",
+          "old_prior": 0.453562,
+          "eval_score": 0.63,
+          "new_prior": 0.419398,
+          "timestamp": "2026-06-23T14:47:26.929019+00:00"
+        },
+        {
+          "model": "mistral-small-latest",
+          "task_type": "coding",
+          "old_prior": 0.419398,
+          "eval_score": 0.63,
+          "new_prior": 0.386696,
+          "timestamp": "2026-06-23T14:47:28.308424+00:00"
+        }
+      ]
+    },
+    "creative": {
+      "prior": 0.7,
+      "history": []
+    }
+  }
+}

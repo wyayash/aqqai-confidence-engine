@@ -1,0 +1,105 @@
+week 4 is about building the Fusion Engine v1 in code, connecting it properly to Jeet's pipeline, and adding the inter-model agreement signal. By end of this week the two of you should have a fully connected pipeline running.
+
+
+Task 1 — Build Fusion Engine v1 in code
+
+The design is done. Now build it. The v1 approach is heuristic sentence blending — you described it correctly in the design doc. Here is the implementation:
+
+```python
+def fuse_responses(scored_responses: list, weights: dict) -> str:
+"""
+v1 Fusion Engine — weighted sentence blending.
+
+1. Sort responses by weight (highest first)
+2. Top response = base
+3. For each other response above 0.15 weight threshold:
+- Split into sentences
+- For each sentence, check similarity against base
+- If similarity < 0.75, the sentence adds new information
+- Append it to the fused output
+4. Return combined response
+"""
+```
+
+Use sentence-transformers `all-MiniLM-L6-v2` for the similarity check — Jeet already has it in his requirements.
+
+Create this as `fusion_engine.py` in your repo.
+
+Task 2 — Add inter-model agreement scoring
+This is a signal unique to AQQAI that no single-model system can produce. After collecting all 5 responses, measure how much they agree with each other.
+
+How to build it:
+- Embed all 5 responses using sentence-transformers
+- Compute pairwise cosine similarity between all response pairs
+- Average all pairwise similarities → agreement score (0 to 1)
+- High agreement (above 0.75) = strong confidence signal — the models converge on the same answer
+- Low agreement (below 0.40) = ambiguous query or models are uncertain
+
+Where it plugs in:
+- Add `agreement_score` to the output of `process_confidence_request()`
+- When agreement is high, the Bayesian weights can be applied more aggressively
+- When agreement is low, weights should be more conservative (keep responses more equal)
+
+Add this to `bayesian_confidence_layer2.py`.
+
+Task 3 — Connect Fusion Engine to Jeet's pipeline
+
+
+Coordinate with Jeet. Once he has `bayesian.py` wired in, your `fusion_engine.py` needs to slot in right after. The exact call sequence:
+
+Jeet's pipeline calls:
+1. process_confidence_request(payload) → gets weights back from you
+2. fuse_responses(scored, weights) → gets final_response back from fusion engine
+
+
+Decide with Jeet who owns the canonical `fuse_responses()` function. One of you keeps it, the other imports it. Don't have two separate versions.
+
+Test together: run one real query through Jeet's full pipeline and confirm the fusion engine returns a blended response, not a single model's response.
+
+Task 4 — Update orchestration flow documentation
+
+Update the orchestration flow doc to reflect the full Week 4 pipeline:
+
+```
+User Query
+↓
+Task Analyzer → classifies task type
+↓
+AQQAI Orchestrator → fans out to 5 models
+↓
+5 responses collected
+↓
+Evaluation Layer
+Layer 1: R, C, K, S (universal)
+Layer 2: task-specific checks
+↓
+process_confidence_request()
+→ Bayesian update
+→ Inter-model agreement
+→ Fusion weights
+↓
+fuse_responses()
+→ Weighted sentence blending
+→ Final response
+↓
+Logged and returned
+
+This becomes the reference document for Week 5 integration testing.
+
+End of week checkpoint
+
+By Friday:
+- Fusion Engine v1 is built and in your repo
+- Inter-model agreement scoring is in the Bayesian layer
+- You and Jeet have run one query through the connected pipeline together
+- The response that comes back is a blended output from multiple models — not a single model's response
+
+ This week what you have to deliver
+
+- [ ] TASK_TYPES updated to all 6 categories
+- [ ] fusion_engine.py built and pushed
+- [ ] Inter-model agreement scoring added to Bayesian layer
+- [ ] Fusion Engine connected to Jeet's pipeline
+- [ ] One real query run through the full connected pipeline
+- [ ] Orchestration flow doc updated
+Important - I am adding a architecture or a simple diagram so you can better understand
