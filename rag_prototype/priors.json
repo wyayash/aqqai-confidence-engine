@@ -207,6 +207,40 @@
           "timestamp": "2026-06-28T04:44:19.216979+00:00"
         }
       ]
+    },
+    "factual": {
+      "prior": 0.46642320268376575,
+      "update_history": [
+        {
+          "old_prior": 0.5,
+          "eval_score": 0.7821,
+          "new_prior": 0.4664
+        }
+      ]
+    }
+  },
+  "gemini-2.5-flash": {
+    "factual": {
+      "prior": 0.4644783217971039,
+      "update_history": [
+        {
+          "old_prior": 0.5,
+          "eval_score": 0.7592,
+          "new_prior": 0.4645
+        }
+      ]
+    }
+  },
+  "llama-3.3-70b-versatile": {
+    "factual": {
+      "prior": 0.4690984755191303,
+      "update_history": [
+        {
+          "old_prior": 0.5,
+          "eval_score": 0.8136,
+          "new_prior": 0.4691
+        }
+      ]
     }
   }
 }
