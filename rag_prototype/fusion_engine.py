@@ -11,9 +11,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 print("[System] Loading Sentence-Transformers model...")
 embedder = SentenceTransformer("all-MiniLM-L6-v2")
 
-# =====================================================================
 # TASK 1: FORMAT CONSTRAINT HANDLING
-# =====================================================================
 
 FORMAT_KEYWORDS = [
     'one sentence', '1 sentence', 'in a sentence',
@@ -63,9 +61,7 @@ def pick_format_compliant_response(scored_responses: dict, weights: dict, query:
     return scored_responses.get(sorted_models[0], "")
 
 
-# =====================================================================
 # TASK 2: CODE BLOCK HANDLING
-# =====================================================================
 
 def contains_code_block(response: str) -> bool:
     """Checks if the response contains code elements."""
@@ -84,9 +80,7 @@ def blend_non_code_sections(scored_responses: dict, weights: dict) -> str:
     return blend_responses(text_only_responses, weights)
 
 
-# =====================================================================
 # V1 SEMANTIC BLENDING LOGIC
-# =====================================================================
 
 def extract_sentences(text: str) -> list[str]:
     """Splits text into sentences while preserving paragraph breaks and structure."""
@@ -135,9 +129,7 @@ def blend_responses(scored_responses: dict, weights: dict) -> str:
     return " ".join(fused_sentences)
 
 
-# =====================================================================
 # MASTER FUSION ROUTER
-# =====================================================================
 
 def fuse_responses(scored_responses: dict, weights: dict, query: str) -> str:
     """Master router: Checks constraints, handles code, then blends if safe."""
@@ -164,9 +156,7 @@ def fuse_responses(scored_responses: dict, weights: dict, query: str) -> str:
     # 3. Normal Prose — blend as before
     return blend_responses(scored_responses, weights)
 
-# =====================================================================
-# LIVE API DEMO BLOCK (Runs when you execute `python fusion_engine.py`)
-# =====================================================================
+# LIVE API DEMO BLOCK
 if __name__ == "__main__":
     import os
     import sys
