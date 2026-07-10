@@ -85,7 +85,7 @@ async def run_pipeline():
     
     # STEP 5: Fusion Layer (Your Code)
     print("[5/5] Synthesizer: Blending responses via Machine Learning...\n")
-    final_answer = fuse_responses(raw_responses, bayesian_output["weights"])
+    final_answer = fuse_responses(raw_responses, bayesian_output["weights"], query)
 
     print("\n")
     print("FINAL SYNTHESIZED RESPONSE:")
