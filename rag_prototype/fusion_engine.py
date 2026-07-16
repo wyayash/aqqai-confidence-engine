@@ -5,11 +5,14 @@ Synthesizes responses from multiple LLMs into a single optimal answer.
 
 import re
 import numpy as np
-from sentence_transformers import SentenceTransformer
+from sentence_transformers import SentenceTransformer, CrossEncoder
 from sklearn.metrics.pairwise import cosine_similarity
 
 print("[System] Loading Sentence-Transformers model...")
 embedder = SentenceTransformer("all-MiniLM-L6-v2")
+
+print("[System] Loading NLI model for contradiction detection...")
+nli_model = CrossEncoder('cross-encoder/nli-deberta-v3-small')
 
 # TASK 1: FORMAT CONSTRAINT HANDLING
 
@@ -34,19 +37,37 @@ def has_format_constraint(query: str) -> bool:
             return True
     return False
 
-def check_compliance(text: str, query: str) -> bool:
-    """Basic heuristic to check if a response followed the format rules."""
+def check_compliance(query: str, text: str) -> bool:
     text = text.strip()
-    q = query.lower()
-    
-    if any(kw in q for kw in ['one sentence', '1 sentence', 'in a sentence']):
-        return len(re.split(r'(?<=[.!?]) +', text)) <= 2 
-    if any(kw in q for kw in ['one word', '1 word']):
-        return len(text.split()) <= 2
-    if any(kw in q for kw in ['one line', '1 line', 'single line']):
-        return len(text.splitlines()) == 1
-    
-    return True 
+    query_lower = query.lower()
+
+    #check exact word count
+    word_match = re.search(r'(\d+)\s*word', query_lower)
+    if word_match:
+        required_words = int(word_match.group(1))
+        actual_words = len(text.split())
+        return actual_words == required_words
+
+    #check exact sentence count
+    sentence_match = re.search(r'(\d+)\s*sentence', query_lower)
+    if sentence_match:
+        required_sentences = int(sentence_match.group(1))
+        actual_sentences = len([s for s in re.split(r'(?<=[.!?]) +', text) if s.strip()])
+        return actual_sentences == required_sentences
+
+    #check exact line or bullet count
+    line_match = re.search(r'(\d+)\s*(?:line|bullet)', query_lower)
+    if line_match:
+        required_lines = int(line_match.group(1))
+        actual_lines = len([line for line in text.split('\n') if line.strip()])
+        return actual_lines == required_lines
+
+    #check Haiku constraint (must be exactly 3 lines)
+    if "haiku" in query_lower:
+        actual_lines = len([line for line in text.split('\n') if line.strip()])
+        return actual_lines == 3
+
+    return True
 
 def pick_format_compliant_response(scored_responses: dict, weights: dict, query: str) -> str:
     """Checks compliance and returns the best single response to prevent stacking."""
@@ -54,7 +75,7 @@ def pick_format_compliant_response(scored_responses: dict, weights: dict, query:
     
     for model in sorted_models:
         text = scored_responses.get(model, "")
-        if check_compliance(text, query):
+        if check_compliance(query, text):
             return text
             
     print("[Log] Constraint violation: No models perfectly followed the format.")
@@ -89,7 +110,7 @@ def extract_sentences(text: str) -> list[str]:
     return [p.strip() for p in parts if len(p.strip()) > 5]
 
 def blend_responses(scored_responses: dict, weights: dict) -> str:
-    """v1 Fusion Engine — weighted sentence blending using semantic similarity."""
+    """v1 Fusion Engine — weighted sentence blending using semantic similarity & NLI."""
     sorted_models = sorted(weights.keys(), key=lambda k: weights[k], reverse=True)
     if not sorted_models:
         return ""
@@ -112,22 +133,34 @@ def blend_responses(scored_responses: dict, weights: dict) -> str:
         candidate_text = scored_responses.get(model, "")
         candidate_sentences = extract_sentences(candidate_text)
         
-        for sentence in candidate_sentences:
+        if not candidate_sentences:
+            continue
+            
+        # LATENCY OPTIMIZATION: Batch encode all candidate sentences at once
+        candidate_embs = embedder.encode(candidate_sentences)
+        
+        for idx, sentence in enumerate(candidate_sentences):
             if not fused_embeddings:
-                fused_sentences.append(sentence)
-                fused_embeddings = embedder.encode([sentence]).tolist()
+                # NLI CHECK: Verify against base_text before adding
+                nli_score = nli_model.predict([(base_text, sentence)])[0]
+                if nli_score.argmax() != 0:  # 0 is contradiction
+                    fused_sentences.append(sentence)
+                    fused_embeddings = embedder.encode([sentence]).tolist()
                 continue
                 
-            candidate_emb = embedder.encode([sentence])
+            # Use the batch-encoded embedding
+            candidate_emb = candidate_embs[idx].reshape(1, -1)
             similarities = cosine_similarity(candidate_emb, fused_embeddings)[0]
             max_similarity = np.max(similarities)
             
             if max_similarity < 0.75:
-                fused_sentences.append(sentence)
-                fused_embeddings.append(candidate_emb[0].tolist())
-                
+                # NLI CHECK: Verify against base_text before adding
+                nli_score = nli_model.predict([(base_text, sentence)])[0]
+                if nli_score.argmax() != 0:  # 0 is contradiction
+                    fused_sentences.append(sentence)
+                    fused_embeddings.append(candidate_emb[0].tolist())
+                    
     return " ".join(fused_sentences)
-
 
 # MASTER FUSION ROUTER
 
@@ -145,9 +178,10 @@ def fuse_responses(scored_responses: dict, weights: dict, query: str) -> str:
         # Pick the highest-weighted model that has code
         best_model = max(code_models, key=lambda m: weights.get(m, 0.0))
         best_code = scored_responses[best_model]
-        
+         
         # Blend text explanations from other responses
-        explanation = blend_non_code_sections(scored_responses, weights)
+        other_responses = {m: text for m, text in scored_responses.items() if m != best_model}
+        explanation = blend_non_code_sections(other_responses, weights)
         
         if explanation:
             return best_code + '\n\n' + explanation
@@ -164,7 +198,7 @@ if __name__ == "__main__":
     from dotenv import load_dotenv
     from openai import AsyncOpenAI
     
-    # 1. Point to Jeet's folder so we can use his Task Analyzer
+    # 1. Point to Task Analyzer
     sys.path.append(os.path.abspath("Evaluation layer"))
     from task_analyzer import analyze_task
     

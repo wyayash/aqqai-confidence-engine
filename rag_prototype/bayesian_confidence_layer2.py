@@ -12,6 +12,8 @@ PERSISTENCE:
 import json
 import os
 import math
+import uuid
+from datetime import datetime
 import numpy as np
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -60,12 +62,14 @@ class PriorStore:
         self._ensure_exists(model, task_type)
         return self.priors[model][task_type]["prior"]
 
-    def set(self, model: str, task_type: str, new_prior: float, eval_score: float, old_prior: float):
+    def set(self, model: str, task_type: str, new_prior: float, eval_score: float, old_prior: float, query_id: str = None):
         self._ensure_exists(model, task_type)
         self.priors[model][task_type]["prior"] = new_prior
         
         history = self.priors[model][task_type]["update_history"]
         history.append({
+            "query_id": query_id if query_id else str(uuid.uuid4()),
+            "timestamp": datetime.now().isoformat(),
             "old_prior": round(old_prior, 4),
             "eval_score": round(eval_score, 4),
             "new_prior": round(new_prior, 4)
@@ -73,8 +77,7 @@ class PriorStore:
         if len(history) > HISTORY_LIMIT:
             self.priors[model][task_type]["update_history"] = history[-HISTORY_LIMIT:]
 
-
-def update_priors(store: PriorStore, task_type: str, eval_scores: dict):
+def update_priors(store: PriorStore, task_type: str, eval_scores: dict, query_id: str = None):
     """Core Bayesian Math"""
     evidence = sum(eval_scores[m] * store.get(m, task_type) for m in eval_scores)
     if evidence == 0:
@@ -86,7 +89,7 @@ def update_priors(store: PriorStore, task_type: str, eval_scores: dict):
         delta = raw_posterior - old_prior
         new_prior = old_prior + (LEARNING_RATE * delta)
         new_prior = max(MIN_PRIOR, min(MAX_PRIOR, new_prior))
-        store.set(model, task_type, new_prior, score, old_prior)
+        store.set(model, task_type, new_prior, score, old_prior, query_id)
     
     store.save()
 
@@ -111,15 +114,16 @@ def calculate_inter_model_agreement(responses: dict) -> float:
 
 def process_confidence_request(payload: dict, store: PriorStore) -> dict:
     """
-    Canonical entry point. Expects: {"task_type": "...", "eval_scores": {...}, "responses": {...}}
+    Canonical entry point. Expects: {"task_type": "...", "eval_scores": {...}, "responses": {...}, "query_id": "..."}
     """
     task_type = payload.get("task_type", "general")
     eval_scores = payload.get("eval_scores", {})
     responses = payload.get("responses", {})
+    query_id = payload.get("query_id")
     models = list(eval_scores.keys())
     
     # 1. Update Priors mathematically
-    update_priors(store, task_type, eval_scores)
+    update_priors(store, task_type, eval_scores, query_id)
     
     # 2. Calculate Inter-Model Agreement
     agreement_score = calculate_inter_model_agreement(responses)
