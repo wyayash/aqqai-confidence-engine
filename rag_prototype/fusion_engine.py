@@ -2,7 +2,6 @@
 AQQAI Fusion Engine
 Synthesizes responses from multiple LLMs into a single optimal answer.
 """
-
 import re
 import numpy as np
 from sentence_transformers import SentenceTransformer, CrossEncoder
@@ -13,14 +12,6 @@ embedder = SentenceTransformer("all-MiniLM-L6-v2")
 
 print("[System] Loading NLI model for contradiction detection...")
 nli_model = CrossEncoder('cross-encoder/nli-deberta-v3-small')
-
-# ──────────────────────────────────────────────────────────
-# FILLER FILTERING (from Jeet's fusion.py — merged in per Vineet's
-# consolidation plan). Skips structural boilerplate that isn't actual
-# content — "Certainly!", markdown headers, bullet markers, "In
-# summary" — so the fused answer doesn't accumulate filler sentences
-# from every model that used one.
-# ──────────────────────────────────────────────────────────
 
 _FILLER_PATTERNS = [
     r"^(certainly|sure|of course|absolutely|great question)[!,.]",
@@ -67,7 +58,7 @@ def check_compliance(query: str, text: str) -> bool:
     text = text.strip()
     query_lower = query.lower()
 
-    # Normalize word-form numbers to digits (e.g., "one sentence" -> "1 sentence")
+    # Normalize word-form numbers to digits 
     for word, digit in WORD_NUMBERS.items():
         query_lower = re.sub(rf'\b{word}\b', str(digit), query_lower)
 
@@ -86,14 +77,14 @@ def check_compliance(query: str, text: str) -> bool:
         actual_sentences = len([s for s in re.split(r'(?<=[.!?])\s+|\n+', text) if s.strip()])
         return actual_sentences == required_sentences
 
-    # 3. Check exact line or bullet count (handles spaces or hyphens like "4-line")
+    # 3. Check exact line or bullet count 
     line_match = re.search(r'(\d+)[\s-]*(?:line|bullet)', query_lower)
     if line_match:
         required_lines = int(line_match.group(1))
         actual_lines = len([line for line in text.split('\n') if line.strip()])
         return actual_lines == required_lines
 
-    # 4. Check Haiku constraint (must be exactly 3 lines)
+    # 4. Check Haiku constraint
     if "haiku" in query_lower:
         actual_lines = len([line for line in text.split('\n') if line.strip()])
         return actual_lines == 3
@@ -133,7 +124,6 @@ def blend_non_code_sections(scored_responses: dict, weights: dict) -> str:
 
 
 # V1 SEMANTIC BLENDING LOGIC
-
 def extract_sentences(text: str) -> list[str]:
     """
     Splits text into sentences while preserving paragraph breaks and structure.
@@ -181,18 +171,17 @@ def blend_responses(scored_responses: dict, weights: dict) -> str:
         if not candidate_sentences:
             continue
             
-        # LATENCY OPTIMIZATION: Batch encode all candidate sentences at once
+        # LATENCY OPTIMIZATION
         candidate_embs = embedder.encode(candidate_sentences)
 
-        additions = 0   # caps this model to MAX_ADDITIONS_PER_MODEL, so one
-                        # verbose model can't dominate the fused answer
+        additions = 0 
 
         for idx, sentence in enumerate(candidate_sentences):
             if additions >= MAX_ADDITIONS_PER_MODEL:
                 break
 
             if not fused_embeddings:
-                # NLI CHECK: Verify against base_text before adding
+                # NLI CHECK
                 nli_score = nli_model.predict([(base_text, sentence)])[0]
                 if nli_score.argmax() != 0:  # 0 is contradiction
                     fused_sentences.append(sentence)
@@ -216,11 +205,10 @@ def blend_responses(scored_responses: dict, weights: dict) -> str:
     return " ".join(fused_sentences)
 
 # MASTER FUSION ROUTER
-
 def fuse_responses(scored_responses: dict, weights: dict, query: str, task_type: str = "general") -> str:
     """Master router: Checks constraints, handles code, then blends if safe."""
     
-    # --- NEW: Filter out API errors before doing anything ---
+    #NEW: Filter out API errors before doing anything
     valid_responses = {m: text for m, text in scored_responses.items() if not text.startswith("Error:")}
     
     if not valid_responses:
@@ -231,7 +219,6 @@ def fuse_responses(scored_responses: dict, weights: dict, query: str, task_type:
         return pick_format_compliant_response(valid_responses, weights, query)
         
     # 2. Code Block Handling
-    # 2. Code Block Handling
     code_models = [m for m, text in valid_responses.items() if task_type == 'coding' or contains_code_block(text)]
     
     if code_models:
@@ -239,14 +226,14 @@ def fuse_responses(scored_responses: dict, weights: dict, query: str, task_type:
         best_model = max(code_models, key=lambda m: weights.get(m, 0.0))
         best_full_text = valid_responses[best_model]
         
-        # Extract ONLY the markdown code block(s)
+        # Extract ONLY the markdown code block
         code_blocks = re.findall(r'```.*?```', best_full_text, flags=re.DOTALL)
         
         if code_blocks:
             best_code_only = "\n\n".join(code_blocks)
             
             # Pass ALL models to the blender so the winning model acts as the base_text
-            # This ensures cosine similarity filters out redundant sentences!
+            # This ensures cosine similarity filters out redundant sentences
             explanation = blend_non_code_sections(valid_responses, weights)
             
             return best_code_only + '\n\n' + explanation
@@ -254,7 +241,7 @@ def fuse_responses(scored_responses: dict, weights: dict, query: str, task_type:
             # Fallback: If no markdown backticks are found, safely return the raw text
             return best_full_text
 
-    # 3. Normal Prose — blend as before
+    # 3. Normal Prose, blend as before
     return blend_responses(valid_responses, weights)
 
 # LIVE API DEMO BLOCK
@@ -301,7 +288,7 @@ if __name__ == "__main__":
         if not query.strip():
             return
             
-        # --- NEW: Task Analysis Step ---
+        #NEW: Task Analysis Step
         task_type = analyze_task(query)
         print(f"\n[0/3] Task Analysis: Classified as '{task_type.upper()}'")
             
