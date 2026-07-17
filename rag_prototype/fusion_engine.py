@@ -21,10 +21,10 @@ FORMAT_KEYWORDS = [
     'one line', '1 line', 'single line',
     'one paragraph', '1 paragraph',
     'one word', '1 word',
-    r'\d+ sentences',
-    r'\d+ lines',
-    r'\d+ words',
-    r'\d+ bullet',
+    r'\d+\s*sentences?',
+    r'\d+\s*lines?',
+    r'\d+[\s-]*words?',
+    r'\d+\s*bullets?',
     r'\d+-line',
     'haiku', 'poem', 'limerick', 
 ]
@@ -37,32 +37,42 @@ def has_format_constraint(query: str) -> bool:
             return True
     return False
 
+WORD_NUMBERS = {
+    "one": 1, "two": 2, "three": 3, "four": 4, "five": 5,
+    "six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10
+}
+
 def check_compliance(query: str, text: str) -> bool:
     text = text.strip()
     query_lower = query.lower()
 
-    #check exact word count
+    # Normalize word-form numbers to digits (e.g., "one sentence" -> "1 sentence")
+    for word, digit in WORD_NUMBERS.items():
+        query_lower = re.sub(rf'\b{word}\b', str(digit), query_lower)
+
+    # 1. Check word count with ±10% tolerance
     word_match = re.search(r'(\d+)\s*word', query_lower)
     if word_match:
         required_words = int(word_match.group(1))
         actual_words = len(text.split())
-        return actual_words == required_words
+        tolerance = max(1, int(required_words * 0.10))
+        return abs(actual_words - required_words) <= tolerance
 
-    #check exact sentence count
+    # 2. Check exact sentence count
     sentence_match = re.search(r'(\d+)\s*sentence', query_lower)
     if sentence_match:
         required_sentences = int(sentence_match.group(1))
         actual_sentences = len([s for s in re.split(r'(?<=[.!?]) +', text) if s.strip()])
         return actual_sentences == required_sentences
 
-    #check exact line or bullet count
-    line_match = re.search(r'(\d+)\s*(?:line|bullet)', query_lower)
+    # 3. Check exact line or bullet count (handles spaces or hyphens like "4-line")
+    line_match = re.search(r'(\d+)[\s-]*(?:line|bullet)', query_lower)
     if line_match:
         required_lines = int(line_match.group(1))
         actual_lines = len([line for line in text.split('\n') if line.strip()])
         return actual_lines == required_lines
 
-    #check Haiku constraint (must be exactly 3 lines)
+    # 4. Check Haiku constraint (must be exactly 3 lines)
     if "haiku" in query_lower:
         actual_lines = len([line for line in text.split('\n') if line.strip()])
         return actual_lines == 3
