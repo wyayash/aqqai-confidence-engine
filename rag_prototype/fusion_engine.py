@@ -1,5 +1,5 @@
 """
-AQQAI — Fusion Engine (fusion_engine.py)
+AQQAI Fusion Engine
 Synthesizes responses from multiple LLMs into a single optimal answer.
 """
 
@@ -13,6 +13,27 @@ embedder = SentenceTransformer("all-MiniLM-L6-v2")
 
 print("[System] Loading NLI model for contradiction detection...")
 nli_model = CrossEncoder('cross-encoder/nli-deberta-v3-small')
+
+# ──────────────────────────────────────────────────────────
+# FILLER FILTERING (from Jeet's fusion.py — merged in per Vineet's
+# consolidation plan). Skips structural boilerplate that isn't actual
+# content — "Certainly!", markdown headers, bullet markers, "In
+# summary" — so the fused answer doesn't accumulate filler sentences
+# from every model that used one.
+# ──────────────────────────────────────────────────────────
+
+_FILLER_PATTERNS = [
+    r"^(certainly|sure|of course|absolutely|great question)[!,.]",
+    r"^(here'?s?|below is|the following|in this|this is)",
+    r"^(i hope|i'?m happy|feel free|let me know)",
+    r"^#+\s",                        # markdown headers
+    r"^\s*[-*•]\s",                  # bullet points
+    r"^(in summary|to summarize|to conclude|in conclusion)",
+]
+_FILLER_RE = re.compile("|".join(_FILLER_PATTERNS), re.IGNORECASE)
+
+MIN_SENTENCE_WORDS = 6          # filters fragments — replaces the old bare len()>5 CHAR check
+MAX_ADDITIONS_PER_MODEL = 4     # caps one verbose model from dominating the fused answer
 
 # TASK 1: FORMAT CONSTRAINT HANDLING
 
@@ -62,7 +83,7 @@ def check_compliance(query: str, text: str) -> bool:
     sentence_match = re.search(r'(\d+)\s*sentence', query_lower)
     if sentence_match:
         required_sentences = int(sentence_match.group(1))
-        actual_sentences = len([s for s in re.split(r'(?<=[.!?]) +', text) if s.strip()])
+        actual_sentences = len([s for s in re.split(r'(?<=[.!?])\s+|\n+', text) if s.strip()])
         return actual_sentences == required_sentences
 
     # 3. Check exact line or bullet count (handles spaces or hyphens like "4-line")
@@ -114,10 +135,24 @@ def blend_non_code_sections(scored_responses: dict, weights: dict) -> str:
 # V1 SEMANTIC BLENDING LOGIC
 
 def extract_sentences(text: str) -> list[str]:
-    """Splits text into sentences while preserving paragraph breaks and structure."""
-    # Removed the |\n+ so the engine stops destroying line breaks!
-    parts = re.split(r'(?<=[.!?]) +', text.strip())
-    return [p.strip() for p in parts if len(p.strip()) > 5]
+    """
+    Splits text into sentences while preserving paragraph breaks and structure.
+    Filters out fragments (< MIN_SENTENCE_WORDS words) and structural
+    filler ("Certainly!", markdown headers, bullets, "In summary") —
+    these aren't real content and shouldn't compete for a fusion slot.
+    """
+    parts = re.split(r'(?<=[.!?])\s+|\n+', text.strip())
+    sentences = []
+    for p in parts:
+        p = p.strip()
+        if not p:
+            continue
+        if len(p.split()) < MIN_SENTENCE_WORDS:
+            continue
+        if _FILLER_RE.match(p):
+            continue
+        sentences.append(p)
+    return sentences
 
 def blend_responses(scored_responses: dict, weights: dict) -> str:
     """v1 Fusion Engine — weighted sentence blending using semantic similarity & NLI."""
@@ -148,14 +183,21 @@ def blend_responses(scored_responses: dict, weights: dict) -> str:
             
         # LATENCY OPTIMIZATION: Batch encode all candidate sentences at once
         candidate_embs = embedder.encode(candidate_sentences)
-        
+
+        additions = 0   # caps this model to MAX_ADDITIONS_PER_MODEL, so one
+                        # verbose model can't dominate the fused answer
+
         for idx, sentence in enumerate(candidate_sentences):
+            if additions >= MAX_ADDITIONS_PER_MODEL:
+                break
+
             if not fused_embeddings:
                 # NLI CHECK: Verify against base_text before adding
                 nli_score = nli_model.predict([(base_text, sentence)])[0]
                 if nli_score.argmax() != 0:  # 0 is contradiction
                     fused_sentences.append(sentence)
                     fused_embeddings = embedder.encode([sentence]).tolist()
+                    additions += 1
                 continue
                 
             # Use the batch-encoded embedding
@@ -169,36 +211,51 @@ def blend_responses(scored_responses: dict, weights: dict) -> str:
                 if nli_score.argmax() != 0:  # 0 is contradiction
                     fused_sentences.append(sentence)
                     fused_embeddings.append(candidate_emb[0].tolist())
+                    additions += 1
                     
     return " ".join(fused_sentences)
 
 # MASTER FUSION ROUTER
 
-def fuse_responses(scored_responses: dict, weights: dict, query: str) -> str:
+def fuse_responses(scored_responses: dict, weights: dict, query: str, task_type: str = "general") -> str:
     """Master router: Checks constraints, handles code, then blends if safe."""
     
+    # --- NEW: Filter out API errors before doing anything ---
+    valid_responses = {m: text for m, text in scored_responses.items() if not text.startswith("Error:")}
+    
+    if not valid_responses:
+        return "Error: All APIs failed to return a valid response."
+        
     # 1. Format Constraints
     if has_format_constraint(query):
-        return pick_format_compliant_response(scored_responses, weights, query)
+        return pick_format_compliant_response(valid_responses, weights, query)
         
     # 2. Code Block Handling
-    code_models = [m for m, text in scored_responses.items() if contains_code_block(text)]
+    # 2. Code Block Handling
+    code_models = [m for m, text in valid_responses.items() if task_type == 'coding' or contains_code_block(text)]
     
     if code_models:
         # Pick the highest-weighted model that has code
         best_model = max(code_models, key=lambda m: weights.get(m, 0.0))
-        best_code = scored_responses[best_model]
-         
-        # Blend text explanations from other responses
-        other_responses = {m: text for m, text in scored_responses.items() if m != best_model}
-        explanation = blend_non_code_sections(other_responses, weights)
+        best_full_text = valid_responses[best_model]
         
-        if explanation:
-            return best_code + '\n\n' + explanation
-        return best_code
+        # Extract ONLY the markdown code block(s)
+        code_blocks = re.findall(r'```.*?```', best_full_text, flags=re.DOTALL)
+        
+        if code_blocks:
+            best_code_only = "\n\n".join(code_blocks)
+            
+            # Pass ALL models to the blender so the winning model acts as the base_text
+            # This ensures cosine similarity filters out redundant sentences!
+            explanation = blend_non_code_sections(valid_responses, weights)
+            
+            return best_code_only + '\n\n' + explanation
+        else:
+            # Fallback: If no markdown backticks are found, safely return the raw text
+            return best_full_text
 
     # 3. Normal Prose — blend as before
-    return blend_responses(scored_responses, weights)
+    return blend_responses(valid_responses, weights)
 
 # LIVE API DEMO BLOCK
 if __name__ == "__main__":
@@ -215,9 +272,18 @@ if __name__ == "__main__":
     load_dotenv()
     
     # Configure SDKs
-    gemini_client = AsyncOpenAI(api_key=os.getenv("GEMINI_API_KEY"), base_url="https://generativelanguage.googleapis.com/v1beta/openai/")
-    groq_client = AsyncOpenAI(api_key=os.getenv("GROQ_API_KEY"), base_url="https://api.groq.com/openai/v1")
-    mistral_client = AsyncOpenAI(api_key=os.getenv("MISTRAL_API_KEY"), base_url="https://api.mistral.ai/v1")
+    gemini_client = AsyncOpenAI(
+        api_key=os.getenv("GEMINI_API_KEY"),
+        base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
+    )
+    groq_client = AsyncOpenAI(
+        api_key=os.getenv("GROQ_API_KEY"),
+        base_url="https://api.groq.com/openai/v1"
+    )
+    mistral_client = AsyncOpenAI(
+        api_key=os.getenv("MISTRAL_API_KEY"),
+        base_url="https://api.mistral.ai/v1"
+    )
 
     async def fetch_api(client, model_name, prompt):
         try:
@@ -256,7 +322,7 @@ if __name__ == "__main__":
         weights = {"gemini-2.5-flash": 0.40, "llama-3.3-70b-versatile": 0.35, "mistral-small-latest": 0.25}
         
         print("\n[2/3] Checking constraints & blending...")
-        final_answer = fuse_responses(responses, weights, query)
+        final_answer = fuse_responses(responses, weights, query, task_type)
         
         print("\n")
         print("FINAL SYNTHESIZED RESPONSE:")
