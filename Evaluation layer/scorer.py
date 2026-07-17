@@ -7,24 +7,15 @@ Implements all four evaluation dimensions:
   C — Coherence     (sentence-transformers all-MiniLM-L6-v2,
                      falls back to TF-IDF if not available)
   K — Completeness  (sub-part decomposition + length signal)
-  S — Consistency   (contradiction pairs + entity conflict detection
-                     + uncertainty phrases from Yashveer's notes)
+  S — Consistency   (NLI model: cross-encoder/nli-deberta-v3-small
+                     falls back to keyword contradiction pairs + entity
+                     conflict detection if NLI not available;
+                     uncertainty phrases + repetition always run)
 
-Yashveer's Week 1 research — adjustments made:
-  ✓ Layer 2 coding scorer — ast.parse syntax check, exec runtime check, code presence
+Week 4 additions:
+  ✓ Layer 2 coding scorer  — ast.parse syntax check, exec runtime check, code presence
   ✓ Layer 2 factual scorer — hedge+fabrication detection (Tanvi's notes), numerical conflict check
-  ✓ NLI upgrade for S dimension — cross-encoder/nli-deberta-v3-small
-
-Output format (matches task spec exactly):
-  {
-    "model_id":        "m1",
-    "relevance":       0.82,
-    "coherence":       0.74,
-    "completeness":    0.91,
-    "consistency":     0.88,
-    "weighted_score":  0.84,
-    "confidence_tier": "MEDIUM"
-  }
+  ✓ NLI upgrade for S      — cross-encoder/nli-deberta-v3-small replaces keyword contradiction
 """
 
 import ast
@@ -45,17 +36,36 @@ from sklearn.metrics.pairwise import cosine_similarity as sklearn_cosine
 # Falls back to TF-IDF automatically if not installed
 # ──────────────────────────────────────────────────────────
 
-_ST_MODEL = None
+_ST_MODEL     = None
 _ST_AVAILABLE = False
 
 try:
     from sentence_transformers import SentenceTransformer
-    _ST_MODEL = SentenceTransformer("all-MiniLM-L6-v2")
+    _ST_MODEL     = SentenceTransformer("all-MiniLM-L6-v2")
     _ST_AVAILABLE = True
     print("  [scorer] sentence-transformers loaded — using all-MiniLM-L6-v2 for coherence")
 except Exception:
     _ST_AVAILABLE = False
     print("  [scorer] sentence-transformers not available — falling back to TF-IDF for coherence")
+
+
+# ──────────────────────────────────────────────────────────
+# NLI MODEL SETUP — cross-encoder/nli-deberta-v3-small
+# Used for consistency (S) dimension — proper contradiction detection
+# Falls back to keyword checks automatically if not available
+# ──────────────────────────────────────────────────────────
+
+_NLI_MODEL     = None
+_NLI_AVAILABLE = False
+
+try:
+    from sentence_transformers.cross_encoder import CrossEncoder
+    _NLI_MODEL     = CrossEncoder("cross-encoder/nli-deberta-v3-small")
+    _NLI_AVAILABLE = True
+    print("  [scorer] NLI model loaded — using cross-encoder/nli-deberta-v3-small for consistency")
+except Exception:
+    _NLI_AVAILABLE = False
+    print("  [scorer] NLI model not available — falling back to keyword checks for consistency")
 
 
 # ──────────────────────────────────────────────────────────
@@ -171,18 +181,7 @@ def _tfidf_cosine(text_a: str, text_b: str) -> float:
 
 
 def _sentence_similarity(sent_a: str, sent_b: str) -> float:
-    """
-    Sentence similarity for coherence scoring.
-
-    Uses sentence-transformers all-MiniLM-L6-v2 when available.
-    Falls back to TF-IDF cosine automatically.
-
-    Why sentence-transformers is better for coherence:
-    - Understands meaning, not just word overlap
-    - "A dog ran fast" and "The canine sprinted" → high similarity
-    - TF-IDF would score these near 0 (no shared words)
-    - Real coherence is about meaning flow, not word repetition
-    """
+    """Sentence similarity for coherence — uses ST model, falls back to TF-IDF."""
     if _ST_AVAILABLE and _ST_MODEL is not None:
         try:
             embeddings = _ST_MODEL.encode([sent_a, sent_b])
@@ -190,7 +189,6 @@ def _sentence_similarity(sent_a: str, sent_b: str) -> float:
             return max(0.0, min(1.0, sim))
         except Exception:
             pass
-    # Fallback
     return _tfidf_cosine(sent_a, sent_b)
 
 
@@ -205,13 +203,7 @@ def _extract_keywords(text: str, top_n: int = 20) -> set[str]:
 
 
 def _decompose_query(query: str) -> list[str]:
-    """
-    Break a query into sub-parts by splitting on conjunctions and question words.
-
-    Example:
-      "What is a vector database and how does it store data?"
-      → ["What is a vector database", "how does it store data"]
-    """
+    """Break a query into sub-parts by splitting on conjunctions and question words."""
     query = query.strip().rstrip("?.")
     parts = re.split(
         r"\b(and|or|also|as well as|what|how|why|when|where|which|explain|describe|list)\b",
@@ -228,12 +220,7 @@ def _decompose_query(query: str) -> list[str]:
 
 
 def _confidence_tier(score: float) -> str:
-    """
-    3-tier confidence system from Yashveer's Week 1 research.
-    HIGH   (≥0.85) — serve directly
-    MEDIUM (0.60-0.84) — serve, optionally with caveat
-    LOW    (<0.60)  — trigger fallback / human review
-    """
+    """HIGH ≥0.85 | MEDIUM 0.60-0.84 | LOW <0.60"""
     if score >= TIER_THRESHOLDS["HIGH"]:
         return "HIGH"
     if score >= TIER_THRESHOLDS["MEDIUM"]:
@@ -245,86 +232,372 @@ def _confidence_tier(score: float) -> str:
 # DIMENSION 1 — RELEVANCE
 # ──────────────────────────────────────────────────────────
 
+_R_HIGH_THRESHOLD = 0.55   # top-chunk cosine sim at/above this → R = 1.0
+_R_LOW_THRESHOLD  = 0.15   # top-chunk cosine sim at/below this → R = 0.0
+
+# TF-IDF cosine runs much lower than embedding cosine for paraphrased text
+# (different vocabulary → near-zero TF-IDF overlap even when semantically
+# identical). Reusing the ST thresholds on TF-IDF output would collapse
+# almost every fallback score to 0 — reintroducing the exact bug this fix
+# removes. Separate, lower thresholds for the fallback path only.
+_R_HIGH_THRESHOLD_TFIDF = 0.30
+_R_LOW_THRESHOLD_TFIDF  = 0.05
+
+# Instruction verbs at the start of a query ("write a", "explain",
+# "summarize", "describe", "give me") carry no topical meaning but pull
+# the query embedding toward a generic "task-request" region, dragging
+# cosine similarity down against every response regardless of content.
+# Stripped before embedding the query only — never the response.
+_INSTRUCTION_PREFIX_RE = re.compile(
+    r"^(write|create|generate|explain|describe|summarize|summarise|"
+    r"tell me|give me|list|define|compose|draft|design)\s+(a|an|the|me)?\s*",
+    re.IGNORECASE,
+)
+
+
+def _clean_query_for_embedding(query: str) -> str:
+    cleaned = _INSTRUCTION_PREFIX_RE.sub("", query.strip())
+    return cleaned if cleaned.strip() else query
+
+
+def _scale_relevance(cosine: float, high: float = _R_HIGH_THRESHOLD, low: float = _R_LOW_THRESHOLD) -> float:
+    """Linearly scale cosine similarity into [0,1] using the given thresholds."""
+    if cosine >= high:
+        return 1.0
+    if cosine <= low:
+        return 0.0
+    return (cosine - low) / (high - low)
+
+
 def score_relevance(query: str, response: str) -> float:
     """
-    R — Relevance
-    How well does the response address the query?
+    R — Relevance (Week 5 fix, revised)
 
-    Method:
-    - Primary:   TF-IDF cosine similarity (semantic overlap)
-    - Secondary: keyword overlap (exact query terms in response)
-    - Final:     0.6 * cosine + 0.4 * keyword_overlap
+    Week 5 v1 replaced keyword overlap with whole-response embedding
+    cosine similarity — but Tanvi's re-validation showed this was STILL
+    broken on every single row (avg gap 0.64), regardless of task type.
+    The uniformity across coding/factual/creative/summary is the tell:
+    it's not a category-specific bug, it's dilution. all-MiniLM-L6-v2 is
+    trained on short sentence-pairs (STS-style). Embedding an entire
+    multi-sentence response as one vector averages in every connector
+    word, code fence, test case, and formatting artifact — diluting the
+    on-topic content until cosine similarity against a short query
+    settles in the 0.2-0.5 range even for a perfectly relevant answer.
+
+    Fix: embed the query against each sentence/chunk of the response
+    individually, and take the average of the top matching chunks
+    (rather than one whole-response average). This asks "does any part
+    of this response directly address the query" instead of "is the
+    average meaning of this whole blob close to the query" — robust to
+    length, extra examples, and formatting that would otherwise dilute
+    a single whole-response embedding.
+
+    Also strips leading instruction verbs ("write a", "explain",
+    "summarize") from the query before embedding — these carry no
+    topical content but pull the query embedding toward a generic
+    "task-request" region rather than the actual subject matter.
+
+    Falls back to whole-text TF-IDF cosine (own thresholds) if
+    sentence-transformers isn't available.
     """
     if not response.strip():
         return 0.0
 
-    cosine = _tfidf_cosine(query, response)
+    clean_query = _clean_query_for_embedding(query)
 
-    query_kw    = _extract_keywords(query, top_n=15)
-    resp_tokens = set(_clean_tokens(response))
-    overlap     = len(query_kw & resp_tokens) / max(len(query_kw), 1)
+    used_embeddings = False
+    if _ST_AVAILABLE and _ST_MODEL is not None:
+        try:
+            chunks = _split_sentences(response)
+            if not chunks:
+                chunks = [response]
 
-    score = round(0.6 * cosine + 0.4 * overlap, 4)
-    return min(1.0, score)
+            query_emb  = _ST_MODEL.encode([clean_query])
+            chunk_embs = _ST_MODEL.encode(chunks)
+            sims = sklearn_cosine(query_emb, chunk_embs)[0]
+
+            top_k = sorted(sims, reverse=True)[:3]
+            cosine = float(np.mean(top_k))
+            used_embeddings = True
+        except Exception:
+            cosine = _tfidf_cosine(query, response)
+    else:
+        cosine = _tfidf_cosine(query, response)
+
+    cosine = max(0.0, min(1.0, cosine))
+
+    if used_embeddings:
+        return round(_scale_relevance(cosine, _R_HIGH_THRESHOLD, _R_LOW_THRESHOLD), 4)
+    return round(_scale_relevance(cosine, _R_HIGH_THRESHOLD_TFIDF, _R_LOW_THRESHOLD_TFIDF), 4)
 
 
 # ──────────────────────────────────────────────────────────
 # DIMENSION 2 — COHERENCE
 # ──────────────────────────────────────────────────────────
 
-def score_coherence(response: str) -> float:
-    """
-    C — Coherence
-    Does the response flow logically from sentence to sentence?
+_BULLET_LINE_RE = re.compile(r"^\s*(?:[-*•]|\d+[.)])\s+")
 
-    Method:
-    - Split response into sentences
-    - Compute sentence-transformers similarity between each adjacent pair
-      (falls back to TF-IDF if sentence-transformers not available)
-    - Average all similarities → coherence score
+_CODE_LINE_RE = re.compile(
+    r"^\s*(def |class |return\b|import |from |for |while |if |elif |else:|"
+    r"try:|except|print\(|@\w+|#.*)"
+)
 
-    Why sentence-transformers here:
-    TF-IDF misses meaning-based coherence. Two sentences about the
-    same topic but with different words score 0 in TF-IDF even if
-    they flow perfectly. Sentence-transformers captures actual meaning.
+
+def _looks_like_fenceless_code(response: str) -> bool:
     """
+    Catches code responses that don't use ``` fences — some model
+    adapters return plain indented code without markdown fencing, which
+    the old fence-only check missed entirely (this was the actual cause
+    of coding responses like C1/Gemini scoring 0.47 instead of routing
+    to score_code_coherence at all — the fix wasn't broken, it just
+    never fired).
+    """
+    lines = [l for l in response.split("\n") if l.strip()]
+    if len(lines) < 3:
+        return False
+    code_like = sum(
+        1 for l in lines
+        if _CODE_LINE_RE.match(l)
+        or re.search(r"[{};:]\s*$", l.strip())
+        or re.match(r"^\s{4,}\S", l)   # 4+ space indentation, typical of code
+    )
+    return (code_like / len(lines)) > 0.30
+
+
+def _is_code_response(response: str) -> bool:
+    stripped = response.strip()
+    if "```" in response or stripped.startswith("def ") or stripped.startswith("class "):
+        return True
+    return _looks_like_fenceless_code(response)
+
+
+def score_code_coherence(response: str) -> float:
+    """
+    Code responses: don't run sentence-flow analysis on code — a fenced
+    code block full of short lines and no punctuation isn't "incoherent
+    prose", it's correctly formatted code. Score based on whether there's
+    explanatory text around the code (indicates a structured, coherent
+    answer) rather than a bare code dump.
+    """
+    non_code_lines = [
+        line for line in response.split("\n")
+        if line.strip()
+        and not line.strip().startswith("#")
+        and "```" not in line
+    ]
+    has_explanation = len(non_code_lines) > 2
+    return 0.85 if has_explanation else 0.75
+
+
+def score_bullet_coherence(bullet_lines: list[str]) -> float:
+    """
+    Bullet-point responses: evaluate coherence within/across bullets
+    instead of penalising the natural sentence breaks between them.
+    Each bullet is checked for having actual content (not a fragment),
+    and adjacent bullets are compared for topical continuity — but with
+    a generous floor, since well-formed independent bullets are a
+    coherent structure even with low adjacent similarity.
+    """
+    if not bullet_lines:
+        return 0.75
+
+    cleaned = [_BULLET_LINE_RE.sub("", b).strip() for b in bullet_lines]
+    cleaned = [b for b in cleaned if b]
+
+    if len(cleaned) < 2:
+        return 0.80
+
+    # substance check — well-formed bullets have real content, not just a word
+    substantive = sum(1 for b in cleaned if len(b.split()) >= 3)
+    substance_ratio = substantive / len(cleaned)
+
+    if len(cleaned) >= 2:
+        sims = [
+            _sentence_similarity(cleaned[i], cleaned[i + 1])
+            for i in range(len(cleaned) - 1)
+        ]
+        avg_sim = float(np.mean(sims))
+    else:
+        avg_sim = 0.5
+
+    # generous floor (0.55) so independent-but-related bullets aren't
+    # punished the way disjointed prose sentences would be
+    score = 0.55 + 0.30 * substance_ratio + 0.15 * avg_sim
+    return round(min(1.0, max(0.0, score)), 4)
+
+
+def score_prose_coherence(response: str) -> float:
+    """Standard sentence-flow analysis for normal prose responses."""
     sentences = _split_sentences(response)
 
     if len(sentences) < 2:
-        return 0.75  # single sentence — neutral score
+        return 0.75
 
-    similarities = []
-    for i in range(len(sentences) - 1):
-        sim = _sentence_similarity(sentences[i], sentences[i + 1])
-        similarities.append(sim)
-
+    similarities = [
+        _sentence_similarity(sentences[i], sentences[i + 1])
+        for i in range(len(sentences) - 1)
+    ]
     avg_sim = float(np.mean(similarities))
 
     if _ST_AVAILABLE:
-        # sentence-transformers scores sit naturally in 0.2-0.9 range
-        # No calibration needed — scores are already meaningful
         score = round(avg_sim, 4)
     else:
-        # TF-IDF sits in 0.02-0.25 range — needs calibration
         score = min(1.0, avg_sim * 4.0 + 0.45)
 
     return round(min(1.0, max(0.0, score)), 4)
+
+
+def score_coherence(response: str) -> float:
+    """
+    C — Coherence (Week 5 fix)
+
+    Tanvi's benchmark: C was wrong on 9/11 rows. The old scorer ran
+    sentence-flow analysis on everything, including code blocks and
+    bullet lists — which naturally break into short, punctuation-light
+    fragments that look "incoherent" to that analysis even though the
+    formatting is intentional and the response reads perfectly to a
+    human (e.g. clean marketing copy scored 0.38; a working Python
+    function scored 0.44).
+
+    Now: detect format first, route accordingly.
+      - Code response        → score_code_coherence()   (skip sentence flow)
+      - Bullet-majority list → score_bullet_coherence()  (skip sentence flow)
+      - Normal prose             → score_prose_coherence()  (original logic)
+    """
+    if not response.strip():
+        return 0.0
+
+    if _is_code_response(response):
+        return score_code_coherence(response)
+
+    lines = response.strip().split("\n")
+    bullet_lines = [l for l in lines if _BULLET_LINE_RE.match(l)]
+    if lines and (len(bullet_lines) / max(len(lines), 1)) > 0.5:
+        return score_bullet_coherence(bullet_lines)
+
+    return score_prose_coherence(response)
 
 
 # ──────────────────────────────────────────────────────────
 # DIMENSION 3 — COMPLETENESS
 # ──────────────────────────────────────────────────────────
 
+# ──────────────────────────────────────────────────────────
+# FORMAT CONSTRAINT DETECTION (Week 5, Task 4)
+# Detects explicit format requirements in the query (e.g. "in one
+# sentence", "3 bullet points") and checks whether the response
+# actually follows them. Violations deduct from K (completeness) —
+# a response that ignores a stated format requirement hasn't fully
+# completed the task, regardless of how good the content is.
+# ──────────────────────────────────────────────────────────
+
+FORMAT_CONSTRAINTS = [
+    ("sentences", re.compile(r"\bone\s+sentence\b"), 1),
+    ("sentences", re.compile(r"\b(\d+)\s+sentences?\b"), None),
+    ("points",    re.compile(r"\b(\d+)\s+(?:bullet\s+)?points?\b"), None),
+    ("lines",     re.compile(r"\b(\d+)[- ]line\b"), None),
+    ("lines",     re.compile(r"\bone\s+(?:opening\s+)?line\b"), 1),
+    ("paragraphs", re.compile(r"\bone\s+paragraph\b"), 1),
+    ("words",     re.compile(r"\b(\d+)\s+words?\b"), None),
+]
+
+_FORMAT_TOLERANCE = {
+    # small allowances before a count is treated as a full violation
+    "sentences": 0, "points": 0, "lines": 0, "paragraphs": 0, "words": 3,
+}
+
+
+def _count_sentences(response: str) -> int:
+    parts = re.split(r"[.!?]+", response.strip())
+    return len([p for p in parts if p.strip()])
+
+
+def _count_words(response: str) -> int:
+    return len(response.split())
+
+
+def _count_points(response: str) -> int:
+    lines = response.strip().split("\n")
+    bullets = [l for l in lines if _BULLET_LINE_RE.match(l)]
+    return len(bullets) if bullets else _count_sentences(response)
+
+
+def _count_lines(response: str) -> int:
+    return len([l for l in response.strip().split("\n") if l.strip()])
+
+
+def _count_paragraphs(response: str) -> int:
+    paras = [p for p in re.split(r"\n\s*\n", response.strip()) if p.strip()]
+    return max(1, len(paras))
+
+
+_COUNTERS = {
+    "sentences":  _count_sentences,
+    "words":      _count_words,
+    "points":     _count_points,
+    "lines":      _count_lines,
+    "paragraphs": _count_paragraphs,
+}
+
+
+def extract_format_requirements(query: str) -> list[tuple[str, int]]:
+    """Find every explicit format constraint stated in the query."""
+    lowered = query.lower()
+    found: list[tuple[str, int]] = []
+    for kind, pattern, fixed_count in FORMAT_CONSTRAINTS:
+        m = pattern.search(lowered)
+        if not m:
+            continue
+        count = fixed_count if fixed_count is not None else int(m.group(1))
+        if count > 0:
+            found.append((kind, count))
+    return found
+
+
+def check_format_constraint(query: str, response: str) -> tuple[float, list[str]]:
+    """
+    If the query specifies a format constraint, check whether the
+    response follows it.
+
+    Returns (compliance_score, details) where compliance_score is in
+    [0, 1] — 1.0 = fully compliant (or no constraint present), lower
+    values indicate a proportionally larger violation. If multiple
+    constraints are present, the worst compliance score wins.
+    """
+    requirements = extract_format_requirements(query)
+    if not requirements or not response.strip():
+        return 1.0, []
+
+    worst = 1.0
+    details = []
+
+    for kind, required in requirements:
+        actual = _COUNTERS[kind](response)
+        tolerance = _FORMAT_TOLERANCE.get(kind, 0)
+        diff = max(0, abs(actual - required) - tolerance)
+
+        if diff == 0:
+            compliance = 1.0
+        else:
+            compliance = max(0.0, 1.0 - diff / max(required, 1))
+
+        if compliance < 1.0:
+            details.append(
+                f"format constraint violated: requested {required} {kind}, "
+                f"response has {actual} (compliance={compliance:.2f})"
+            )
+
+        worst = min(worst, compliance)
+
+    return worst, details
+
+
 def score_completeness(query: str, response: str) -> float:
     """
     K — Completeness
-    Does the response address all parts of the query?
-
-    Method:
-    - Decompose query into sub-parts
-    - Check coverage of each sub-part in response
-    - Length signal as secondary check
-    - Final: 0.70 * coverage + 0.30 * length_signal
+    0.70 × sub-part coverage + 0.30 × length signal,
+    minus a penalty (up to 0.30) if the query stated a format
+    constraint (e.g. "in one sentence") that the response violated.
     """
     if not response.strip():
         return 0.0
@@ -332,23 +605,21 @@ def score_completeness(query: str, response: str) -> float:
     sub_parts  = _decompose_query(query)
     resp_lower = response.lower()
 
-    covered = 0
-    for part in sub_parts:
-        part_keywords = [
-            kw for kw in _clean_tokens(part)
-            if kw not in STOPWORDS
-        ]
-        if any(kw in resp_lower for kw in part_keywords):
-            covered += 1
+    covered = sum(
+        1 for part in sub_parts
+        if any(kw in resp_lower for kw in _clean_tokens(part) if kw not in STOPWORDS)
+    )
 
-    coverage = covered / max(len(sub_parts), 1)
-
+    coverage      = covered / max(len(sub_parts), 1)
     expected_words = max(len(sub_parts) * 40, 50)
-    actual_words   = len(response.split())
-    length_signal  = min(1.0, actual_words / expected_words)
+    length_signal  = min(1.0, len(response.split()) / expected_words)
 
-    score = round(0.70 * coverage + 0.30 * length_signal, 4)
-    return min(1.0, score)
+    base = 0.70 * coverage + 0.30 * length_signal
+
+    constraint_score, _details = check_format_constraint(query, response)
+    format_penalty = (1.0 - constraint_score) * 0.30   # up to 0.30 deducted
+
+    return min(1.0, round(max(0.0, base - format_penalty), 4))
 
 
 # ──────────────────────────────────────────────────────────
@@ -356,34 +627,68 @@ def score_completeness(query: str, response: str) -> float:
 # ──────────────────────────────────────────────────────────
 
 CONTRADICTION_PAIRS = [
-    ("fast",       "slow"),
-    ("simple",     "complex"),
-    ("always",     "never"),
-    ("increase",   "decrease"),
-    ("efficient",  "inefficient"),
-    ("safe",       "dangerous"),
-    ("accurate",   "inaccurate"),
-    ("reliable",   "unreliable"),
-    ("easy",       "difficult"),
-    ("cheap",      "expensive"),
-    ("high",       "low"),
-    ("large",      "small"),
-    ("best",       "worst"),
-    ("strong",     "weak"),
-    ("faster",     "slower"),
-    ("better",     "worse"),
+    ("fast","slow"), ("simple","complex"), ("always","never"),
+    ("increase","decrease"), ("efficient","inefficient"),
+    ("safe","dangerous"), ("accurate","inaccurate"),
+    ("reliable","unreliable"), ("easy","difficult"),
+    ("cheap","expensive"), ("high","low"), ("large","small"),
+    ("best","worst"), ("strong","weak"), ("faster","slower"),
+    ("better","worse"),
 ]
 
 UNCERTAINTY_PHRASES = [
-    "i'm not sure",   "i am not sure",
-    "i think",        "i believe",
-    "might be wrong", "could be wrong",
-    "i don't know",   "i do not know",
-    "to the best of my knowledge",
-    "i'm not certain","i am not certain",
-    "i may be wrong", "i cannot be sure",
-    "not 100% sure",  "not entirely sure",
+    "i'm not sure", "i am not sure", "i think", "i believe",
+    "might be wrong", "could be wrong", "i don't know",
+    "i do not know", "to the best of my knowledge",
+    "i'm not certain", "i am not certain", "i may be wrong",
+    "i cannot be sure", "not 100% sure", "not entirely sure",
 ]
+
+
+def _nli_contradiction_penalty(sentences: list[str]) -> float:
+    """
+    Run sentence pairs through NLI model to detect contradictions.
+
+    Model: cross-encoder/nli-deberta-v3-small
+    Output per pair: [contradiction, entailment, neutral] as raw logits
+    We apply softmax to get probabilities.
+
+    Pairs checked: adjacent sentences + first vs last.
+    Penalty: 0.20 per contradiction pair with confidence > 0.80.
+    Cap: 0.60 total (prevents wiping score on long responses).
+    """
+    if len(sentences) < 2:
+        return 0.0
+
+    # Adjacent pairs + first vs last
+    pairs = [(sentences[i], sentences[i + 1]) for i in range(len(sentences) - 1)]
+    if len(sentences) > 2:
+        pairs.append((sentences[0], sentences[-1]))
+
+    try:
+        scores = _NLI_MODEL.predict(pairs)   # shape: (n_pairs, 3)
+
+        def softmax(x):
+            e = np.exp(x - np.max(x))
+            return e / e.sum()
+
+        penalty       = 0.0
+        NLI_THRESHOLD = 0.80
+        NLI_PENALTY   = 0.20
+        MAX_PENALTY   = 0.60
+
+        for score_row in scores:
+            probs           = softmax(score_row)
+            contradiction_p = float(probs[0])   # index 0 = contradiction
+            if contradiction_p > NLI_THRESHOLD:
+                penalty += NLI_PENALTY
+                if penalty >= MAX_PENALTY:
+                    return MAX_PENALTY
+
+        return round(penalty, 4)
+
+    except Exception:
+        return 0.0
 
 
 def score_consistency(response: str) -> float:
@@ -391,50 +696,61 @@ def score_consistency(response: str) -> float:
     S — Consistency
     Does the response contradict itself?
 
-    Check 1 — Contradiction pairs (penalty: 0.08 each)
-    Check 2 — Named entity with conflicting attributes (penalty: 0.15)
-    Check 3 — Uncertainty phrases (penalty: 0.08 each)
-    Check 4 — Repetition loops / degenerate output (penalty: 0.20)
+    PRIMARY (when NLI available):
+        NLI check — cross-encoder/nli-deberta-v3-small
+        Adjacent + first-vs-last sentence pairs
+        Contradiction confidence > 0.80 → deduct 0.20 per pair
+        Max NLI penalty capped at 0.60
+
+    FALLBACK (when NLI not available):
+        Keyword contradiction pairs     → deduct 0.08 each
+        Named entity attribute conflict → deduct 0.15
+
+    ALWAYS RUN:
+        Uncertainty phrases             → deduct 0.08 each
+        Repetition loops (4-gram × 3+) → deduct 0.20
     """
     if not response.strip():
         return 0.0
 
-    score = 1.0
-    lower = response.lower()
-
-    # Check 1: Contradiction pairs
-    for w1, w2 in CONTRADICTION_PAIRS:
-        if re.search(rf"\b{w1}\b", lower) and re.search(rf"\b{w2}\b", lower):
-            score -= 0.08
-
-    # Check 2: Named entity consistency
+    score     = 1.0
+    lower     = response.lower()
     sentences = _split_sentences(response)
-    entity_attributes: dict[str, list[str]] = {}
 
-    for sent in sentences:
-        matches = re.findall(
-            r"\b([A-Z][a-z]+(?:\s[A-Z][a-z]+)?)\s+(?:is|are|was|were)\s+(\w+)",
-            sent
-        )
-        for entity, attribute in matches:
-            entity_lower = entity.lower()
-            if entity_lower not in entity_attributes:
-                entity_attributes[entity_lower] = []
-            entity_attributes[entity_lower].append(attribute.lower())
+    # ── Primary: NLI contradiction check ─────────────────
+    if _NLI_AVAILABLE and _NLI_MODEL is not None:
+        score -= _nli_contradiction_penalty(sentences)
 
-    for entity, attrs in entity_attributes.items():
-        attr_set = set(attrs)
+    else:
+        # ── Fallback: keyword contradiction pairs ─────────
         for w1, w2 in CONTRADICTION_PAIRS:
-            if w1 in attr_set and w2 in attr_set:
-                score -= 0.15
-                break
+            if re.search(rf"\b{w1}\b", lower) and re.search(rf"\b{w2}\b", lower):
+                score -= 0.08
 
-    # Check 3: Uncertainty phrases
+        # ── Fallback: named entity consistency ────────────
+        entity_attributes: dict[str, list[str]] = {}
+        for sent in sentences:
+            for entity, attribute in re.findall(
+                r"\b([A-Z][a-z]+(?:\s[A-Z][a-z]+)?)\s+(?:is|are|was|were)\s+(\w+)", sent
+            ):
+                entity_lower = entity.lower()
+                if entity_lower not in entity_attributes:
+                    entity_attributes[entity_lower] = []
+                entity_attributes[entity_lower].append(attribute.lower())
+
+        for attrs in entity_attributes.values():
+            attr_set = set(attrs)
+            for w1, w2 in CONTRADICTION_PAIRS:
+                if w1 in attr_set and w2 in attr_set:
+                    score -= 0.15
+                    break
+
+    # ── Always: uncertainty phrases ───────────────────────
     for phrase in UNCERTAINTY_PHRASES:
         if phrase in lower:
             score -= 0.08
 
-    # Check 4: Repetition loops
+    # ── Always: repetition loops ──────────────────────────
     words = lower.split()
     if len(words) >= 12:
         ngrams: dict[tuple, int] = {}
@@ -450,76 +766,41 @@ def score_consistency(response: str) -> float:
 # ──────────────────────────────────────────────────────────
 # LAYER 2 — CODING SCORER
 # Only runs when task_type == "coding"
-# Applies penalty adjustments on top of the Layer 1 weighted_score
 # ──────────────────────────────────────────────────────────
 
-# Regex to find fenced code blocks: ```...``` or ```python...```
 _CODE_BLOCK_RE = re.compile(r"```[\w]*\n?(.*?)```", re.DOTALL)
 
 
 def _extract_code_blocks(response: str) -> list[str]:
-    """
-    Extract all fenced code blocks from a response.
-    Returns list of code strings (without the backtick fences).
-    """
     return _CODE_BLOCK_RE.findall(response)
 
 
 def score_coding(response: str) -> dict:
     """
     Layer 2 — Coding scorer.
-    Runs 3 checks on top of RCKS and returns a penalty + breakdown.
 
-    Check 1 — Code presence (penalty: 0.20)
-        Does the response contain a fenced code block at all?
-        If someone asked for code and there's none, it's incomplete.
-
-    Check 2 — Syntax check (penalty: 0.30)
-        Does the code block have valid Python syntax?
-        Uses ast.parse() — the same parser Python itself uses.
-        SyntaxError = code that can't even be read, let alone run.
-
-    Check 3 — Runtime check (penalty: 0.15)
-        If syntax is valid, try exec() in a sandboxed environment.
-        Catches NameError, TypeError, ZeroDivisionError etc.
-        Only runs if syntax check passed — no point running broken code.
-
-    Returns:
-        {
-            "penalty":       0.35,   # total deduction to apply to weighted_score
-            "has_code":      True,
-            "syntax_ok":     True,
-            "runtime_ok":    False,
-            "code_blocks":   1,
-            "details":       ["runtime error: NameError: name 'x' is not defined"]
-        }
+    Check 1 — Code presence   (penalty: 0.20) — no fenced code block found
+    Check 2 — Syntax check    (penalty: 0.30) — ast.parse() throws SyntaxError
+    Check 3 — Runtime check   (penalty: 0.15) — exec() raises an exception
     """
     penalty = 0.0
     details = []
 
-    # ── Check 1: Code presence ────────────────────────────
     code_blocks = _extract_code_blocks(response)
     has_code    = len(code_blocks) > 0
 
     if not has_code:
         penalty += 0.20
         details.append("no code block found (-0.20)")
-        # Can't check syntax or runtime without code
         return {
-            "penalty":     round(penalty, 4),
-            "has_code":    False,
-            "syntax_ok":   False,
-            "runtime_ok":  False,
-            "code_blocks": 0,
-            "details":     details,
+            "penalty": round(penalty, 4), "has_code": False,
+            "syntax_ok": False, "runtime_ok": False,
+            "code_blocks": 0, "details": details,
         }
 
-    # Use the first code block for syntax + runtime checks
-    # (most responses have one primary code block)
-    code = code_blocks[0].strip()
-
-    # ── Check 2: Syntax check ─────────────────────────────
+    code      = code_blocks[0].strip()
     syntax_ok = False
+
     try:
         ast.parse(code)
         syntax_ok = True
@@ -527,15 +808,11 @@ def score_coding(response: str) -> dict:
         penalty += 0.30
         details.append(f"syntax error (-0.30): {e.msg} at line {e.lineno}")
 
-    # ── Check 3: Runtime check ────────────────────────────
-    # Only run if syntax is valid — exec() on broken syntax crashes
     runtime_ok = False
     if syntax_ok:
-        stdout_capture = io.StringIO()
-        sandbox = {}   # isolated namespace — no access to global state
         try:
-            with contextlib.redirect_stdout(stdout_capture):
-                exec(code, sandbox)   # noqa: S102
+            with contextlib.redirect_stdout(io.StringIO()):
+                exec(code, {})   # noqa: S102
             runtime_ok = True
         except Exception as e:
             penalty += 0.15
@@ -545,116 +822,64 @@ def score_coding(response: str) -> dict:
         details.append("all checks passed")
 
     return {
-        "penalty":     round(penalty, 4),
-        "has_code":    has_code,
-        "syntax_ok":   syntax_ok,
-        "runtime_ok":  runtime_ok,
-        "code_blocks": len(code_blocks),
-        "details":     details,
+        "penalty": round(penalty, 4), "has_code": has_code,
+        "syntax_ok": syntax_ok, "runtime_ok": runtime_ok,
+        "code_blocks": len(code_blocks), "details": details,
     }
 
 
 # ──────────────────────────────────────────────────────────
 # LAYER 2 — FACTUAL SCORER
 # Only runs when task_type == "factual"
-# Applies penalty adjustments on top of the Layer 1 weighted_score
 # ──────────────────────────────────────────────────────────
 
-# Phrases from Tanvi's hallucination notes (Part 2).
-# These are the hedge phrases that appeared in H23-H25 failures
-# (Gemini, DeepSeek, Mistral on fake research paper prompts).
-# The hedge itself is not the problem — what comes AFTER it is.
-# We detect the pattern: hedge phrase → followed by specific detail
-# within the same sentence or the next sentence.
 HEDGE_PHRASES = [
-    # Directly from Tanvi's notes — exact phrases observed in failures
+    # From Tanvi's hallucination notes — H23/H24/H25 exact phrases
     "i couldn't find the exact paper, but",
-    "this might relate to",
-    "this could relate to",
+    "this might relate to", "this could relate to",
     "this likely covers",
     "based on the title, this paper probably explores",
     "common themes in this area include",
     "while i don't have direct access to this, themes such as",
-
-    # Extended list — same pattern, same risk
-    # Unsourced research claims (Vineet's task spec)
-    "research shows",
-    "studies show",
-    "studies indicate",
-    "studies suggest",
-    "research indicates",
-    "research suggests",
-    "this paper suggests",
-    "this paper argues",
-    "this paper shows",
-    "according to research",
-    "according to studies",
-    "experts say",
-    "experts believe",
-    "scientists say",
-    "scientists have found",
-    "it has been shown that",
-    "it is widely accepted that",
-    "evidence suggests",
-    "data suggests",
-    "findings suggest",
-    "the literature suggests",
-    "the evidence shows",
-
-    # Speculation-after-hedge pattern (core of Tanvi's finding)
-    "it probably",
-    "it likely",
-    "it seems likely",
-    "it would seem",
-    "it may be that",
-    "one could argue",
-    "it is possible that",
-    "presumably",
-    "in all likelihood",
+    # Unsourced research claims 
+    "research shows", "studies show", "studies indicate",
+    "studies suggest", "research indicates", "research suggests",
+    "this paper suggests", "this paper argues", "this paper shows",
+    "according to research", "according to studies",
+    "experts say", "experts believe", "scientists say",
+    "scientists have found", "it has been shown that",
+    "it is widely accepted that", "evidence suggests",
+    "data suggests", "findings suggest",
+    "the literature suggests", "the evidence shows",
+    # Speculation-after-hedge
+    "it probably", "it likely", "it seems likely",
+    "it would seem", "it may be that", "one could argue",
+    "it is possible that", "presumably", "in all likelihood",
 ]
 
-# Minimum words after a hedge phrase to count as "fabricated detail"
-# Short phrases like "this might relate to X" are fine
-# Long continuations after the hedge are the problem
 _HEDGE_CONTINUATION_MIN_WORDS = 8
 
 
 def _detect_hedge_then_fabrication(response: str) -> list[str]:
     """
-    Implements Tanvi's core finding: the failure pattern is NOT just
-    hedge phrases — it's hedge followed by specific invented detail.
-
-    Method:
-    1. Find every hedge phrase in the response
-    2. Extract the text that follows it (rest of sentence + next sentence)
-    3. If the continuation is long enough (≥8 words) → flag it
-       Short continuations like "this might relate to X" are borderline ok
-       Long continuations with invented specifics are the real problem
-
-    Returns list of flagged instances for the breakdown dict.
+    Tanvi's core finding: flag hedge phrase + long continuation (≥8 words).
+    Short continuations are borderline ok. Long ones signal fabrication.
     """
-    lower    = response.lower()
-    flagged  = []
+    lower   = response.lower()
+    flagged = []
 
     for phrase in HEDGE_PHRASES:
         idx = lower.find(phrase)
         while idx != -1:
-            # Get the text after the hedge phrase
             after = response[idx + len(phrase):]
-
-            # Take up to end of current sentence + next sentence
-            # Split on sentence boundary
-            continuation_match = re.match(r"([^.!?]*[.!?]?\s*[^.!?]*[.!?]?)", after)
-            if continuation_match:
-                continuation = continuation_match.group(0).strip()
-                word_count   = len(continuation.split())
-                if word_count >= _HEDGE_CONTINUATION_MIN_WORDS:
+            m     = re.match(r"([^.!?]*[.!?]?\s*[^.!?]*[.!?]?)", after)
+            if m:
+                continuation = m.group(0).strip()
+                if len(continuation.split()) >= _HEDGE_CONTINUATION_MIN_WORDS:
                     flagged.append(
                         f"hedge+fabrication: '{phrase}' followed by "
-                        f"{word_count}-word continuation"
+                        f"{len(continuation.split())}-word continuation"
                     )
-
-            # Look for next occurrence of this phrase
             idx = lower.find(phrase, idx + 1)
 
     return flagged
@@ -662,80 +887,40 @@ def _detect_hedge_then_fabrication(response: str) -> list[str]:
 
 def _detect_numerical_conflicts(response: str) -> list[str]:
     """
-    Numerical claim check — from Vineet's task spec.
-
-    If the same number appears in two different contexts with conflicting
-    meaning, flag it as a consistency issue.
-
-    Method:
-    1. Extract all numbers from the response
-    2. For each number that appears 2+ times, check if the surrounding
-       context (5 words on each side) is meaningfully different
-    3. If contexts differ significantly → flag as numerical conflict
-
-    Example of what this catches:
-    "The model was trained on 1.5 billion parameters... 
-     The dataset contains 1.5 million records."
-    Same number (1.5) but different units/contexts — ambiguous but not
-    necessarily wrong.
-
-    Example of actual conflict:
-    "Python was released in 1991... Python was first released in 1994."
-    Same referent, different values → genuine conflict.
-
-    Returns list of flagged instances.
+    Flag same number appearing in two different low-overlap contexts.
+    Catches contradictory statistics in the same response.
     """
-    # Extract all numbers (integers and decimals, including with commas)
-    number_pattern = re.compile(r"\b\d[\d,]*\.?\d*\b")
-    sentences      = _split_sentences(response)
-    flagged        = []
-
-    # Map: number_string → list of (sentence_index, context_snippet)
+    number_pattern  = re.compile(r"\b\d[\d,]*\.?\d*\b")
+    sentences       = _split_sentences(response)
     number_contexts: dict[str, list[tuple[int, str]]] = {}
+    flagged         = []
 
     for i, sent in enumerate(sentences):
         for match in number_pattern.finditer(sent):
-            num = match.group(0).replace(",", "")   # normalise 1,000 → 1000
+            num   = match.group(0).replace(",", "")
             start = max(0, match.start() - 40)
             end   = min(len(sent), match.end() + 40)
             ctx   = sent[start:end].strip()
-
-            if num not in number_contexts:
-                number_contexts[num] = []
-            number_contexts[num].append((i, ctx))
+            number_contexts.setdefault(num, []).append((i, ctx))
 
     for num, occurrences in number_contexts.items():
         if len(occurrences) < 2:
             continue
-
-        # Check pairs of occurrences for context conflict
         for j in range(len(occurrences)):
             for k in range(j + 1, len(occurrences)):
                 idx_a, ctx_a = occurrences[j]
                 idx_b, ctx_b = occurrences[k]
-
-                # Only flag if they're in different sentences
                 if idx_a == idx_b:
                     continue
-
-                # Context similarity — if contexts are very different,
-                # same number might mean different things (unit change etc)
-                # Use token overlap as a proxy
                 tokens_a = set(_clean_tokens(ctx_a))
                 tokens_b = set(_clean_tokens(ctx_b))
-
                 if not tokens_a or not tokens_b:
                     continue
-
                 overlap = len(tokens_a & tokens_b) / max(len(tokens_a | tokens_b), 1)
-
-                # Low overlap = same number used in very different contexts
-                # High overlap = same number repeated about same thing (ok)
-                # Threshold: < 0.25 overlap = likely different claims
                 if overlap < 0.25:
                     flagged.append(
-                        f"numerical conflict: '{num}' appears in different "
-                        f"contexts — '{ctx_a[:60]}' vs '{ctx_b[:60]}'"
+                        f"numerical conflict: '{num}' in different contexts — "
+                        f"'{ctx_a[:60]}' vs '{ctx_b[:60]}'"
                     )
 
     return flagged
@@ -744,47 +929,21 @@ def _detect_numerical_conflicts(response: str) -> list[str]:
 def score_factual(response: str) -> dict:
     """
     Layer 2 — Factual scorer.
-    Runs 2 checks on top of RCKS and returns a penalty + breakdown.
 
-    Check 1 — Hedge + fabrication detection (penalty: 0.10 per instance)
-        Implements Tanvi's core finding from hallucination notes H23-H25:
-        the real failure pattern is not uncertainty language alone,
-        but hedge phrase followed by invented specific detail.
-        Full phrase list from Tanvi's Part 2 notes + extended set.
-
-    Check 2 — Numerical conflict detection (penalty: 0.15 per conflict)
-        If the same number appears in two different contexts with
-        meaningfully different surrounding tokens, flag as consistency
-        issue. Catches contradictory statistics in the same response.
-
-    Returns:
-        {
-            "penalty":              0.25,
-            "hedge_flags":          ["hedge+fabrication: 'research shows' ..."],
-            "numerical_flags":      ["numerical conflict: '1991' appears ..."],
-            "hedge_count":          1,
-            "numerical_conflict_count": 1,
-        }
+    Check 1 — Hedge + fabrication (penalty: 0.10 per instance)
+    Check 2 — Numerical conflict  (penalty: 0.15 per conflict)
+    Total penalty capped at 0.50.
     """
-    penalty       = 0.0
-    hedge_flags   = _detect_hedge_then_fabrication(response)
-    num_flags     = _detect_numerical_conflicts(response)
-
-    # Penalty: 0.10 per hedge+fabrication instance
-    penalty += len(hedge_flags) * 0.10
-
-    # Penalty: 0.15 per numerical conflict
-    penalty += len(num_flags) * 0.15
-
-    # Cap total factual penalty at 0.50 — same reasoning as NLI cap
-    penalty = min(penalty, 0.50)
+    hedge_flags = _detect_hedge_then_fabrication(response)
+    num_flags   = _detect_numerical_conflicts(response)
+    penalty     = min(0.50, len(hedge_flags) * 0.10 + len(num_flags) * 0.15)
 
     return {
-        "penalty":                   round(penalty, 4),
-        "hedge_flags":               hedge_flags,
-        "numerical_flags":           num_flags,
-        "hedge_count":               len(hedge_flags),
-        "numerical_conflict_count":  len(num_flags),
+        "penalty":                  round(penalty, 4),
+        "hedge_flags":              hedge_flags,
+        "numerical_flags":          num_flags,
+        "hedge_count":              len(hedge_flags),
+        "numerical_conflict_count": len(num_flags),
     }
 
 
@@ -793,20 +952,12 @@ def score_factual(response: str) -> dict:
 # ──────────────────────────────────────────────────────────
 
 class HeuristicScorer:
-    """
-    Orchestrates all four scoring dimensions into one weighted score.
-
-    Usage:
-        scorer  = HeuristicScorer()
-        results = scorer.score_all(query, responses)
-        winner  = scorer.pick_winner(results)
-    """
+    """Orchestrates all four scoring dimensions into one weighted score."""
 
     def __init__(self, weights: Optional[dict] = None):
         self.weights = weights or WEIGHTS
         total = sum(self.weights.values())
-        assert abs(total - 1.0) < 0.01, \
-            f"Weights must sum to 1.0, got {total:.4f}"
+        assert abs(total - 1.0) < 0.01, f"Weights must sum to 1.0, got {total:.4f}"
 
     def score_one(
         self,
@@ -815,19 +966,16 @@ class HeuristicScorer:
         task_type: str = "general",
     ) -> ScoredResponse:
         """
-        Score a single ModelResponse against the query.
-
         Layer 1 (RCKS) always runs.
         Layer 2 coding scorer runs only when task_type == 'coding'.
+        Layer 2 factual scorer runs only when task_type == 'factual'.
         """
         if not response.success or not response.content:
             return ScoredResponse(
                 model_id        = response.model_id,
                 content         = response.content or "",
-                relevance       = 0.0,
-                coherence       = 0.0,
-                completeness    = 0.0,
-                consistency     = 0.0,
+                relevance       = 0.0, coherence    = 0.0,
+                completeness    = 0.0, consistency   = 0.0,
                 weighted_score  = 0.0,
                 confidence_tier = "LOW",
                 latency_ms      = response.latency_ms,
@@ -851,7 +999,7 @@ class HeuristicScorer:
             4,
         )
 
-        # ── Layer 2: Coding scorer ────────────────────────
+        # ── Layer 2 ───────────────────────────────────────
         layer2_coding  = None
         layer2_factual = None
 
@@ -859,7 +1007,6 @@ class HeuristicScorer:
             layer2_coding = score_coding(response.content)
             weighted      = round(max(0.0, weighted - layer2_coding["penalty"]), 4)
 
-        # ── Layer 2: Factual scorer ───────────────────────
         elif task_type == "factual":
             layer2_factual = score_factual(response.content)
             weighted       = round(max(0.0, weighted - layer2_factual["penalty"]), 4)
@@ -867,10 +1014,8 @@ class HeuristicScorer:
         return ScoredResponse(
             model_id        = response.model_id,
             content         = response.content,
-            relevance       = r,
-            coherence       = c,
-            completeness    = k,
-            consistency     = s,
+            relevance       = r, coherence    = c,
+            completeness    = k, consistency   = s,
             weighted_score  = weighted,
             confidence_tier = _confidence_tier(weighted),
             latency_ms      = response.latency_ms,
@@ -886,8 +1031,5 @@ class HeuristicScorer:
         responses: list[ModelResponse],
         task_type: str = "general",
     ) -> list[ScoredResponse]:
-        """
-        Score every response. Failed ones get zeroed out.
-        task_type passed through to score_one for Layer 2 routing.
-        """
+        """Score every response. task_type passed through for Layer 2 routing."""
         return [self.score_one(query, r, task_type) for r in responses]

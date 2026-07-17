@@ -20,10 +20,18 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# ── Pre-bake the sentence-transformers model into the image ───────────────
-# Downloads all-MiniLM-L6-v2 weights at BUILD time, not at runtime.
-# Without this, first request would hang for 30-60s while the model downloads.
-RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('all-MiniLM-L6-v2')"
+# ── Pre-bake the sentence-transformers models into the image ──────────────
+# Downloads all-MiniLM-L6-v2 (coherence + relevance) AND
+# cross-encoder/nli-deberta-v3-small (consistency/NLI) at BUILD time,
+# not at runtime. Without this, the first request that hits the S
+# dimension would hang for 30-60s while the NLI model downloads.
+RUN python -c "\
+from sentence_transformers import SentenceTransformer; \
+from sentence_transformers.cross_encoder import CrossEncoder; \
+SentenceTransformer('all-MiniLM-L6-v2'); \
+CrossEncoder('cross-encoder/nli-deberta-v3-small'); \
+print('Models ready') \
+"
 
 # ── Copy source code ──────────────────────────────────────
 COPY adapters.py .
@@ -31,7 +39,15 @@ COPY scorer.py .
 COPY fusion.py .
 COPY task_analyzer.py .
 COPY bayesian.py .
+COPY pipeline_logger.py .
 COPY main.py .
+COPY run.py .
+
+# ── Runtime directories ───────────────────────────────────
+# logs/pipeline.log (Loguru) and outputs/ (--save results) need to exist.
+# Loguru creates parent dirs automatically, but this makes it explicit
+# and avoids relying on that behavior.
+RUN mkdir -p logs outputs
 
 # ── Runtime config ────────────────────────────────────────
 # Port the FastAPI server listens on
