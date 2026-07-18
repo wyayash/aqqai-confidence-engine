@@ -253,7 +253,7 @@ if __name__ == "__main__":
     
     # 1. Point to Task Analyzer
     sys.path.append(os.path.abspath("Evaluation layer"))
-    from task_analyzer import analyze_task
+    from evaluation_layer.task_analyzer import analyze_task
     
     load_dotenv()
     

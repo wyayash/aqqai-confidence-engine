@@ -149,3 +149,8 @@ def process_confidence_request(payload: dict, store: PriorStore) -> dict:
         "weights": {m: round(w, 4) for m, w in final_weights.items()},
         "updated_priors": {m: round(store.get(m, task_type), 4) for m in models}
     }
+    
+# Create a global store instance for the application to use
+store = PriorStore()
+
+print(f"[Confidence Engine] Priors loaded from {store.filepath} with {len(store.priors)} models.")

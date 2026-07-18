@@ -1,0 +1,92 @@
+2026-07-02 14:35:29 | INFO     | pipeline_logger | Logger initialised — writing to logs/pipeline.log
+2026-07-02 14:35:41 | INFO     | pipeline_logger | Logger initialised — writing to logs/pipeline.log
+2026-07-02 14:35:41 | INFO     | main | AQQAI v4.0.0 started — Bayesian store ready (5 models loaded)
+2026-07-02 14:35:41 | INFO     | main | Registered models: ['gemini-3.1-flash-lite', 'cerebras-gpt-oss', 'mistral-small']
+2026-07-02 14:39:23 | INFO     | main | [req_1b54314d02b5] Incoming query | user=anonymous | query='Write a basic 2 Sum problem in C++ ,brute force approach'
+2026-07-02 14:39:23 | INFO     | main | [req_1b54314d02b5] Task classified | task_type=coding | query='Write a basic 2 Sum problem in C++ ,brute force approach'
+2026-07-02 14:39:23 | INFO     | main | [req_1b54314d02b5] Calling 3 models in parallel
+2026-07-02 14:39:24 | INFO     | main | [req_1b54314d02b5] Model OK      | model=cerebras-gpt-oss | latency=1152ms
+2026-07-02 14:39:26 | INFO     | main | [req_1b54314d02b5] Model OK      | model=mistral-small | latency=2960ms
+2026-07-02 14:39:27 | INFO     | main | [req_1b54314d02b5] Model OK      | model=gemini-3.1-flash-lite | latency=3491ms
+2026-07-02 14:39:29 | DEBUG    | main | [req_1b54314d02b5] RCKS | model=cerebras-gpt-oss | R=0.237 C=0.498 K=1.000 S=1.000 | score=0.6458 | tier=MEDIUM
+2026-07-02 14:39:29 | DEBUG    | main | [req_1b54314d02b5] RCKS | model=mistral-small | R=0.452 C=0.506 K=1.000 S=0.800 | score=0.6821 | tier=MEDIUM
+2026-07-02 14:39:29 | DEBUG    | main | [req_1b54314d02b5] RCKS | model=gemini-3.1-flash-lite | R=0.322 C=0.474 K=1.000 S=1.000 | score=0.6652 | tier=MEDIUM
+2026-07-02 14:39:29 | DEBUG    | main | [req_1b54314d02b5] Fusion weights | {'cerebras-gpt-oss': 0.329472, 'mistral-small': 0.332171, 'gemini-3.1-flash-lite': 0.338357}
+2026-07-02 14:39:35 | INFO     | main | [req_1b54314d02b5] Pipeline complete | task=coding | response_len=2211 chars | total=11710.51ms
+2026-07-02 14:42:10 | INFO     | main | [req_91f910f0dd07] Incoming query | user=anonymous | query="How is the today's Weather in Delhi? answer in 1 or 2 lines"
+2026-07-02 14:42:10 | INFO     | main | [req_91f910f0dd07] Task classified | task_type=general | query="How is the today's Weather in Delhi? answer in 1 or 2 lines"
+2026-07-02 14:42:10 | INFO     | main | [req_91f910f0dd07] Calling 3 models in parallel
+2026-07-02 14:42:11 | INFO     | main | [req_91f910f0dd07] Model OK      | model=mistral-small | latency=763ms
+2026-07-02 14:42:11 | INFO     | main | [req_91f910f0dd07] Model OK      | model=cerebras-gpt-oss | latency=819ms
+2026-07-02 14:42:12 | INFO     | main | [req_91f910f0dd07] Model OK      | model=gemini-3.1-flash-lite | latency=2197ms
+2026-07-02 14:42:13 | DEBUG    | main | [req_91f910f0dd07] RCKS | model=mistral-small | R=0.251 C=0.301 K=0.436 S=1.000 | score=0.4317 | tier=LOW
+2026-07-02 14:42:13 | DEBUG    | main | [req_91f910f0dd07] RCKS | model=cerebras-gpt-oss | R=0.223 C=0.750 K=0.448 S=1.000 | score=0.5386 | tier=LOW
+2026-07-02 14:42:13 | DEBUG    | main | [req_91f910f0dd07] RCKS | model=gemini-3.1-flash-lite | R=0.292 C=0.377 K=0.455 S=1.000 | score=0.4683 | tier=LOW
+2026-07-02 14:42:13 | DEBUG    | main | [req_91f910f0dd07] Fusion weights | {'mistral-small': 0.329796, 'cerebras-gpt-oss': 0.337701, 'gemini-3.1-flash-lite': 0.332503}
+2026-07-02 14:42:13 | INFO     | main | [req_91f910f0dd07] Pipeline complete | task=general | response_len=365 chars | total=2332.19ms
+2026-07-02 14:50:02 | INFO     | main | Shutdown — Bayesian priors saved to priors.json
+2026-07-02 14:50:16 | INFO     | pipeline_logger | Logger initialised — writing to logs/pipeline.log
+2026-07-02 14:50:16 | INFO     | main | AQQAI v4.0.0 started — Bayesian store ready (5 models loaded)
+2026-07-02 14:50:16 | INFO     | main | Registered models: ['gemini-3.1-flash-lite', 'cerebras-gpt-oss', 'mistral-small']
+2026-07-02 14:50:16 | INFO     | main | Shutdown — Bayesian priors saved to priors.json
+2026-07-02 14:53:58 | INFO     | pipeline_logger | Logger initialised — writing to logs/pipeline.log
+2026-07-02 14:54:09 | INFO     | pipeline_logger | Logger initialised — writing to logs/pipeline.log
+2026-07-02 14:54:09 | INFO     | main | AQQAI v4.0.0 started — Bayesian store ready (5 models loaded)
+2026-07-02 14:54:09 | INFO     | main | Registered models: ['gemini-3.1-flash-lite', 'cerebras-gpt-oss', 'mistral-small']
+2026-07-02 14:54:47 | INFO     | pipeline_logger | Logger initialised — writing to logs/pipeline.log
+2026-07-02 14:54:47 | INFO     | __main__ | [req_9928375023] Pipeline started | query='Write a python function to reverse a String'
+2026-07-02 14:54:47 | INFO     | __main__ | [req_9928375023] Task classified | task_type=coding
+2026-07-02 14:54:47 | INFO     | __main__ | [req_9928375023] Calling 3 models in parallel
+2026-07-02 14:54:48 | INFO     | __main__ | [req_9928375023] Model OK     | model=cerebras-gpt-oss | latency=1128ms
+2026-07-02 14:54:49 | INFO     | __main__ | [req_9928375023] Model OK     | model=mistral-small | latency=2224ms
+2026-07-02 14:54:50 | INFO     | __main__ | [req_9928375023] Model OK     | model=gemini-3.1-flash-lite | latency=3113ms
+2026-07-02 14:54:50 | DEBUG    | __main__ | [req_9928375023] RCKS | model=cerebras-gpt-oss | R=0.485 C=0.514 K=1.000 S=1.000 | score=0.7242 | tier=MEDIUM
+2026-07-02 14:54:50 | DEBUG    | __main__ | [req_9928375023] RCKS | model=mistral-small | R=0.506 C=0.586 K=1.000 S=1.000 | score=0.7481 | tier=MEDIUM
+2026-07-02 14:54:50 | DEBUG    | __main__ | [req_9928375023] RCKS | model=gemini-3.1-flash-lite | R=0.451 C=0.492 K=1.000 S=1.000 | score=0.7083 | tier=MEDIUM
+2026-07-02 14:54:50 | DEBUG    | __main__ | [req_9928375023] Bayesian | model=cerebras-gpt-oss | old=0.515 new=0.478 delta=-0.037
+2026-07-02 14:54:50 | DEBUG    | __main__ | [req_9928375023] Bayesian | model=mistral-small | old=0.519 new=0.484 delta=-0.035
+2026-07-02 14:54:50 | DEBUG    | __main__ | [req_9928375023] Bayesian | model=gemini-3.1-flash-lite | old=0.529 new=0.489 delta=-0.040
+2026-07-02 14:54:50 | DEBUG    | __main__ | [req_9928375023] Fusion weights | {'cerebras-gpt-oss': 0.329312, 'mistral-small': 0.333516, 'gemini-3.1-flash-lite': 0.337173}
+2026-07-02 14:54:56 | INFO     | __main__ | [req_9928375023] Pipeline complete | task=coding | response_len=1948 chars | fusion_weights={'cerebras-gpt-oss': 0.329312, 'mistral-small': 0.333516, 'gemini-3.1-flash-lite': 0.337173} | total=9226.25ms
+2026-07-02 15:17:14 | INFO     | main | Shutdown — Bayesian priors saved to priors.json
+2026-07-02 15:19:32 | INFO     | pipeline_logger | Logger initialised — writing to logs/pipeline.log
+2026-07-02 15:19:32 | INFO     | main | AQQAI v4.0.0 started — Bayesian store ready (5 models loaded)
+2026-07-02 15:19:32 | INFO     | main | Registered models: ['gemini-3.1-flash-lite', 'cerebras-gpt-oss', 'mistral-small']
+2026-07-02 15:19:32 | INFO     | main | Shutdown — Bayesian priors saved to priors.json
+2026-07-02 15:19:51 | INFO     | pipeline_logger | Logger initialised — writing to logs/pipeline.log
+2026-07-02 15:19:52 | INFO     | main | AQQAI v4.0.0 started — Bayesian store ready (5 models loaded)
+2026-07-02 15:19:52 | INFO     | main | Registered models: ['gemini-3.1-flash-lite', 'cerebras-gpt-oss', 'mistral-small']
+2026-07-02 15:29:07 | INFO     | main | Shutdown — Bayesian priors saved to priors.json
+2026-07-02 15:29:23 | INFO     | pipeline_logger | Logger initialised — writing to logs/pipeline.log
+2026-07-02 15:29:23 | INFO     | main | AQQAI v4.0.0 started — Bayesian store ready (5 models loaded)
+2026-07-02 15:29:23 | INFO     | main | Registered models: ['gemini-3.1-flash-lite', 'cerebras-gpt-oss', 'mistral-small']
+2026-07-02 15:29:48 | INFO     | pipeline_logger | Logger initialised — writing to logs/pipeline.log
+2026-07-02 15:29:48 | INFO     | __main__ | [req_2a42fd610d] Pipeline started | query='What causes inflation?'
+2026-07-02 15:29:48 | INFO     | __main__ | [req_2a42fd610d] Task classified | task_type=general
+2026-07-02 15:29:48 | INFO     | __main__ | [req_2a42fd610d] Calling 3 models in parallel
+2026-07-02 15:29:49 | INFO     | __main__ | [req_2a42fd610d] Model OK     | model=cerebras-gpt-oss | latency=1199ms
+2026-07-02 15:29:52 | INFO     | __main__ | [req_2a42fd610d] Model OK     | model=mistral-small | latency=4481ms
+2026-07-02 15:30:10 | INFO     | __main__ | [req_2a42fd610d] Model OK     | model=gemini-3.1-flash-lite | latency=21862ms
+2026-07-02 15:30:11 | DEBUG    | __main__ | [req_2a42fd610d] RCKS | model=cerebras-gpt-oss | R=0.256 C=0.428 K=1.000 S=0.920 | score=0.6218 | tier=MEDIUM
+2026-07-02 15:30:11 | DEBUG    | __main__ | [req_2a42fd610d] RCKS | model=mistral-small | R=0.581 C=0.470 K=1.000 S=0.840 | score=0.7178 | tier=MEDIUM
+2026-07-02 15:30:11 | DEBUG    | __main__ | [req_2a42fd610d] RCKS | model=gemini-3.1-flash-lite | R=0.579 C=0.523 K=1.000 S=0.720 | score=0.7125 | tier=MEDIUM
+2026-07-02 15:30:11 | DEBUG    | __main__ | [req_2a42fd610d] Bayesian | model=cerebras-gpt-oss | old=0.635 new=0.569 delta=-0.066
+2026-07-02 15:30:11 | DEBUG    | __main__ | [req_2a42fd610d] Bayesian | model=mistral-small | old=0.620 new=0.565 delta=-0.055
+2026-07-02 15:30:11 | DEBUG    | __main__ | [req_2a42fd610d] Bayesian | model=gemini-3.1-flash-lite | old=0.625 new=0.569 delta=-0.056
+2026-07-02 15:30:11 | DEBUG    | __main__ | [req_2a42fd610d] Fusion weights | {'cerebras-gpt-oss': 0.334117, 'mistral-small': 0.331732, 'gemini-3.1-flash-lite': 0.334151}
+2026-07-02 15:30:16 | INFO     | __main__ | [req_2a42fd610d] Pipeline complete | task=general | response_len=2574 chars | fusion_weights={'cerebras-gpt-oss': 0.334117, 'mistral-small': 0.331732, 'gemini-3.1-flash-lite': 0.334151} | total=28399.15ms
+2026-07-02 15:30:16 | INFO     | __main__ | Result saved | file=outputs/result_req_2a42fd610d.json
+2026-07-17 16:48:05 | INFO     | pipeline_logger | Logger initialised — writing to logs/pipeline.log
+2026-07-17 16:48:39 | INFO     | pipeline_logger | Logger initialised — writing to logs/pipeline.log
+2026-07-17 16:53:33 | INFO     | pipeline_logger | Logger initialised — writing to logs/pipeline.log
+2026-07-17 16:53:37 | INFO     | main | AQQAI v4.0.0 started — Bayesian store ready (5 models loaded)
+2026-07-17 16:53:37 | INFO     | main | Registered models: ['gemini-3.1-flash-lite', 'cerebras-gpt-oss', 'mistral-small']
+2026-07-17 16:54:56 | INFO     | main | [req_057b5e68195b] Incoming query | user=anonymous | query='What is a RAG?'
+2026-07-17 16:54:56 | INFO     | main | [req_057b5e68195b] Task classified | task_type=factual | query='What is a RAG?'
+2026-07-17 16:54:56 | INFO     | main | [req_057b5e68195b] Calling 3 models in parallel
+2026-07-17 16:54:57 | INFO     | main | [req_057b5e68195b] Model OK      | model=cerebras-gpt-oss | latency=943ms
+2026-07-17 16:55:00 | INFO     | main | [req_057b5e68195b] Model OK      | model=gemini-3.1-flash-lite | latency=3575ms
+2026-07-17 16:55:00 | INFO     | main | [req_057b5e68195b] Model OK      | model=mistral-small | latency=4340ms
+2026-07-17 16:55:09 | DEBUG    | main | [req_057b5e68195b] RCKS | model=cerebras-gpt-oss | R=0.609 C=0.303 K=1.000 S=0.400 | score=0.6186 | tier=MEDIUM
+2026-07-17 16:55:09 | DEBUG    | main | [req_057b5e68195b] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.262 K=1.000 S=0.400 | score=0.4256 | tier=LOW
+2026-07-17 16:55:09 | DEBUG    | main | [req_057b5e68195b] RCKS | model=mistral-small | R=1.000 C=0.860 K=1.000 S=0.600 | score=0.7551 | tier=MEDIUM

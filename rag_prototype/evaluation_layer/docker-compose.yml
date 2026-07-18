@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  aqqai:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    # Name the running container so logs and exec commands are easy
+    container_name: aqqai_api
+
+    # Load API keys from .env — keys never baked into the image
+    env_file:
+      - .env
+
+    ports:
+      # localhost:8000 → container:8000
+      - "8000:8000"
+
+    volumes:
+      # Persist outputs/ and priors.json across container restarts.
+      # Without this, Bayesian priors reset every time you restart.
+      - ./outputs:/app/outputs
+      - ./priors.json:/app/priors.json
+
+    # Restart automatically if the container crashes (not on manual stop)
+    restart: unless-stopped
+
+    # Health check — hits /health every 30s.
+    # Docker marks container unhealthy if 3 checks fail in a row.
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s   # give uvicorn + model load time to finish before first check
