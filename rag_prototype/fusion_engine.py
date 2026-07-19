@@ -41,11 +41,10 @@ FORMAT_KEYWORDS = [
     'haiku', 'poem', 'limerick', 
 ]
 
-def has_format_constraint(query: str) -> bool:
+def has_format_constraint(normalized_query: str) -> bool:
     """Returns True if the query contains a format constraint."""
-    query_lower = query.lower()
     for kw in FORMAT_KEYWORDS:
-        if re.search(r'\b' + kw + r'\b', query_lower):
+        if re.search(r'\b' + kw + r'\b', normalized_query):
             return True
     return False
 
@@ -54,16 +53,11 @@ WORD_NUMBERS = {
     "six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10
 }
 
-def check_compliance(query: str, text: str) -> bool:
+def check_compliance(normalized_query: str, text: str) -> bool:
     text = text.strip()
-    query_lower = query.lower()
-
-    # Normalize word-form numbers to digits 
-    for word, digit in WORD_NUMBERS.items():
-        query_lower = re.sub(rf'\b{word}\b', str(digit), query_lower)
 
     # 1. Check word count with ±10% tolerance
-    word_match = re.search(r'(\d+)\s*word', query_lower)
+    word_match = re.search(r'(\d+)\s*word', normalized_query)
     if word_match:
         required_words = int(word_match.group(1))
         actual_words = len(text.split())
@@ -71,21 +65,21 @@ def check_compliance(query: str, text: str) -> bool:
         return abs(actual_words - required_words) <= tolerance
 
     # 2. Check exact sentence count
-    sentence_match = re.search(r'(\d+)\s*sentence', query_lower)
+    sentence_match = re.search(r'(\d+)\s*sentence', normalized_query)
     if sentence_match:
         required_sentences = int(sentence_match.group(1))
         actual_sentences = len([s for s in re.split(r'(?<=[.!?])\s+|\n+', text) if s.strip()])
         return actual_sentences == required_sentences
 
-    # 3. Check exact line or bullet count 
-    line_match = re.search(r'(\d+)[\s-]*(?:line|bullet)', query_lower)
+    # 3. Check exact line or bullet count (handles spaces or hyphens like "4-line")
+    line_match = re.search(r'(\d+)[\s-]*(?:line|bullet)', normalized_query)
     if line_match:
         required_lines = int(line_match.group(1))
         actual_lines = len([line for line in text.split('\n') if line.strip()])
         return actual_lines == required_lines
 
-    # 4. Check Haiku constraint
-    if "haiku" in query_lower:
+    # 4. Check Haiku constraint (must be exactly 3 lines)
+    if "haiku" in normalized_query:
         actual_lines = len([line for line in text.split('\n') if line.strip()])
         return actual_lines == 3
 
@@ -208,15 +202,21 @@ def blend_responses(scored_responses: dict, weights: dict) -> str:
 def fuse_responses(scored_responses: dict, weights: dict, query: str, task_type: str = "general") -> str:
     """Master router: Checks constraints, handles code, then blends if safe."""
     
-    #NEW: Filter out API errors before doing anything
+    # --- NEW: Filter out API errors before doing anything ---
     valid_responses = {m: text for m, text in scored_responses.items() if not text.startswith("Error:")}
     
     if not valid_responses:
         return "Error: All APIs failed to return a valid response."
+
+    # --- NEW: Normalize query ONCE here ---
+    # Log: We accept that \n+ split in extract_sentences flattens paragraph structure for v1
+    normalized_query = query.lower()
+    for word, digit in WORD_NUMBERS.items():
+        normalized_query = re.sub(rf'\b{word}\b', str(digit), normalized_query)
         
-    # 1. Format Constraints
-    if has_format_constraint(query):
-        return pick_format_compliant_response(valid_responses, weights, query)
+    # 1. Format Constraints (Pass the normalized query!)
+    if has_format_constraint(normalized_query):
+        return pick_format_compliant_response(valid_responses, weights, normalized_query)
         
     # 2. Code Block Handling
     code_models = [m for m, text in valid_responses.items() if task_type == 'coding' or contains_code_block(text)]
