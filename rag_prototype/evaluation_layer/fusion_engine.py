@@ -13,6 +13,14 @@ embedder = SentenceTransformer("all-MiniLM-L6-v2")
 print("[System] Loading NLI model for contradiction detection...")
 nli_model = CrossEncoder('cross-encoder/nli-deberta-v3-small')
 
+# ──────────────────────────────────────────────────────────
+# FILLER FILTERING (from Jeet's fusion.py — merged in per Vineet's
+# consolidation plan). Skips structural boilerplate that isn't actual
+# content — "Certainly!", markdown headers, bullet markers, "In
+# summary" — so the fused answer doesn't accumulate filler sentences
+# from every model that used one.
+# ──────────────────────────────────────────────────────────
+
 _FILLER_PATTERNS = [
     r"^(certainly|sure|of course|absolutely|great question)[!,.]",
     r"^(here'?s?|below is|the following|in this|this is)",
@@ -125,7 +133,7 @@ def extract_sentences(text: str) -> list[str]:
     filler ("Certainly!", markdown headers, bullets, "In summary") —
     these aren't real content and shouldn't compete for a fusion slot.
     """
-    parts = re.split(r'(?<=[.!?])\s+|\n+', text.strip())
+    parts = re.split(r'(?<=[.!?]) +', text.strip())
     sentences = []
     for p in parts:
         p = p.strip()
@@ -168,7 +176,8 @@ def blend_responses(scored_responses: dict, weights: dict) -> str:
         # LATENCY OPTIMIZATION
         candidate_embs = embedder.encode(candidate_sentences)
 
-        additions = 0 
+        additions = 0   # caps this model to MAX_ADDITIONS_PER_MODEL, so one
+                         # verbose model can't dominate the fused answer
 
         for idx, sentence in enumerate(candidate_sentences):
             if additions >= MAX_ADDITIONS_PER_MODEL:
@@ -254,7 +263,7 @@ if __name__ == "__main__":
     
     # 1. Point to Task Analyzer
     sys.path.append(os.path.abspath("Evaluation layer"))
-    from task_analyzer import analyze_task
+    from evaluation_layer.task_analyzer import analyze_task
     
     load_dotenv()
     
