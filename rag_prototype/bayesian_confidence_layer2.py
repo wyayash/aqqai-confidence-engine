@@ -52,9 +52,26 @@ class PriorStore:
         if model not in self.priors:
             self.priors[model] = {}
         
-        if task_type not in self.priors[model] or isinstance(self.priors[model].get(task_type), (float, int)):
+        needs_init = (
+            task_type not in self.priors[model]
+            or isinstance(self.priors[model].get(task_type), (float, int))
+            or "update_history" not in self.priors[model].get(task_type, {})
+        )
+        if needs_init:
+            existing = self.priors[model].get(task_type, {})
+            # Preserve the actual prior value if it exists in ANY known
+            # shape (bare float, or a dict under "prior" or the older
+            # "history" key name) — only the history list schema gets
+            # reset, never the trust score itself.
+            if isinstance(existing, (float, int)):
+                prior_value = float(existing)
+            elif isinstance(existing, dict) and "prior" in existing:
+                prior_value = float(existing["prior"])
+            else:
+                prior_value = DEFAULT_PRIOR
+
             self.priors[model][task_type] = {
-                "prior": float(self.priors[model].get(task_type, DEFAULT_PRIOR)),
+                "prior": prior_value,
                 "update_history": []
             }
             
@@ -149,3 +166,8 @@ def process_confidence_request(payload: dict, store: PriorStore) -> dict:
         "weights": {m: round(w, 4) for m, w in final_weights.items()},
         "updated_priors": {m: round(store.get(m, task_type), 4) for m in models}
     }
+    
+# Create a global store instance for the application to use
+store = PriorStore()
+
+print(f"[Confidence Engine] Priors loaded from {store.filepath} with {len(store.priors)} models.")
