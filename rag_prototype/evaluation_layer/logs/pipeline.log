@@ -121,3 +121,13 @@
 2026-07-19 23:26:54 | INFO     | main | AQQAI v4.0.0 started — Bayesian store ready (5 models loaded)
 2026-07-19 23:26:54 | INFO     | main | Registered models: ['gemini-3.1-flash-lite', 'cerebras-gpt-oss', 'mistral-small']
 2026-07-19 23:27:16 | INFO     | main | Shutdown — Bayesian priors saved to priors.json
+2026-07-23 14:31:55 | INFO     | pipeline_logger | Logger initialised — writing to logs/pipeline.log
+2026-07-23 14:32:01 | INFO     | __main__ | [req_6078dcfbc5] Pipeline started | query='Explain vector databases in simple terms'
+2026-07-23 14:32:01 | INFO     | __main__ | [req_6078dcfbc5] Task classified | task_type=general
+2026-07-23 14:32:01 | INFO     | __main__ | [req_6078dcfbc5] Calling 3 models in parallel
+2026-07-23 14:32:01 | WARNING  | __main__ | [req_6078dcfbc5] Model FAILED | model=cerebras-gpt-oss | error=No API key set for cerebras-gpt-oss — add it to your .env file.
+2026-07-23 14:32:03 | INFO     | __main__ | [req_6078dcfbc5] Model OK     | model=mistral-small | latency=2334ms
+2026-07-23 14:32:04 | INFO     | __main__ | [req_6078dcfbc5] Model OK     | model=gemini-3.1-flash-lite | latency=3579ms
+2026-07-23 14:32:21 | DEBUG    | __main__ | [req_6078dcfbc5] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-23 14:32:21 | DEBUG    | __main__ | [req_6078dcfbc5] RCKS | model=mistral-small | R=0.990 C=0.941 K=1.000 S=1.000 | score=0.9821 | tier=HIGH
+2026-07-23 14:32:21 | DEBUG    | __main__ | [req_6078dcfbc5] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.922 K=1.000 S=0.400 | score=0.8904 | tier=HIGH
