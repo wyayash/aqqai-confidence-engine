@@ -90,3 +90,34 @@
 2026-07-17 16:55:09 | DEBUG    | main | [req_057b5e68195b] RCKS | model=cerebras-gpt-oss | R=0.609 C=0.303 K=1.000 S=0.400 | score=0.6186 | tier=MEDIUM
 2026-07-17 16:55:09 | DEBUG    | main | [req_057b5e68195b] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.262 K=1.000 S=0.400 | score=0.4256 | tier=LOW
 2026-07-17 16:55:09 | DEBUG    | main | [req_057b5e68195b] RCKS | model=mistral-small | R=1.000 C=0.860 K=1.000 S=0.600 | score=0.7551 | tier=MEDIUM
+2026-07-18 14:56:28 | INFO     | pipeline_logger | Logger initialised — writing to logs/pipeline.log
+2026-07-18 14:56:34 | INFO     | main | AQQAI v4.0.0 started — Bayesian store ready (5 models loaded)
+2026-07-18 14:56:34 | INFO     | main | Registered models: ['gemini-3.1-flash-lite', 'cerebras-gpt-oss', 'mistral-small']
+2026-07-18 14:59:46 | INFO     | main | [req_f04a17bb7262] Incoming query | user=anonymous | query='What is a RAG system'
+2026-07-18 14:59:46 | INFO     | main | [req_f04a17bb7262] Task classified | task_type=factual | query='What is a RAG system'
+2026-07-18 14:59:46 | INFO     | main | [req_f04a17bb7262] Calling 3 models in parallel
+2026-07-18 14:59:47 | INFO     | main | [req_f04a17bb7262] Model OK      | model=cerebras-gpt-oss | latency=965ms
+2026-07-18 14:59:50 | INFO     | main | [req_f04a17bb7262] Model OK      | model=gemini-3.1-flash-lite | latency=3542ms
+2026-07-18 14:59:53 | INFO     | main | [req_f04a17bb7262] Model OK      | model=mistral-small | latency=6751ms
+2026-07-18 15:00:03 | DEBUG    | main | [req_f04a17bb7262] RCKS | model=cerebras-gpt-oss | R=0.677 C=0.850 K=1.000 S=0.400 | score=0.7757 | tier=MEDIUM
+2026-07-18 15:00:03 | DEBUG    | main | [req_f04a17bb7262] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.850 K=1.000 S=0.400 | score=0.7225 | tier=MEDIUM
+2026-07-18 15:00:03 | DEBUG    | main | [req_f04a17bb7262] RCKS | model=mistral-small | R=0.880 C=0.850 K=1.000 S=1.000 | score=0.9264 | tier=HIGH
+2026-07-19 23:14:47 | INFO     | pipeline_logger | Logger initialised — writing to logs/pipeline.log
+2026-07-19 23:14:53 | INFO     | main | AQQAI v4.0.0 started — Bayesian store ready (5 models loaded)
+2026-07-19 23:14:53 | INFO     | main | Registered models: ['gemini-3.1-flash-lite', 'cerebras-gpt-oss', 'mistral-small']
+2026-07-19 23:15:42 | INFO     | main | [req_dfc53e973973] Incoming query | user=anonymous | query='What is a RAG?'
+2026-07-19 23:15:42 | INFO     | main | [req_dfc53e973973] Task classified | task_type=factual | query='What is a RAG?'
+2026-07-19 23:15:42 | INFO     | main | [req_dfc53e973973] Calling 3 models in parallel
+2026-07-19 23:15:44 | INFO     | main | [req_dfc53e973973] Model OK      | model=cerebras-gpt-oss | latency=1935ms
+2026-07-19 23:15:46 | INFO     | main | [req_dfc53e973973] Model OK      | model=gemini-3.1-flash-lite | latency=3372ms
+2026-07-19 23:15:47 | INFO     | main | [req_dfc53e973973] Model OK      | model=mistral-small | latency=4880ms
+2026-07-19 23:15:57 | DEBUG    | main | [req_dfc53e973973] RCKS | model=cerebras-gpt-oss | R=1.000 C=0.345 K=1.000 S=1.000 | score=0.8363 | tier=MEDIUM
+2026-07-19 23:15:57 | DEBUG    | main | [req_dfc53e973973] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.254 K=1.000 S=0.600 | score=0.4535 | tier=LOW
+2026-07-19 23:15:57 | DEBUG    | main | [req_dfc53e973973] RCKS | model=mistral-small | R=1.000 C=0.421 K=1.000 S=0.400 | score=0.7652 | tier=MEDIUM
+2026-07-19 23:15:57 | DEBUG    | main | [req_dfc53e973973] Fusion weights | {'cerebras-gpt-oss': 0.1632, 'gemini-3.1-flash-lite': 0.456, 'mistral-small': 0.3808} | agreement=0.6701
+2026-07-19 23:16:00 | INFO     | main | [req_dfc53e973973] Pipeline complete | task=factual | response_len=5491 chars | total=17965.07ms
+2026-07-19 23:25:56 | INFO     | main | Shutdown — Bayesian priors saved to priors.json
+2026-07-19 23:26:48 | INFO     | pipeline_logger | Logger initialised — writing to logs/pipeline.log
+2026-07-19 23:26:54 | INFO     | main | AQQAI v4.0.0 started — Bayesian store ready (5 models loaded)
+2026-07-19 23:26:54 | INFO     | main | Registered models: ['gemini-3.1-flash-lite', 'cerebras-gpt-oss', 'mistral-small']
+2026-07-19 23:27:16 | INFO     | main | Shutdown — Bayesian priors saved to priors.json

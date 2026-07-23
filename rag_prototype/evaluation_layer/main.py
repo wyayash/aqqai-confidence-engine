@@ -42,7 +42,7 @@ from scorer import HeuristicScorer, ModelResponse, ScoredResponse
 from fusion_engine import fuse_responses
 from task_analyzer import analyze_task
 from pipeline_logger import log
-import bayesian_confidence_layer2
+import bayesian_confidence_layer2 as bayesian
 
 # ──────────────────────────────────────────────────────────
 # APP SETUP
@@ -73,15 +73,14 @@ store: dict[str, dict] = {}
 
 @app.on_event("startup")
 def startup_event():
-    # Get all model names from the priors dictionary
-    model_count = len(bayesian_confidence_layer2.store.priors.keys())
+    model_count = len(bayesian.store.priors)
     log.info(f"AQQAI v4.0.0 started — Bayesian store ready ({model_count} models loaded)")
     log.info(f"Registered models: {[a.model_id for a in ALL_ADAPTERS]}")
 
 
 @app.on_event("shutdown")
 def shutdown_event():
-    bayesian_confidence_layer2.store.save()
+    bayesian.store.save()
     log.info("Shutdown — Bayesian priors saved to priors.json")
 
 
@@ -102,6 +101,21 @@ class QueryResponse(BaseModel):
     fusion_weights:  dict
     model_responses: list[dict]
     total_time_ms:   float
+
+
+class ScoreRequest(BaseModel):
+    query:      str
+    response:   str
+    task_type:  Optional[str] = None   # auto-classified via analyze_task() if omitted
+    model_id:   Optional[str] = "manual_test_case"
+
+
+class ScoreResponse(BaseModel):
+    request_id: str
+    query:      str
+    response:   str
+    task_type:  str
+    scores:     dict
 
 
 # ──────────────────────────────────────────────────────────
@@ -170,27 +184,50 @@ def orchestrate(query: str, request_id: str) -> tuple[list[ScoredResponse], str,
         for s in scored
     }
 
-    bayes_result = bayesian_confidence_layer2.process_confidence_request(
-        store   = bayesian_confidence_layer2.store,
-        payload = {
+    # Yashveer's process_confidence_request() needs the raw response TEXT
+    # per model (not just the eval scores) to compute inter-model
+    # agreement — build that from the successful raw responses.
+    response_texts = {
+        r.model_id: r.content
+        for r in raw_responses
+        if r.success and r.content.strip()
+    }
+
+    # NOTE: arg order is (payload, store) here — Yashveer's signature,
+    # not (store, payload, verbose) like the old bayesian.py had.
+    bayes_result = bayesian.process_confidence_request(
+        payload={
             "task_type":   task_type,
             "eval_scores": eval_scores,
+            "responses":   response_texts,
             "query_id":    request_id,
         },
-        verbose = False
+        store=bayesian.store,
     )
 
     fusion_weights = bayes_result["weights"]
-    log.debug(f"[{request_id}] Fusion weights | {fusion_weights}")
+    log.debug(
+        f"[{request_id}] Fusion weights | {fusion_weights} | "
+        f"agreement={bayes_result.get('agreement_score')}"
+    )
 
     # ── Step 6: Fuse ──────────────────────────────────────
-    final_response = fuse_responses(query, scored, fusion_weights)
+    # fusion_engine.fuse_responses() takes a dict of {model_id: text},
+    # not a list of ScoredResponse objects — and needs query + task_type
+    # for its format-constraint / code-block routing.
+    fusable_responses = {
+        s.model_id: s.content
+        for s in scored
+        if s.success and s.content.strip()
+    }
+
+    final_response = fuse_responses(fusable_responses, fusion_weights, query, task_type)
 
     if not final_response:
         log.error(f"[{request_id}] Fusion produced empty response — all models failed")
         raise ValueError("All model responses failed — cannot produce fused response.")
 
-    bayesian_confidence_layer2.store.save()
+    bayesian.store.save()
 
     total_ms = round((time.time() - start) * 1000, 2)
 
@@ -244,6 +281,65 @@ def submit_query(body: QueryRequest):
     )
 
 
+@app.post("/api/v1/score", response_model=ScoreResponse)
+def score_manual_response(body: ScoreRequest):
+    """
+    Scores a response YOU provide directly — no model calls, no fusion.
+
+    This exists specifically to unblock testing that /api/v1/query can't do:
+    /api/v1/query always calls the 3 live models and fuses their output, so
+    there's no way to feed it a hand-constructed test case (e.g. Tanvi's
+    "CODE-3: prose response with zero code block, expect severe penalty")
+    and see how the scorer actually grades THAT text — the pipeline just
+    generates its own response and scores that instead.
+
+    Use this for:
+      - Layer 2 test cases (CODE 1-5, FACT 1-5) — feed the exact test
+        response text and task_type, get back the exact RCKS + Layer 2
+        breakdown for that response, nothing else in the loop.
+      - Tanvi's validation spreadsheet — feed each model's actual saved
+        response text instead of re-querying live models (whose outputs
+        change between runs), so her manual scores and Jeet's automated
+        scores are compared against the SAME frozen text every time.
+
+    If task_type isn't provided, it's auto-classified via analyze_task()
+    exactly like the main pipeline does.
+    """
+    request_id = f"score_{uuid.uuid4().hex[:12]}"
+
+    task_type = body.task_type or analyze_task(body.query)
+
+    fake_response = ModelResponse(
+        model_id   = body.model_id,
+        content    = body.response,
+        latency_ms = 0.0,
+        success    = True,
+        error      = None,
+    )
+
+    log.info(
+        f"[{request_id}] Manual score request | task_type={task_type} | "
+        f"model_id={body.model_id} | query={body.query[:80]!r}"
+    )
+
+    scored = scorer.score_all(body.query, [fake_response], task_type)
+
+    if not scored:
+        raise HTTPException(status_code=500, detail="Scorer returned no result.")
+
+    result = scored[0].to_dict_with_content()
+
+    log.debug(f"[{request_id}] Manual score result | {result}")
+
+    return ScoreResponse(
+        request_id = request_id,
+        query      = body.query,
+        response   = body.response,
+        task_type  = task_type,
+        scores     = result,
+    )
+
+
 @app.get("/api/v1/responses/{request_id}")
 def get_responses(request_id: str):
     if request_id not in store:
@@ -285,6 +381,6 @@ def health():
         "fusion":          "bayesian_weighted_additive",
         "task_analyzer":   "keyword_matching_v1",
         "bayesian_engine": "active",
-        "model_priors":    bayesian_confidence_layer2.store.get_all(),
+        "model_priors":    bayesian.store.priors,
         "version":         "4.0.0",
-    }
+    }   

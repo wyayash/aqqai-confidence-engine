@@ -21,8 +21,12 @@ Week 4 additions:
 import ast
 import contextlib
 import io
+import os
 import re
 import string
+import subprocess
+import sys
+import tempfile
 from dataclasses import dataclass
 from typing import Optional
 
@@ -232,8 +236,33 @@ def _confidence_tier(score: float) -> str:
 # DIMENSION 1 — RELEVANCE
 # ──────────────────────────────────────────────────────────
 
-_R_HIGH_THRESHOLD = 0.55   # top-chunk cosine sim at/above this → R = 1.0
-_R_LOW_THRESHOLD  = 0.15   # top-chunk cosine sim at/below this → R = 0.0
+_R_HIGH_THRESHOLD = 0.40   # top-chunk cosine sim at/above this → R = 1.0
+_R_LOW_THRESHOLD  = 0.05   # top-chunk cosine sim at/below this → R = 0.0
+
+# RECALIBRATION (Week 6): the previous thresholds (0.55/0.15) were a
+# best-guess estimate — this sandbox has no Hugging Face access, so the
+# max-chunk fix that introduced those numbers was never actually run
+# against real embedding output before shipping.
+#
+# Tanvi's re-validation exposed the gap directly: reverse-engineering
+# raw cosine from her 13 flagged rows (all manually rated R=1.0, across
+# EVERY task category — reasoning, coding, summary, creative, factual)
+# showed real cosine clustering at 0.20-0.41 for genuinely relevant
+# responses. 0.55 was simply too high a bar — and it wasn't a
+# category-specific gap (e.g. "creative isn't covered"), every category
+# undershot by roughly the same margin. Re-tested these new thresholds
+# against all 13 real flagged rows — every one moved substantially
+# closer to 1.0 (e.g. CR3/Mistral, the specific case Vineet flagged as
+# critical, moved from a derived-raw score of 0.12 to 0.42).
+#
+# Known remaining limitation: creative/analogy content (e.g. CR3) still
+# doesn't reach a full 1.0 even after this recalibration — a genuinely
+# on-topic creative analogy that deliberately avoids literal vocabulary
+# overlap with the query can have real cosine as low as ~0.20, and no
+# single threshold can both reward creative analogies properly AND
+# correctly penalize truly off-topic responses — those need a different
+# signal, not just a different cutoff. Flagging for a task-type-aware
+# scoring path as a follow-up, not solved here.
 
 # TF-IDF cosine runs much lower than embedding cosine for paraphrased text
 # (different vocabulary → near-zero TF-IDF overlap even when semantically
@@ -426,6 +455,37 @@ def score_bullet_coherence(bullet_lines: list[str]) -> float:
     return round(min(1.0, max(0.0, score)), 4)
 
 
+_C_PROSE_HIGH_THRESHOLD = 0.35   # adjacent-sentence cosine at/above this → C = 1.0
+_C_PROSE_LOW_THRESHOLD  = 0.05   # adjacent-sentence cosine at/below this → C = 0.0
+
+# FIX (Week 6): score_prose_coherence() used to return the raw average
+# adjacent-sentence cosine similarity DIRECTLY as the coherence score —
+# no scaling at all (`score = round(avg_sim, 4)`). That conflates two
+# different things: semantic similarity between adjacent sentences, and
+# logical coherence/flow. A genuinely coherent response that moves
+# through distinct sub-points (e.g. definition → example → use case)
+# has LOWER adjacent-sentence similarity than a repetitive one — that's
+# backwards from what C is supposed to reward.
+#
+# Tanvi's re-validation caught this directly: 6 responses she rated
+# coherence=1.0 (clear, logical, no breaks in flow — including one she
+# specifically called "one of the clearest explanations in the whole
+# suite") had raw adjacent-sentence cosine of only 0.36-0.75. Every one
+# of those 6 hits a full 1.0 under this threshold scaling.
+#
+# Known limitation: no negative (genuinely incoherent/rambling) examples
+# were in this validation round, so these thresholds are calibrated
+# only against known-good responses — worth adding disjointed/rambling
+# test cases to the next validation pass to confirm this isn't overly
+# generous on the low end.
+def _scale_prose_coherence(avg_sim: float) -> float:
+    if avg_sim >= _C_PROSE_HIGH_THRESHOLD:
+        return 1.0
+    if avg_sim <= _C_PROSE_LOW_THRESHOLD:
+        return 0.0
+    return (avg_sim - _C_PROSE_LOW_THRESHOLD) / (_C_PROSE_HIGH_THRESHOLD - _C_PROSE_LOW_THRESHOLD)
+
+
 def score_prose_coherence(response: str) -> float:
     """Standard sentence-flow analysis for normal prose responses."""
     sentences = _split_sentences(response)
@@ -440,7 +500,7 @@ def score_prose_coherence(response: str) -> float:
     avg_sim = float(np.mean(similarities))
 
     if _ST_AVAILABLE:
-        score = round(avg_sim, 4)
+        score = _scale_prose_coherence(avg_sim)
     else:
         score = min(1.0, avg_sim * 4.0 + 0.45)
 
@@ -462,7 +522,7 @@ def score_coherence(response: str) -> float:
     Now: detect format first, route accordingly.
       - Code response        → score_code_coherence()   (skip sentence flow)
       - Bullet-majority list → score_bullet_coherence()  (skip sentence flow)
-      - Normal prose             → score_prose_coherence()  (original logic)
+      - Normal prose          → score_prose_coherence()  (original logic)
     """
     if not response.strip():
         return 0.0
@@ -595,9 +655,35 @@ def check_format_constraint(query: str, response: str) -> tuple[float, list[str]
 def score_completeness(query: str, response: str) -> float:
     """
     K — Completeness
-    0.70 × sub-part coverage + 0.30 × length signal,
+    0.65 × sub-part coverage + 0.35 × length signal,
     minus a penalty (up to 0.30) if the query stated a format
     constraint (e.g. "in one sentence") that the response violated.
+
+    ADJUSTMENT (Week 6): Tanvi's re-validation found K systematically
+    overcounting — 3 flagged rows (C1/ChatGPT-worst, C4/DeepSeek-worst,
+    F4/Gemini-worst) all hit K=1.0 when manually rated 0.9. All three
+    share the same shape: correct, every sub-part technically covered,
+    but shallower than the best response for that prompt ("missed edge
+    cases", "less detailed", "no extra context"). The old length_signal
+    saturated to 1.0 too easily (expected_words = sub_parts*40, floor
+    50 — a fairly low bar), so once every sub-part was mentioned, a
+    response barely past that word count got full credit with no room
+    left to reflect "correct but shallow."
+
+    Raised the saturation point (sub_parts*65, floor 80) and shifted
+    weight from coverage (0.70->0.65) toward length (0.30->0.35), so
+    brief-but-technically-complete responses have room to land below
+    1.0 instead of maxing out immediately.
+
+    Known limitation: this is a heuristic adjustment based on the
+    pattern across 3 flagged rows, not exact-calibrated against their
+    actual word counts (the validation sheet doesn't include full
+    response text). K fundamentally can't measure "depth relative to
+    what a thorough answer would cover" without either a reference
+    response to compare against or real word-count data — this
+    narrows the overcounting gap but won't perfectly replicate a
+    human's judgment of thoroughness. Worth re-checking with actual
+    word counts in the next validation pass.
     """
     if not response.strip():
         return 0.0
@@ -611,10 +697,10 @@ def score_completeness(query: str, response: str) -> float:
     )
 
     coverage      = covered / max(len(sub_parts), 1)
-    expected_words = max(len(sub_parts) * 40, 50)
+    expected_words = max(len(sub_parts) * 65, 80)
     length_signal  = min(1.0, len(response.split()) / expected_words)
 
-    base = 0.70 * coverage + 0.30 * length_signal
+    base = 0.65 * coverage + 0.35 * length_signal
 
     constraint_score, _details = check_format_constraint(query, response)
     format_penalty = (1.0 - constraint_score) * 0.30   # up to 0.30 deducted
@@ -654,8 +740,38 @@ def _nli_contradiction_penalty(sentences: list[str]) -> float:
     We apply softmax to get probabilities.
 
     Pairs checked: adjacent sentences + first vs last.
-    Penalty: 0.20 per contradiction pair with confidence > 0.80.
+    Penalty: 0.20 per contradiction pair with confidence > NLI_THRESHOLD.
     Cap: 0.60 total (prevents wiping score on long responses).
+
+    ADJUSTMENT (Week 6) — UNCONFIRMED, flagging honestly: Tanvi's
+    re-validation showed S underscoring on several structurally sound
+    responses (e.g. a "detailed, covers mutability and use cases fully"
+    response scoring S=0.6 vs manual 1.0, with no actual contradiction
+    present). The specific culprit is genuinely unclear without the
+    actual response text — the validation sheet only has category
+    descriptions, not full response bodies, so this can't be diagnosed
+    precisely the way the R/C fixes above were.
+
+    Working hypothesis: the first-vs-last sentence check is the most
+    likely source. A well-structured response that opens with one
+    sub-point and closes with a different-but-related one (e.g. "lists
+    are mutable..." -> "...use tuples for fixed collections") can be
+    topically distant enough that an NLI model returns elevated
+    non-entailment probability even with zero actual contradiction —
+    NLI models are trained on direct entailment/contradiction pairs,
+    not on judging whether a topic shift within one coherent response
+    is contradictory.
+
+    Raised the threshold from 0.80 to 0.90 as a conservative mitigation
+    — a genuine contradiction (e.g. two models reporting different
+    Nobel Prize years for the same award) should trigger very high
+    confidence, comfortably above 0.90, so real contradictions should
+    still be caught. This narrows the window for topic-shift false
+    positives without confirmed proof it's the actual cause.
+
+    NEEDS VERIFICATION: re-check against Tanvi's actual response text
+    for the flagged S rows once available, to confirm this threshold
+    change is the right lever and not just a plausible-sounding guess.
     """
     if len(sentences) < 2:
         return 0.0
@@ -673,7 +789,7 @@ def _nli_contradiction_penalty(sentences: list[str]) -> float:
             return e / e.sum()
 
         penalty       = 0.0
-        NLI_THRESHOLD = 0.80
+        NLI_THRESHOLD = 0.90   # was 0.80 — see docstring for reasoning
         NLI_PENALTY   = 0.20
         MAX_PENALTY   = 0.60
 
@@ -699,7 +815,7 @@ def score_consistency(response: str) -> float:
     PRIMARY (when NLI available):
         NLI check — cross-encoder/nli-deberta-v3-small
         Adjacent + first-vs-last sentence pairs
-        Contradiction confidence > 0.80 → deduct 0.20 per pair
+        Contradiction confidence > 0.90 → deduct 0.20 per pair
         Max NLI penalty capped at 0.60
 
     FALLBACK (when NLI not available):
@@ -770,9 +886,70 @@ def score_consistency(response: str) -> float:
 
 _CODE_BLOCK_RE = re.compile(r"```[\w]*\n?(.*?)```", re.DOTALL)
 
+RUNTIME_CHECK_TIMEOUT = 4.0   # seconds — hard ceiling on how long a runtime check can take
+
 
 def _extract_code_blocks(response: str) -> list[str]:
     return _CODE_BLOCK_RE.findall(response)
+
+
+def _run_code_sandboxed(code: str, timeout: float = RUNTIME_CHECK_TIMEOUT) -> tuple[bool, str]:
+    """
+    Runs LLM-generated code in an ISOLATED SUBPROCESS with a hard timeout.
+
+    SECURITY FIX (Vineet's review, item 4a): the old implementation ran
+    `exec(code, {})` directly in the API process with no timeout at all.
+    A response containing `while True: pass` (or any accidental/malicious
+    infinite loop) would hang the worker thread handling that request
+    forever — and since main.py runs scoring in FastAPI's threadpool,
+    enough stuck requests would exhaust the pool and take down the whole
+    API for every user, not just the one whose response triggered it.
+
+    This runs the code in a separate OS process instead of the API's own
+    process/thread, with `timeout=` on subprocess.run() as a hard kill
+    switch — if the process is still running after `timeout` seconds,
+    Python terminates it and raises TimeoutExpired, which we catch and
+    treat as a normal runtime-check failure (same 0.15 penalty as any
+    other runtime error), not a crash.
+
+    Returns (success, error_message).
+    """
+    tmp_path = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w", suffix=".py", delete=False, encoding="utf-8"
+        ) as f:
+            f.write(code)
+            tmp_path = f.name
+
+        result = subprocess.run(
+            [sys.executable, tmp_path],
+            capture_output=True,
+            text=True,
+            timeout=timeout,
+        )
+
+        if result.returncode != 0:
+            # keep the error message short — full tracebacks aren't
+            # useful in a score breakdown, just the failure reason
+            err = result.stderr.strip().splitlines()
+            err_msg = err[-1] if err else f"exited with code {result.returncode}"
+            return False, err_msg[:300]
+
+        return True, ""
+
+    except subprocess.TimeoutExpired:
+        return False, f"execution exceeded {timeout}s timeout (likely an infinite loop)"
+
+    except Exception as e:
+        return False, f"{type(e).__name__}: {e}"
+
+    finally:
+        if tmp_path:
+            try:
+                os.unlink(tmp_path)
+            except OSError:
+                pass   # best-effort cleanup — don't fail the check over a leftover temp file
 
 
 def score_coding(response: str) -> dict:
@@ -781,7 +958,9 @@ def score_coding(response: str) -> dict:
 
     Check 1 — Code presence   (penalty: 0.20) — no fenced code block found
     Check 2 — Syntax check    (penalty: 0.30) — ast.parse() throws SyntaxError
-    Check 3 — Runtime check   (penalty: 0.15) — exec() raises an exception
+    Check 3 — Runtime check   (penalty: 0.15) — sandboxed execution fails
+                                                 or times out (see
+                                                 _run_code_sandboxed docstring)
     """
     penalty = 0.0
     details = []
@@ -810,13 +989,10 @@ def score_coding(response: str) -> dict:
 
     runtime_ok = False
     if syntax_ok:
-        try:
-            with contextlib.redirect_stdout(io.StringIO()):
-                exec(code, {})   # noqa: S102
-            runtime_ok = True
-        except Exception as e:
+        runtime_ok, error_msg = _run_code_sandboxed(code)
+        if not runtime_ok:
             penalty += 0.15
-            details.append(f"runtime error (-0.15): {type(e).__name__}: {e}")
+            details.append(f"runtime error (-0.15): {error_msg}")
 
     if syntax_ok and runtime_ok:
         details.append("all checks passed")
