@@ -55,11 +55,17 @@ WORD_NUMBERS = {
     "six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10
 }
 
+def _normalize_query(query: str) -> str:
+    q = query.lower()
+    for word, digit in WORD_NUMBERS.items():
+        q = re.sub(rf'\b{word}\b', str(digit), q)
+    return q
+
 def check_compliance(normalized_query: str, text: str) -> bool:
     text = text.strip()
 
     # 1. Check word count with ±10% tolerance
-    word_match = re.search(r'(\d+)\s*word', normalized_query)
+    word_match = re.search(r'(\d+)[\s-]*word', normalized_query)
     if word_match:
         required_words = int(word_match.group(1))
         actual_words = len(text.split())
@@ -67,7 +73,7 @@ def check_compliance(normalized_query: str, text: str) -> bool:
         return abs(actual_words - required_words) <= tolerance
 
     # 2. Check exact sentence count
-    sentence_match = re.search(r'(\d+)\s*sentence', normalized_query)
+    sentence_match = re.search(r'(\d+)[\s-]*sentence', normalized_query)
     if sentence_match:
         required_sentences = int(sentence_match.group(1))
         actual_sentences = len([s for s in re.split(r'(?<=[.!?])\s+|\n+', text) if s.strip()])
@@ -120,6 +126,14 @@ def blend_non_code_sections(scored_responses: dict, weights: dict) -> str:
 
 
 # V1 SEMANTIC BLENDING LOGIC
+def extract_base_sentences(text: str) -> list[str]:
+    """
+    Splits the winning base text into sentences/paragraphs WITHOUT 
+    stripping headers, bullets, or structural formatting.
+    """
+    parts = re.split(r'(?<=[.!?])\s+|\n+', text.strip())
+    return [p.strip() for p in parts if p.strip()]
+
 def extract_sentences(text: str) -> list[str]:
     """
     Splits text into sentences while preserving paragraph breaks and structure.
@@ -149,7 +163,9 @@ def blend_responses(scored_responses: dict, weights: dict) -> str:
     base_model = sorted_models[0]
     base_text = scored_responses.get(base_model, "")
     
-    fused_sentences = extract_sentences(base_text)
+    # Use lighter extraction for the base model so headers and structure remain intact
+    fused_sentences = extract_base_sentences(base_text)
+    base_sentence_count = len(fused_sentences)
     
     if fused_sentences:
         fused_embeddings = embedder.encode(fused_sentences).tolist()
@@ -199,7 +215,13 @@ def blend_responses(scored_responses: dict, weights: dict) -> str:
                     fused_embeddings.append(candidate_emb[0].tolist())
                     additions += 1
                     
-    return " ".join(fused_sentences)
+    added_sentences = fused_sentences[base_sentence_count:]
+    
+    if added_sentences:
+        insights = "\n* " + "\n* ".join(added_sentences)
+        return base_text.strip() + "\n\n### Additional Insights" + insights
+        
+    return base_text.strip()
 
 # MASTER FUSION ROUTER
 def fuse_responses(scored_responses: dict, weights: dict, query: str, task_type: str = "general") -> str:
@@ -213,9 +235,7 @@ def fuse_responses(scored_responses: dict, weights: dict, query: str, task_type:
 
     # --- NEW: Normalize query ONCE here ---
     # Log: We accept that \n+ split in extract_sentences flattens paragraph structure for v1
-    normalized_query = query.lower()
-    for word, digit in WORD_NUMBERS.items():
-        normalized_query = re.sub(rf'\b{word}\b', str(digit), normalized_query)
+    normalized_query = _normalize_query(query)
         
     # 1. Format Constraints (Pass the normalized query!)
     if has_format_constraint(normalized_query):
