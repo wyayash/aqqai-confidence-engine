@@ -4,14 +4,8 @@ Synthesizes responses from multiple LLMs into a single optimal answer.
 """
 import re
 import numpy as np
-from sentence_transformers import SentenceTransformer, CrossEncoder
+from model_registry import embedder, nli_model
 from sklearn.metrics.pairwise import cosine_similarity
-
-print("[System] Loading Sentence-Transformers model...")
-embedder = SentenceTransformer("all-MiniLM-L6-v2")
-
-print("[System] Loading NLI model for contradiction detection...")
-nli_model = CrossEncoder('cross-encoder/nli-deberta-v3-small')
 
 # ──────────────────────────────────────────────────────────
 # FILLER FILTERING (from Jeet's fusion.py — merged in per Vineet's

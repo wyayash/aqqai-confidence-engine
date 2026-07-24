@@ -150,7 +150,7 @@
       ]
     },
     "factual": {
-      "prior": 0.45899166413432674,
+      "prior": 0.48720080273302624,
       "update_history": [
         {
           "query_id": "req_dfc53e973973",
@@ -158,6 +158,20 @@
           "old_prior": 0.4863,
           "eval_score": 0.4535,
           "new_prior": 0.459
+        },
+        {
+          "query_id": "req_5f394198aa2a",
+          "timestamp": "2026-07-23T15:56:35.946671",
+          "old_prior": 0.459,
+          "eval_score": 0.9877,
+          "new_prior": 0.4753
+        },
+        {
+          "query_id": "req_4bb960b6fa15",
+          "timestamp": "2026-07-23T21:28:24.486232",
+          "old_prior": 0.4753,
+          "eval_score": 0.9021,
+          "new_prior": 0.4872
         }
       ]
     },
@@ -673,7 +687,7 @@
       ]
     },
     "factual": {
-      "prior": 0.16427861976920835,
+      "prior": 0.11164861036272691,
       "update_history": [
         {
           "query_id": "req_dfc53e973973",
@@ -681,6 +695,20 @@
           "old_prior": 0.1542,
           "eval_score": 0.8363,
           "new_prior": 0.1643
+        },
+        {
+          "query_id": "req_5f394198aa2a",
+          "timestamp": "2026-07-23T15:56:35.946629",
+          "old_prior": 0.1643,
+          "eval_score": 0.1,
+          "new_prior": 0.1353
+        },
+        {
+          "query_id": "req_4bb960b6fa15",
+          "timestamp": "2026-07-23T21:28:24.486199",
+          "old_prior": 0.1353,
+          "eval_score": 0.1,
+          "new_prior": 0.1116
         }
       ]
     },
@@ -1144,7 +1172,7 @@
       ]
     },
     "factual": {
-      "prior": 0.3832233160964649,
+      "prior": 0.4053064909042469,
       "update_history": [
         {
           "query_id": "req_dfc53e973973",
@@ -1152,6 +1180,20 @@
           "old_prior": 0.3676,
           "eval_score": 0.7652,
           "new_prior": 0.3832
+        },
+        {
+          "query_id": "req_5f394198aa2a",
+          "timestamp": "2026-07-23T15:56:35.946654",
+          "old_prior": 0.3832,
+          "eval_score": 0.9637,
+          "new_prior": 0.3946
+        },
+        {
+          "query_id": "req_4bb960b6fa15",
+          "timestamp": "2026-07-23T21:28:24.486220",
+          "old_prior": 0.3946,
+          "eval_score": 0.91,
+          "new_prior": 0.4053
         }
       ]
     },

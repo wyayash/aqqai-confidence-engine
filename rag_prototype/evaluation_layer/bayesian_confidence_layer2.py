@@ -15,7 +15,7 @@ import math
 import uuid
 from datetime import datetime
 import numpy as np
-from sentence_transformers import SentenceTransformer
+from model_registry import embedder
 from sklearn.metrics.pairwise import cosine_similarity
 
 # 1. Updated Task Types for AQQAI Pipeline (Task 1)
@@ -26,9 +26,6 @@ LEARNING_RATE = 0.20
 MIN_PRIOR = 0.05
 MAX_PRIOR = 0.95
 HISTORY_LIMIT = 50
-
-# Global embedder for the agreement signal
-embedder = SentenceTransformer('all-MiniLM-L6-v2')
 
 class PriorStore:
     def __init__(self, filepath="priors.json"):
@@ -146,8 +143,9 @@ def process_confidence_request(payload: dict, store: PriorStore) -> dict:
     agreement_score = calculate_inter_model_agreement(responses)
     
     # 3. Dynamically adjust weights based on Agreement Signal
-    total_prior = sum(store.get(m, task_type) for m in models)
-    raw_weights = {m: (store.get(m, task_type) / total_prior) for m in models} if total_prior > 0 else {}
+    successful_models = list(responses.keys())
+    total_prior = sum(store.get(m, task_type) for m in successful_models)
+    raw_weights = {m: (store.get(m, task_type) / total_prior) for m in successful_models} if total_prior > 0 else {}
     
     final_weights = {}
     if agreement_score > 0.75:

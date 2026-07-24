@@ -35,42 +35,14 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity as sklearn_cosine
 
 # ──────────────────────────────────────────────────────────
-# SENTENCE-TRANSFORMERS SETUP
-# Loads once at import time — not on every function call
-# Falls back to TF-IDF automatically if not installed
+# MODEL REGISTRY IMPORT (Shared Singletons)
 # ──────────────────────────────────────────────────────────
-
-_ST_MODEL     = None
-_ST_AVAILABLE = False
-
-try:
-    from sentence_transformers import SentenceTransformer
-    _ST_MODEL     = SentenceTransformer("all-MiniLM-L6-v2")
-    _ST_AVAILABLE = True
-    print("  [scorer] sentence-transformers loaded — using all-MiniLM-L6-v2 for coherence")
-except Exception:
-    _ST_AVAILABLE = False
-    print("  [scorer] sentence-transformers not available — falling back to TF-IDF for coherence")
-
-
-# ──────────────────────────────────────────────────────────
-# NLI MODEL SETUP — cross-encoder/nli-deberta-v3-small
-# Used for consistency (S) dimension — proper contradiction detection
-# Falls back to keyword checks automatically if not available
-# ──────────────────────────────────────────────────────────
-
-_NLI_MODEL     = None
-_NLI_AVAILABLE = False
-
-try:
-    from sentence_transformers.cross_encoder import CrossEncoder
-    _NLI_MODEL     = CrossEncoder("cross-encoder/nli-deberta-v3-small")
-    _NLI_AVAILABLE = True
-    print("  [scorer] NLI model loaded — using cross-encoder/nli-deberta-v3-small for consistency")
-except Exception:
-    _NLI_AVAILABLE = False
-    print("  [scorer] NLI model not available — falling back to keyword checks for consistency")
-
+from model_registry import (
+    embedder as _ST_MODEL,
+    nli_model as _NLI_MODEL,
+    ST_AVAILABLE as _ST_AVAILABLE,
+    NLI_AVAILABLE as _NLI_AVAILABLE,
+)
 
 # ──────────────────────────────────────────────────────────
 # CONFIGURATION
