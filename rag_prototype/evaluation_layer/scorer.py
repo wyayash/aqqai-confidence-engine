@@ -1036,19 +1036,25 @@ def _detect_hedge_then_fabrication(response: str) -> list[str]:
 def _detect_numerical_conflicts(response: str) -> list[str]:
     """
     Flag same number appearing in two different low-overlap contexts.
-    Catches contradictory statistics in the same response.
+    Aggressively strips markdown lists and headers to avoid false positives.
     """
-    number_pattern  = re.compile(r"\b\d[\d,]*\.?\d*\b")
-    sentences       = _split_sentences(response)
+    number_pattern = re.compile(r"\b\d[\d,]*\.?\d*\b")
+    
+    # Pre-clean the text: strip out all Markdown list numbers (e.g., "1.", "### 1.") 
+    # anywhere they appear before we even split the sentences.
+    clean_response = re.sub(r"(?m)^\s*(?:#+\s*)?\d+[.)]\s*", "", response)
+    
+    sentences = _split_sentences(clean_response)
     number_contexts: dict[str, list[tuple[int, str]]] = {}
-    flagged         = []
+    flagged = []
 
     for i, sent in enumerate(sentences):
         for match in number_pattern.finditer(sent):
-            num   = match.group(0).replace(",", "")
+            num = match.group(0).replace(",", "")
+            
             start = max(0, match.start() - 40)
-            end   = min(len(sent), match.end() + 40)
-            ctx   = sent[start:end].strip()
+            end = min(len(sent), match.end() + 40)
+            ctx = sent[start:end].strip()
             number_contexts.setdefault(num, []).append((i, ctx))
 
     for num, occurrences in number_contexts.items():

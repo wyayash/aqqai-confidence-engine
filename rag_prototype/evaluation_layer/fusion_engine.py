@@ -35,11 +35,10 @@ FORMAT_KEYWORDS = [
     'one line', '1 line', 'single line',
     'one paragraph', '1 paragraph',
     'one word', '1 word',
-    r'\d+\s*sentences?',
-    r'\d+\s*lines?',
+    r'\d+[\s-]*sentences?',
     r'\d+[\s-]*words?',
-    r'\d+\s*bullets?',
-    r'\d+-line',
+    r'\d+[\s-]*bullets?',
+    r'\d+[\s-]*lines?',
     'haiku', 'poem', 'limerick', 
 ]
 
@@ -54,6 +53,15 @@ WORD_NUMBERS = {
     "one": 1, "two": 2, "three": 3, "four": 4, "five": 5,
     "six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10
 }
+
+def _clean_complete_sentences(text: str) -> str:
+    """Removes trailing incomplete sentences cut off by model token limits."""
+    text = text.strip()
+    # Find the last sentence-ending punctuation mark
+    match = re.search(r"^(.*[.!?])", text, re.DOTALL)
+    if match:
+        return match.group(1).strip()
+    return text
 
 def _normalize_query(query: str) -> str:
     q = query.lower()

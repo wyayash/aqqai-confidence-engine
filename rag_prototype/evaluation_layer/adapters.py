@@ -2,16 +2,16 @@
 AQQAI — Model Adapters (adapters.py)
 =====================================
 3 free model adapters:
-  1. Gemini 2.0 Flash  — Google AI Studio  (own format)
-  2. Cerebras          — Llama 4 Scout     (OpenAI-compatible)
-  3. Groq              — Llama 3.3 70B     (OpenAI-compatible, truly free)
+  1. Gemini 3.1 Flash Lite — Google AI Studio (own format)
+  2. Groq                 — Llama 3.3 70B     (OpenAI-compatible)
+  3. Mistral              — Mistral Small     (OpenAI-compatible)
 
 Keys loaded from .env file automatically.
 
 .env file should contain:
-  GEMINI_API_KEY=...     from aistudio.google.com
-  CEREBRAS_API_KEY=...   from cloud.cerebras.ai
-  GROQ_API_KEY=...       from console.groq.com
+  GEMINI_API_KEY=...    from aistudio.google.com
+  GROQ_API_KEY=...      from console.groq.com
+  MISTRAL_API_KEY=...   from console.mistral.ai
 """
 
 import json
@@ -51,21 +51,19 @@ class BaseModelAdapter(ABC):
 
         for attempt in range(self.max_retries):
             try:
-                # Add default headers, then merge caller's headers on top
                 default_headers = {
                     "User-Agent": "python-requests/2.31.0",
                     "Accept": "application/json",
-}
+                }
                 merged_headers = {**default_headers, **headers}
                 req = urllib.request.Request(
                     url, data=data, headers=merged_headers, method="POST"
-)
+                )
                 with urllib.request.urlopen(req, timeout=self.timeout) as resp:
                     return json.loads(resp.read().decode("utf-8"))
 
             except urllib.error.HTTPError as e:
                 if e.code in NON_RETRYABLE:
-                    # No point retrying — auth/billing issue
                     raise RuntimeError(
                         f"HTTP {e.code} from {self.model_id} — "
                         f"{'check API key' if e.code in {401,403} else 'check account credits/billing' if e.code == 402 else 'bad request'}"
@@ -95,7 +93,7 @@ class BaseModelAdapter(ABC):
 
 # ──────────────────────────────────────────────────────────
 # OPENAI-COMPATIBLE BASE
-# Cerebras and Groq both use this exact same format
+# Groq and Mistral both use this exact same format
 # ──────────────────────────────────────────────────────────
 
 class OpenAICompatibleAdapter(BaseModelAdapter):
@@ -137,10 +135,7 @@ class OpenAICompatibleAdapter(BaseModelAdapter):
 
 
 # ──────────────────────────────────────────────────────────
-# ADAPTER 1 — GEMINI 3.5 FLASH
-# Uses Google's own request/response format
-# Free: 1000 req/day, 15 req/min
-# Key from: aistudio.google.com → Get API Key
+# ADAPTER 1 — GEMINI 3.1 FLASH LITE
 # ──────────────────────────────────────────────────────────
 
 class GeminiAdapter(BaseModelAdapter):
@@ -184,35 +179,24 @@ class GeminiAdapter(BaseModelAdapter):
 
 
 # ──────────────────────────────────────────────────────────
-# ADAPTER 2 — CEREBRAS (Llama 4 Scout)
-# Fastest free inference — 2600+ tokens/sec
-# Free: 1M tokens/day, no credit card
-# Key from: cloud.cerebras.ai → API Keys
+# ADAPTER 2 — GROQ (Llama 3.3 70B)
+# Truly free — fast inference
+# Key from: console.groq.com
 # ──────────────────────────────────────────────────────────
 
-class CerebrasAdapter(OpenAICompatibleAdapter):
-    model_id   = "cerebras-gpt-oss"
-    model_name = "gpt-oss-120b"
-    base_url   = "https://api.cerebras.ai/v1/chat/completions"
+class GroqAdapter(OpenAICompatibleAdapter):
+    model_id   = "groq-llama3"
+    model_name = "llama-3.3-70b-versatile"
+    base_url   = "https://api.groq.com/openai/v1/chat/completions"
 
     def __init__(self):
-        self.api_key = os.getenv("CEREBRAS_API_KEY", "")
+        self.api_key = os.getenv("GROQ_API_KEY", "")
 
 
 # ──────────────────────────────────────────────────────────
-# ADAPTER 3 — GROQ (Llama 3.3 70B)
-# Truly free — no credit card, no expiring credits
-# Free: 14,400 req/day, 30 req/min
-# Key from: console.groq.com → API Keys → Create API Key
+# ADAPTER 3 — MISTRAL SMALL
+# Key from: console.mistral.ai
 # ──────────────────────────────────────────────────────────
-
-# class GroqAdapter(OpenAICompatibleAdapter):
-#     model_id   = "groq-llama3"
-#     model_name = "llama-3.3-70b-versatile"
-#     base_url   = "https://api.groq.com/openai/v1/chat/completions"
-
-#     def __init__(self):
-#         self.api_key = os.getenv("GROQ_API_KEY", "")
 
 class MistralAdapter(OpenAICompatibleAdapter):
     model_id   = "mistral-small"
@@ -222,14 +206,13 @@ class MistralAdapter(OpenAICompatibleAdapter):
     def __init__(self):
         self.api_key = os.getenv("MISTRAL_API_KEY", "")
 
+
 # ──────────────────────────────────────────────────────────
 # REGISTRY
-# To add a new model: write one adapter class, add it here
-# Nothing else in the codebase changes
 # ──────────────────────────────────────────────────────────
 
 ALL_ADAPTERS: list[BaseModelAdapter] = [
     GeminiAdapter(),
-    CerebrasAdapter(),
+    GroqAdapter(),
     MistralAdapter(),
 ]

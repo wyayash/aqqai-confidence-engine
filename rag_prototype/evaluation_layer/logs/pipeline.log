@@ -164,3 +164,687 @@
 2026-07-23 21:28:24 | DEBUG    | main | [req_4bb960b6fa15] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.968 K=1.000 S=0.400 | score=0.9021 | tier=HIGH
 2026-07-23 21:28:24 | DEBUG    | main | [req_4bb960b6fa15] Fusion weights | {'mistral-small': 0.409, 'gemini-3.1-flash-lite': 0.591} | agreement=0.8725
 2026-07-23 21:28:30 | INFO     | main | [req_4bb960b6fa15] Pipeline complete | task=factual | response_len=2412 chars | total=28206.59ms
+2026-07-25 00:34:28 | INFO     | pipeline_logger | Logger initialised — writing to logs/pipeline.log
+2026-07-25 00:34:28 | INFO     | main | AQQAI v4.0.0 started — Bayesian store ready (5 models loaded)
+2026-07-25 00:34:28 | INFO     | main | Registered models: ['gemini-3.1-flash-lite', 'cerebras-gpt-oss', 'mistral-small']
+2026-07-25 00:35:01 | INFO     | main | [req_fd1a6846a726] Incoming query | user=vineet_benchmark_test | query='Explain a vector database in two sentences.'
+2026-07-25 00:35:01 | INFO     | main | [req_fd1a6846a726] Task classified | task_type=general | query='Explain a vector database in two sentences.'
+2026-07-25 00:35:01 | INFO     | main | [req_fd1a6846a726] Calling 3 models in parallel
+2026-07-25 00:35:01 | WARNING  | main | [req_fd1a6846a726] Model FAILED  | model=cerebras-gpt-oss | error=No API key set for cerebras-gpt-oss — add it to your .env file.
+2026-07-25 00:35:02 | INFO     | main | [req_fd1a6846a726] Model OK      | model=mistral-small | latency=971ms
+2026-07-25 00:35:34 | INFO     | main | [req_fd1a6846a726] Model OK      | model=gemini-3.1-flash-lite | latency=32438ms
+2026-07-25 00:35:36 | DEBUG    | main | [req_fd1a6846a726] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-25 00:35:36 | DEBUG    | main | [req_fd1a6846a726] RCKS | model=mistral-small | R=1.000 C=1.000 K=0.864 S=1.000 | score=0.9593 | tier=HIGH
+2026-07-25 00:35:36 | DEBUG    | main | [req_fd1a6846a726] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=1.000 K=0.834 S=1.000 | score=0.9501 | tier=HIGH
+2026-07-25 00:35:37 | DEBUG    | main | [req_fd1a6846a726] Fusion weights | {'mistral-small': 0.4532, 'gemini-3.1-flash-lite': 0.5468} | agreement=0.8876
+2026-07-25 00:35:37 | INFO     | main | [req_fd1a6846a726] Pipeline complete | task=general | response_len=297 chars | total=35418.49ms
+2026-07-25 00:38:15 | INFO     | main | [req_0971a33ff09b] Incoming query | user=vineet_benchmark_test | query='Give me a 3-sentence summary of black holes.'
+2026-07-25 00:38:15 | INFO     | main | [req_0971a33ff09b] Task classified | task_type=summary | query='Give me a 3-sentence summary of black holes.'
+2026-07-25 00:38:15 | INFO     | main | [req_0971a33ff09b] Calling 3 models in parallel
+2026-07-25 00:38:15 | WARNING  | main | [req_0971a33ff09b] Model FAILED  | model=cerebras-gpt-oss | error=No API key set for cerebras-gpt-oss — add it to your .env file.
+2026-07-25 00:38:16 | INFO     | main | [req_0971a33ff09b] Model OK      | model=mistral-small | latency=800ms
+2026-07-25 00:38:16 | INFO     | main | [req_0971a33ff09b] Model OK      | model=gemini-3.1-flash-lite | latency=1638ms
+2026-07-25 00:38:18 | DEBUG    | main | [req_0971a33ff09b] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-25 00:38:18 | DEBUG    | main | [req_0971a33ff09b] RCKS | model=mistral-small | R=1.000 C=1.000 K=0.921 S=1.000 | score=0.9764 | tier=HIGH
+2026-07-25 00:38:18 | DEBUG    | main | [req_0971a33ff09b] RCKS | model=gemini-3.1-flash-lite | R=0.831 C=0.962 K=0.921 S=0.800 | score=0.8861 | tier=HIGH
+2026-07-25 00:38:18 | DEBUG    | main | [req_0971a33ff09b] Fusion weights | {'mistral-small': 0.5313, 'gemini-3.1-flash-lite': 0.4687} | agreement=0.818
+2026-07-25 00:38:19 | INFO     | main | [req_0971a33ff09b] Pipeline complete | task=summary | response_len=515 chars | total=4207.02ms
+2026-07-25 00:39:33 | INFO     | main | [req_9e77357b0419] Incoming query | user=vineet_benchmark_test | query='What is a vector database in simple terms?'
+2026-07-25 00:39:33 | INFO     | main | [req_9e77357b0419] Task classified | task_type=factual | query='What is a vector database in simple terms?'
+2026-07-25 00:39:33 | INFO     | main | [req_9e77357b0419] Calling 3 models in parallel
+2026-07-25 00:39:33 | WARNING  | main | [req_9e77357b0419] Model FAILED  | model=cerebras-gpt-oss | error=No API key set for cerebras-gpt-oss — add it to your .env file.
+2026-07-25 00:39:35 | INFO     | main | [req_9e77357b0419] Model OK      | model=mistral-small | latency=2372ms
+2026-07-25 00:39:36 | INFO     | main | [req_9e77357b0419] Model OK      | model=gemini-3.1-flash-lite | latency=2987ms
+2026-07-25 00:39:48 | DEBUG    | main | [req_9e77357b0419] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-25 00:39:48 | DEBUG    | main | [req_9e77357b0419] RCKS | model=mistral-small | R=1.000 C=0.850 K=1.000 S=0.600 | score=0.9025 | tier=HIGH
+2026-07-25 00:39:48 | DEBUG    | main | [req_9e77357b0419] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.674 K=1.000 S=0.400 | score=0.8286 | tier=MEDIUM
+2026-07-25 00:39:48 | DEBUG    | main | [req_9e77357b0419] Fusion weights | {'mistral-small': 0.4587, 'gemini-3.1-flash-lite': 0.5413} | agreement=0.7083
+2026-07-25 00:39:51 | INFO     | main | [req_9e77357b0419] Pipeline complete | task=factual | response_len=3197 chars | total=18488.14ms
+2026-07-25 00:40:32 | INFO     | main | [req_9b65a5d072ea] Incoming query | user=vineet_benchmark_test | query='What is a vector database in simple terms?'
+2026-07-25 00:40:32 | INFO     | main | [req_9b65a5d072ea] Task classified | task_type=factual | query='What is a vector database in simple terms?'
+2026-07-25 00:40:32 | INFO     | main | [req_9b65a5d072ea] Calling 3 models in parallel
+2026-07-25 00:40:32 | WARNING  | main | [req_9b65a5d072ea] Model FAILED  | model=cerebras-gpt-oss | error=No API key set for cerebras-gpt-oss — add it to your .env file.
+2026-07-25 00:40:35 | INFO     | main | [req_9b65a5d072ea] Model OK      | model=gemini-3.1-flash-lite | latency=3095ms
+2026-07-25 00:40:36 | INFO     | main | [req_9b65a5d072ea] Model OK      | model=mistral-small | latency=3490ms
+2026-07-25 00:40:51 | DEBUG    | main | [req_9b65a5d072ea] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-25 00:40:51 | DEBUG    | main | [req_9b65a5d072ea] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.777 K=1.000 S=0.400 | score=0.8542 | tier=HIGH
+2026-07-25 00:40:51 | DEBUG    | main | [req_9b65a5d072ea] RCKS | model=mistral-small | R=1.000 C=0.821 K=1.000 S=0.600 | score=0.8952 | tier=HIGH
+2026-07-25 00:40:51 | DEBUG    | main | [req_9b65a5d072ea] Fusion weights | {'gemini-3.1-flash-lite': 0.5771, 'mistral-small': 0.4229} | agreement=0.8496
+2026-07-25 00:41:02 | INFO     | main | [req_9b65a5d072ea] Pipeline complete | task=factual | response_len=3187 chars | total=29317.52ms
+2026-07-25 00:42:32 | INFO     | main | [req_f225321eabf0] Incoming query | user=vineet_benchmark_test | query='write a python script to convert an array, inputted by the user into roman numer'
+2026-07-25 00:42:32 | INFO     | main | [req_f225321eabf0] Task classified | task_type=coding | query='write a python script to convert an array, inputted by the user into roman numer'
+2026-07-25 00:42:32 | INFO     | main | [req_f225321eabf0] Calling 3 models in parallel
+2026-07-25 00:42:32 | WARNING  | main | [req_f225321eabf0] Model FAILED  | model=cerebras-gpt-oss | error=No API key set for cerebras-gpt-oss — add it to your .env file.
+2026-07-25 00:42:34 | INFO     | main | [req_f225321eabf0] Model OK      | model=mistral-small | latency=1220ms
+2026-07-25 00:42:40 | INFO     | main | [req_f225321eabf0] Model OK      | model=gemini-3.1-flash-lite | latency=7291ms
+2026-07-25 00:42:48 | DEBUG    | main | [req_f225321eabf0] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-25 00:42:48 | DEBUG    | main | [req_f225321eabf0] RCKS | model=mistral-small | R=1.000 C=0.850 K=0.983 S=1.000 | score=0.8073 | tier=MEDIUM
+2026-07-25 00:42:48 | DEBUG    | main | [req_f225321eabf0] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.850 K=1.000 S=1.000 | score=0.8125 | tier=MEDIUM
+2026-07-25 00:42:48 | DEBUG    | main | [req_f225321eabf0] Fusion weights | {'mistral-small': 0.5553, 'gemini-3.1-flash-lite': 0.4447} | agreement=0.9565
+2026-07-25 00:42:48 | INFO     | main | [req_f225321eabf0] Pipeline complete | task=coding | response_len=468 chars | total=16171.13ms
+2026-07-25 00:43:39 | INFO     | main | [req_052300a43d0d] Incoming query | user=vineet_benchmark_test | query='write a python script to convert an array, inputted by the user into roman numer'
+2026-07-25 00:43:39 | INFO     | main | [req_052300a43d0d] Task classified | task_type=coding | query='write a python script to convert an array, inputted by the user into roman numer'
+2026-07-25 00:43:39 | INFO     | main | [req_052300a43d0d] Calling 3 models in parallel
+2026-07-25 00:43:39 | WARNING  | main | [req_052300a43d0d] Model FAILED  | model=cerebras-gpt-oss | error=No API key set for cerebras-gpt-oss — add it to your .env file.
+2026-07-25 00:43:40 | INFO     | main | [req_052300a43d0d] Model OK      | model=mistral-small | latency=1246ms
+2026-07-25 00:43:47 | INFO     | main | [req_052300a43d0d] Model OK      | model=gemini-3.1-flash-lite | latency=8396ms
+2026-07-25 00:43:56 | DEBUG    | main | [req_052300a43d0d] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-25 00:43:56 | DEBUG    | main | [req_052300a43d0d] RCKS | model=mistral-small | R=1.000 C=0.850 K=0.996 S=1.000 | score=0.8112 | tier=MEDIUM
+2026-07-25 00:43:56 | DEBUG    | main | [req_052300a43d0d] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.850 K=1.000 S=1.000 | score=0.8125 | tier=MEDIUM
+2026-07-25 00:43:56 | DEBUG    | main | [req_052300a43d0d] Fusion weights | {'mistral-small': 0.5551, 'gemini-3.1-flash-lite': 0.4449} | agreement=0.9543
+2026-07-25 00:43:56 | INFO     | main | [req_052300a43d0d] Pipeline complete | task=coding | response_len=482 chars | total=17412.21ms
+2026-07-25 00:45:04 | INFO     | main | [req_11e274abc1cb] Incoming query | user=vineet_benchmark_test | query='What is a vector database in simple terms?'
+2026-07-25 00:45:04 | INFO     | main | [req_11e274abc1cb] Task classified | task_type=factual | query='What is a vector database in simple terms?'
+2026-07-25 00:45:04 | INFO     | main | [req_11e274abc1cb] Calling 3 models in parallel
+2026-07-25 00:45:04 | WARNING  | main | [req_11e274abc1cb] Model FAILED  | model=cerebras-gpt-oss | error=No API key set for cerebras-gpt-oss — add it to your .env file.
+2026-07-25 00:45:06 | INFO     | main | [req_11e274abc1cb] Model OK      | model=mistral-small | latency=1971ms
+2026-07-25 00:45:14 | INFO     | main | [req_11e274abc1cb] Model OK      | model=gemini-3.1-flash-lite | latency=9999ms
+2026-07-25 00:45:24 | DEBUG    | main | [req_11e274abc1cb] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-25 00:45:24 | DEBUG    | main | [req_11e274abc1cb] RCKS | model=mistral-small | R=1.000 C=1.000 K=1.000 S=0.400 | score=0.9100 | tier=HIGH
+2026-07-25 00:45:24 | DEBUG    | main | [req_11e274abc1cb] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.850 K=1.000 S=0.400 | score=0.8725 | tier=HIGH
+2026-07-25 00:45:24 | DEBUG    | main | [req_11e274abc1cb] Fusion weights | {'mistral-small': 0.4272, 'gemini-3.1-flash-lite': 0.5728} | agreement=0.8352
+2026-07-25 00:45:31 | INFO     | main | [req_11e274abc1cb] Pipeline complete | task=factual | response_len=2604 chars | total=26554.12ms
+2026-07-25 00:45:58 | INFO     | main | [req_f11d23ae0656] Incoming query | user=vineet_benchmark_test | query='What is a vector database in simple terms?'
+2026-07-25 00:45:58 | INFO     | main | [req_f11d23ae0656] Task classified | task_type=factual | query='What is a vector database in simple terms?'
+2026-07-25 00:45:58 | INFO     | main | [req_f11d23ae0656] Calling 3 models in parallel
+2026-07-25 00:45:58 | WARNING  | main | [req_f11d23ae0656] Model FAILED  | model=cerebras-gpt-oss | error=No API key set for cerebras-gpt-oss — add it to your .env file.
+2026-07-25 00:46:02 | INFO     | main | [req_f11d23ae0656] Model OK      | model=gemini-3.1-flash-lite | latency=3830ms
+2026-07-25 00:46:02 | INFO     | main | [req_f11d23ae0656] Model OK      | model=mistral-small | latency=4344ms
+2026-07-25 00:46:27 | DEBUG    | main | [req_f11d23ae0656] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-25 00:46:27 | DEBUG    | main | [req_f11d23ae0656] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.967 K=1.000 S=0.400 | score=0.9019 | tier=HIGH
+2026-07-25 00:46:27 | DEBUG    | main | [req_f11d23ae0656] RCKS | model=mistral-small | R=1.000 C=0.850 K=1.000 S=0.600 | score=0.7525 | tier=MEDIUM
+2026-07-25 00:46:27 | DEBUG    | main | [req_f11d23ae0656] Fusion weights | {'gemini-3.1-flash-lite': 0.591, 'mistral-small': 0.409} | agreement=0.8421
+2026-07-25 00:46:37 | INFO     | main | [req_f11d23ae0656] Pipeline complete | task=factual | response_len=2681 chars | total=39249.95ms
+2026-07-25 00:50:23 | INFO     | main | Shutdown — Bayesian priors saved to priors.json
+2026-07-25 00:55:15 | INFO     | pipeline_logger | Logger initialised — writing to logs/pipeline.log
+2026-07-25 00:55:15 | INFO     | main | AQQAI v4.0.0 started — Bayesian store ready (5 models loaded)
+2026-07-25 00:55:15 | INFO     | main | Registered models: ['gemini-3.1-flash-lite', 'cerebras-gpt-oss', 'mistral-small']
+2026-07-25 00:55:35 | INFO     | main | [req_ebf20defc6e9] Incoming query | user=vineet_benchmark_test | query='Explain a vector database in two sentences.'
+2026-07-25 00:55:35 | INFO     | main | [req_ebf20defc6e9] Task classified | task_type=general | query='Explain a vector database in two sentences.'
+2026-07-25 00:55:35 | INFO     | main | [req_ebf20defc6e9] Calling 3 models in parallel
+2026-07-25 00:55:35 | WARNING  | main | [req_ebf20defc6e9] Model FAILED  | model=cerebras-gpt-oss | error=No API key set for cerebras-gpt-oss — add it to your .env file.
+2026-07-25 00:55:36 | INFO     | main | [req_ebf20defc6e9] Model OK      | model=mistral-small | latency=1134ms
+2026-07-25 00:55:36 | INFO     | main | [req_ebf20defc6e9] Model OK      | model=gemini-3.1-flash-lite | latency=1333ms
+2026-07-25 00:55:38 | DEBUG    | main | [req_ebf20defc6e9] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-25 00:55:38 | DEBUG    | main | [req_ebf20defc6e9] RCKS | model=mistral-small | R=1.000 C=1.000 K=0.891 S=1.000 | score=0.9672 | tier=HIGH
+2026-07-25 00:55:38 | DEBUG    | main | [req_ebf20defc6e9] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=1.000 K=0.869 S=1.000 | score=0.9606 | tier=HIGH
+2026-07-25 00:55:38 | DEBUG    | main | [req_ebf20defc6e9] Fusion weights | {'mistral-small': 0.4539, 'gemini-3.1-flash-lite': 0.5461} | agreement=0.841
+2026-07-25 00:55:38 | INFO     | main | [req_ebf20defc6e9] Pipeline complete | task=general | response_len=348 chars | total=3072.89ms
+2026-07-25 00:56:05 | INFO     | main | [req_c835a181bd26] Incoming query | user=vineet_benchmark_test | query='What is a vector database in simple terms?'
+2026-07-25 00:56:05 | INFO     | main | [req_c835a181bd26] Task classified | task_type=factual | query='What is a vector database in simple terms?'
+2026-07-25 00:56:05 | INFO     | main | [req_c835a181bd26] Calling 3 models in parallel
+2026-07-25 00:56:05 | WARNING  | main | [req_c835a181bd26] Model FAILED  | model=cerebras-gpt-oss | error=No API key set for cerebras-gpt-oss — add it to your .env file.
+2026-07-25 00:56:08 | INFO     | main | [req_c835a181bd26] Model OK      | model=gemini-3.1-flash-lite | latency=3231ms
+2026-07-25 00:56:08 | INFO     | main | [req_c835a181bd26] Model OK      | model=mistral-small | latency=3287ms
+2026-07-25 00:56:25 | DEBUG    | main | [req_c835a181bd26] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-25 00:56:25 | DEBUG    | main | [req_c835a181bd26] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.983 K=1.000 S=0.600 | score=0.7858 | tier=MEDIUM
+2026-07-25 00:56:25 | DEBUG    | main | [req_c835a181bd26] RCKS | model=mistral-small | R=1.000 C=1.000 K=1.000 S=0.400 | score=0.9100 | tier=HIGH
+2026-07-25 00:56:25 | DEBUG    | main | [req_c835a181bd26] Fusion weights | {'gemini-3.1-flash-lite': 0.5762, 'mistral-small': 0.4238} | agreement=0.88
+2026-07-25 00:56:33 | INFO     | main | [req_c835a181bd26] Pipeline complete | task=factual | response_len=3368 chars | total=27573.04ms
+2026-07-25 00:56:55 | INFO     | main | [req_436b2faca525] Incoming query | user=vineet_benchmark_test | query='What is a vector database in simple terms?'
+2026-07-25 00:56:55 | INFO     | main | [req_436b2faca525] Task classified | task_type=factual | query='What is a vector database in simple terms?'
+2026-07-25 00:56:55 | INFO     | main | [req_436b2faca525] Calling 3 models in parallel
+2026-07-25 00:56:55 | WARNING  | main | [req_436b2faca525] Model FAILED  | model=cerebras-gpt-oss | error=No API key set for cerebras-gpt-oss — add it to your .env file.
+2026-07-25 00:56:58 | INFO     | main | [req_436b2faca525] Model OK      | model=mistral-small | latency=2749ms
+2026-07-25 00:56:58 | INFO     | main | [req_436b2faca525] Model OK      | model=gemini-3.1-flash-lite | latency=2807ms
+2026-07-25 00:57:09 | DEBUG    | main | [req_436b2faca525] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-25 00:57:09 | DEBUG    | main | [req_436b2faca525] RCKS | model=mistral-small | R=1.000 C=0.935 K=1.000 S=1.000 | score=0.9838 | tier=HIGH
+2026-07-25 00:57:09 | DEBUG    | main | [req_436b2faca525] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.825 K=1.000 S=0.400 | score=0.8663 | tier=HIGH
+2026-07-25 00:57:09 | DEBUG    | main | [req_436b2faca525] Fusion weights | {'mistral-small': 0.4367, 'gemini-3.1-flash-lite': 0.5633} | agreement=0.8625
+2026-07-25 00:57:18 | INFO     | main | [req_436b2faca525] Pipeline complete | task=factual | response_len=2155 chars | total=23380.18ms
+2026-07-25 01:01:59 | INFO     | main | Shutdown — Bayesian priors saved to priors.json
+2026-07-25 01:02:28 | INFO     | pipeline_logger | Logger initialised — writing to logs/pipeline.log
+2026-07-25 01:02:28 | INFO     | main | AQQAI v4.0.0 started — Bayesian store ready (5 models loaded)
+2026-07-25 01:02:28 | INFO     | main | Registered models: ['gemini-3.1-flash-lite', 'cerebras-gpt-oss', 'mistral-small']
+2026-07-25 01:02:28 | INFO     | main | Shutdown — Bayesian priors saved to priors.json
+2026-07-25 01:03:04 | INFO     | pipeline_logger | Logger initialised — writing to logs/pipeline.log
+2026-07-25 01:03:04 | INFO     | main | AQQAI v4.0.0 started — Bayesian store ready (5 models loaded)
+2026-07-25 01:03:04 | INFO     | main | Registered models: ['gemini-3.1-flash-lite', 'cerebras-gpt-oss', 'mistral-small']
+2026-07-25 01:03:39 | INFO     | main | [req_8ff3a6d8afa8] Incoming query | user=vineet_benchmark_test | query='What is a vector database in simple terms?'
+2026-07-25 01:03:39 | INFO     | main | [req_8ff3a6d8afa8] Task classified | task_type=factual | query='What is a vector database in simple terms?'
+2026-07-25 01:03:39 | INFO     | main | [req_8ff3a6d8afa8] Calling 3 models in parallel
+2026-07-25 01:03:39 | WARNING  | main | [req_8ff3a6d8afa8] Model FAILED  | model=cerebras-gpt-oss | error=No API key set for cerebras-gpt-oss — add it to your .env file.
+2026-07-25 01:03:41 | INFO     | main | [req_8ff3a6d8afa8] Model OK      | model=mistral-small | latency=2189ms
+2026-07-25 01:03:42 | INFO     | main | [req_8ff3a6d8afa8] Model OK      | model=gemini-3.1-flash-lite | latency=3164ms
+2026-07-25 01:03:53 | DEBUG    | main | [req_8ff3a6d8afa8] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-25 01:03:53 | DEBUG    | main | [req_8ff3a6d8afa8] RCKS | model=mistral-small | R=1.000 C=1.000 K=1.000 S=0.800 | score=0.9700 | tier=HIGH
+2026-07-25 01:03:53 | DEBUG    | main | [req_8ff3a6d8afa8] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.755 K=1.000 S=0.400 | score=0.8487 | tier=MEDIUM
+2026-07-25 01:03:54 | DEBUG    | main | [req_8ff3a6d8afa8] Fusion weights | {'mistral-small': 0.4502, 'gemini-3.1-flash-lite': 0.5498} | agreement=0.8195
+2026-07-25 01:04:05 | INFO     | main | [req_8ff3a6d8afa8] Pipeline complete | task=factual | response_len=3171 chars | total=26907.41ms
+2026-07-25 01:06:06 | INFO     | main | [req_29df52e83361] Incoming query | user=vineet_benchmark_test | query='What is a vector database in simple terms?'
+2026-07-25 01:06:06 | INFO     | main | [req_29df52e83361] Task classified | task_type=factual | query='What is a vector database in simple terms?'
+2026-07-25 01:06:06 | INFO     | main | [req_29df52e83361] Calling 3 models in parallel
+2026-07-25 01:06:06 | WARNING  | main | [req_29df52e83361] Model FAILED  | model=cerebras-gpt-oss | error=No API key set for cerebras-gpt-oss — add it to your .env file.
+2026-07-25 01:06:08 | INFO     | main | [req_29df52e83361] Model OK      | model=mistral-small | latency=2486ms
+2026-07-25 01:06:09 | INFO     | main | [req_29df52e83361] Model OK      | model=gemini-3.1-flash-lite | latency=3407ms
+2026-07-25 01:06:25 | DEBUG    | main | [req_29df52e83361] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-25 01:06:25 | DEBUG    | main | [req_29df52e83361] RCKS | model=mistral-small | R=1.000 C=1.000 K=1.000 S=0.400 | score=0.9100 | tier=HIGH
+2026-07-25 01:06:25 | DEBUG    | main | [req_29df52e83361] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=1.000 K=1.000 S=0.200 | score=0.8800 | tier=HIGH
+2026-07-25 01:06:25 | DEBUG    | main | [req_29df52e83361] Fusion weights | {'mistral-small': 0.4536, 'gemini-3.1-flash-lite': 0.5464} | agreement=0.8599
+2026-07-25 01:06:34 | INFO     | main | [req_29df52e83361] Pipeline complete | task=factual | response_len=3459 chars | total=28301.63ms
+2026-07-25 01:10:32 | INFO     | main | Shutdown — Bayesian priors saved to priors.json
+2026-07-25 01:11:55 | INFO     | pipeline_logger | Logger initialised — writing to logs/pipeline.log
+2026-07-25 01:11:55 | INFO     | main | AQQAI v4.0.0 started — Bayesian store ready (5 models loaded)
+2026-07-25 01:11:55 | INFO     | main | Registered models: ['gemini-3.1-flash-lite', 'cerebras-gpt-oss', 'mistral-small']
+2026-07-25 01:14:03 | INFO     | main | [req_27d21e84cefc] Incoming query | user=vineet_benchmark_test | query='What is a vector database in simple terms?'
+2026-07-25 01:14:03 | INFO     | main | [req_27d21e84cefc] Task classified | task_type=factual | query='What is a vector database in simple terms?'
+2026-07-25 01:14:03 | INFO     | main | [req_27d21e84cefc] Calling 3 models in parallel
+2026-07-25 01:14:03 | WARNING  | main | [req_27d21e84cefc] Model FAILED  | model=cerebras-gpt-oss | error=No API key set for cerebras-gpt-oss — add it to your .env file.
+2026-07-25 01:14:06 | INFO     | main | [req_27d21e84cefc] Model OK      | model=mistral-small | latency=2668ms
+2026-07-25 01:14:06 | INFO     | main | [req_27d21e84cefc] Model OK      | model=gemini-3.1-flash-lite | latency=3204ms
+2026-07-25 01:14:16 | DEBUG    | main | [req_27d21e84cefc] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-25 01:14:16 | DEBUG    | main | [req_27d21e84cefc] RCKS | model=mistral-small | R=1.000 C=0.970 K=1.000 S=1.000 | score=0.9925 | tier=HIGH
+2026-07-25 01:14:16 | DEBUG    | main | [req_27d21e84cefc] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.850 K=1.000 S=0.400 | score=0.8725 | tier=HIGH
+2026-07-25 01:14:16 | DEBUG    | main | [req_27d21e84cefc] Fusion weights | {'mistral-small': 0.4666, 'gemini-3.1-flash-lite': 0.5334} | agreement=0.8221
+2026-07-25 01:14:25 | INFO     | main | [req_27d21e84cefc] Pipeline complete | task=factual | response_len=2778 chars | total=21498.03ms
+2026-07-25 01:15:05 | INFO     | main | [req_05d0b4a72700] Incoming query | user=vineet_benchmark_test | query='What is a vector database in simple terms?'
+2026-07-25 01:15:05 | INFO     | main | [req_05d0b4a72700] Task classified | task_type=factual | query='What is a vector database in simple terms?'
+2026-07-25 01:15:05 | INFO     | main | [req_05d0b4a72700] Calling 3 models in parallel
+2026-07-25 01:15:05 | WARNING  | main | [req_05d0b4a72700] Model FAILED  | model=cerebras-gpt-oss | error=No API key set for cerebras-gpt-oss — add it to your .env file.
+2026-07-25 01:15:08 | INFO     | main | [req_05d0b4a72700] Model OK      | model=gemini-3.1-flash-lite | latency=3086ms
+2026-07-25 01:15:08 | INFO     | main | [req_05d0b4a72700] Model OK      | model=mistral-small | latency=3310ms
+2026-07-25 01:15:20 | DEBUG    | main | [req_05d0b4a72700] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-25 01:15:20 | DEBUG    | main | [req_05d0b4a72700] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.831 K=1.000 S=0.400 | score=0.8677 | tier=HIGH
+2026-07-25 01:15:20 | DEBUG    | main | [req_05d0b4a72700] RCKS | model=mistral-small | R=1.000 C=0.850 K=1.000 S=1.000 | score=0.9625 | tier=HIGH
+2026-07-25 01:15:20 | DEBUG    | main | [req_05d0b4a72700] Fusion weights | {'gemini-3.1-flash-lite': 0.5229, 'mistral-small': 0.4771} | agreement=0.8348
+2026-07-25 01:15:25 | INFO     | main | [req_05d0b4a72700] Pipeline complete | task=factual | response_len=2529 chars | total=19997.28ms
+2026-07-25 01:17:10 | INFO     | main | Shutdown — Bayesian priors saved to priors.json
+2026-07-25 01:19:44 | INFO     | pipeline_logger | Logger initialised — writing to logs/pipeline.log
+2026-07-25 01:19:44 | INFO     | main | AQQAI v4.0.0 started — Bayesian store ready (5 models loaded)
+2026-07-25 01:19:44 | INFO     | main | Registered models: ['gemini-3.1-flash-lite', 'cerebras-gpt-oss', 'mistral-small']
+2026-07-25 01:20:14 | INFO     | main | [req_3dc935f619ed] Incoming query | user=vineet_benchmark_test | query='What is a vector database in simple terms?'
+2026-07-25 01:20:14 | INFO     | main | [req_3dc935f619ed] Task classified | task_type=factual | query='What is a vector database in simple terms?'
+2026-07-25 01:20:14 | INFO     | main | [req_3dc935f619ed] Calling 3 models in parallel
+2026-07-25 01:20:14 | WARNING  | main | [req_3dc935f619ed] Model FAILED  | model=cerebras-gpt-oss | error=No API key set for cerebras-gpt-oss — add it to your .env file.
+2026-07-25 01:20:17 | INFO     | main | [req_3dc935f619ed] Model OK      | model=mistral-small | latency=2489ms
+2026-07-25 01:20:18 | INFO     | main | [req_3dc935f619ed] Model OK      | model=gemini-3.1-flash-lite | latency=3491ms
+2026-07-25 01:20:28 | DEBUG    | main | [req_3dc935f619ed] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-25 01:20:28 | DEBUG    | main | [req_3dc935f619ed] RCKS | model=mistral-small | R=1.000 C=0.850 K=1.000 S=0.800 | score=0.9325 | tier=HIGH
+2026-07-25 01:20:28 | DEBUG    | main | [req_3dc935f619ed] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=1.000 K=1.000 S=0.400 | score=0.9100 | tier=HIGH
+2026-07-25 01:20:28 | DEBUG    | main | [req_3dc935f619ed] Fusion weights | {'mistral-small': 0.4795, 'gemini-3.1-flash-lite': 0.5205} | agreement=0.8828
+2026-07-25 01:20:33 | INFO     | main | [req_3dc935f619ed] Pipeline complete | task=factual | response_len=2332 chars | total=19124.29ms
+2026-07-25 01:20:56 | INFO     | main | [req_d7de2143d727] Incoming query | user=vineet_benchmark_test | query='What is a vector database in simple terms?'
+2026-07-25 01:20:56 | INFO     | main | [req_d7de2143d727] Task classified | task_type=factual | query='What is a vector database in simple terms?'
+2026-07-25 01:20:56 | INFO     | main | [req_d7de2143d727] Calling 3 models in parallel
+2026-07-25 01:20:56 | WARNING  | main | [req_d7de2143d727] Model FAILED  | model=cerebras-gpt-oss | error=No API key set for cerebras-gpt-oss — add it to your .env file.
+2026-07-25 01:20:58 | INFO     | main | [req_d7de2143d727] Model OK      | model=mistral-small | latency=2388ms
+2026-07-25 01:20:59 | INFO     | main | [req_d7de2143d727] Model OK      | model=gemini-3.1-flash-lite | latency=3343ms
+2026-07-25 01:21:15 | DEBUG    | main | [req_d7de2143d727] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-25 01:21:15 | DEBUG    | main | [req_d7de2143d727] RCKS | model=mistral-small | R=1.000 C=0.925 K=1.000 S=0.400 | score=0.8914 | tier=HIGH
+2026-07-25 01:21:15 | DEBUG    | main | [req_d7de2143d727] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=1.000 K=1.000 S=0.400 | score=0.9100 | tier=HIGH
+2026-07-25 01:21:15 | DEBUG    | main | [req_d7de2143d727] Fusion weights | {'mistral-small': 0.4774, 'gemini-3.1-flash-lite': 0.5226} | agreement=0.8696
+2026-07-25 01:21:24 | INFO     | main | [req_d7de2143d727] Pipeline complete | task=factual | response_len=2599 chars | total=28302.95ms
+2026-07-25 01:24:08 | INFO     | main | [req_af0e35d5a590] Incoming query | user=vineet_benchmark_test | query='write a four line poem on oceans'
+2026-07-25 01:24:08 | INFO     | main | [req_af0e35d5a590] Task classified | task_type=creative | query='write a four line poem on oceans'
+2026-07-25 01:24:08 | INFO     | main | [req_af0e35d5a590] Calling 3 models in parallel
+2026-07-25 01:24:08 | WARNING  | main | [req_af0e35d5a590] Model FAILED  | model=cerebras-gpt-oss | error=No API key set for cerebras-gpt-oss — add it to your .env file.
+2026-07-25 01:24:08 | INFO     | main | [req_af0e35d5a590] Model OK      | model=mistral-small | latency=735ms
+2026-07-25 01:24:09 | INFO     | main | [req_af0e35d5a590] Model OK      | model=gemini-3.1-flash-lite | latency=1114ms
+2026-07-25 01:24:10 | DEBUG    | main | [req_af0e35d5a590] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-25 01:24:10 | DEBUG    | main | [req_af0e35d5a590] RCKS | model=mistral-small | R=1.000 C=1.000 K=0.101 S=1.000 | score=0.7302 | tier=MEDIUM
+2026-07-25 01:24:10 | DEBUG    | main | [req_af0e35d5a590] RCKS | model=gemini-3.1-flash-lite | R=0.881 C=1.000 K=0.136 S=1.000 | score=0.7051 | tier=MEDIUM
+2026-07-25 01:24:10 | DEBUG    | main | [req_af0e35d5a590] Fusion weights | {'mistral-small': 0.5517, 'gemini-3.1-flash-lite': 0.4483} | agreement=0.6706
+2026-07-25 01:24:10 | INFO     | main | [req_af0e35d5a590] Pipeline complete | task=creative | response_len=177 chars | total=2280.14ms
+2026-07-25 01:24:23 | INFO     | main | [req_ddfad3b850f1] Incoming query | user=vineet_benchmark_test | query='write a four line poem on oceans'
+2026-07-25 01:24:23 | INFO     | main | [req_ddfad3b850f1] Task classified | task_type=creative | query='write a four line poem on oceans'
+2026-07-25 01:24:23 | INFO     | main | [req_ddfad3b850f1] Calling 3 models in parallel
+2026-07-25 01:24:23 | WARNING  | main | [req_ddfad3b850f1] Model FAILED  | model=cerebras-gpt-oss | error=No API key set for cerebras-gpt-oss — add it to your .env file.
+2026-07-25 01:24:23 | INFO     | main | [req_ddfad3b850f1] Model OK      | model=mistral-small | latency=739ms
+2026-07-25 01:24:24 | INFO     | main | [req_ddfad3b850f1] Model OK      | model=gemini-3.1-flash-lite | latency=1287ms
+2026-07-25 01:24:25 | DEBUG    | main | [req_ddfad3b850f1] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-25 01:24:25 | DEBUG    | main | [req_ddfad3b850f1] RCKS | model=mistral-small | R=1.000 C=1.000 K=0.746 S=1.000 | score=0.9239 | tier=HIGH
+2026-07-25 01:24:25 | DEBUG    | main | [req_ddfad3b850f1] RCKS | model=gemini-3.1-flash-lite | R=0.957 C=0.750 K=0.122 S=1.000 | score=0.6613 | tier=MEDIUM
+2026-07-25 01:24:25 | DEBUG    | main | [req_ddfad3b850f1] Fusion weights | {'mistral-small': 0.5685, 'gemini-3.1-flash-lite': 0.4315} | agreement=0.6671
+2026-07-25 01:24:25 | INFO     | main | [req_ddfad3b850f1] Pipeline complete | task=creative | response_len=177 chars | total=1886.97ms
+2026-07-25 16:02:44 | INFO     | pipeline_logger | Logger initialised — writing to logs/pipeline.log
+2026-07-25 16:02:44 | INFO     | main | AQQAI v4.0.0 started — Bayesian store ready (5 models loaded)
+2026-07-25 16:02:44 | INFO     | main | Registered models: ['gemini-3.1-flash-lite', 'cerebras-gpt-oss', 'mistral-small']
+2026-07-25 16:03:57 | INFO     | main | [req_011f80cc3280] Incoming query | user=vineet_final_test | query='What is a vector database in simple terms?'
+2026-07-25 16:03:57 | INFO     | main | [req_011f80cc3280] Task classified | task_type=factual | query='What is a vector database in simple terms?'
+2026-07-25 16:03:57 | INFO     | main | [req_011f80cc3280] Calling 3 models in parallel
+2026-07-25 16:03:57 | WARNING  | main | [req_011f80cc3280] Model FAILED  | model=cerebras-gpt-oss | error=No API key set for cerebras-gpt-oss — add it to your .env file.
+2026-07-25 16:04:00 | INFO     | main | [req_011f80cc3280] Model OK      | model=gemini-3.1-flash-lite | latency=3153ms
+2026-07-25 16:04:00 | INFO     | main | [req_011f80cc3280] Model OK      | model=mistral-small | latency=3086ms
+2026-07-25 16:04:12 | DEBUG    | main | [req_011f80cc3280] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-25 16:04:12 | DEBUG    | main | [req_011f80cc3280] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.947 K=1.000 S=0.600 | score=0.4266 | tier=LOW
+2026-07-25 16:04:12 | DEBUG    | main | [req_011f80cc3280] RCKS | model=mistral-small | R=1.000 C=1.000 K=1.000 S=1.000 | score=1.0000 | tier=HIGH
+2026-07-25 16:04:12 | DEBUG    | main | [req_011f80cc3280] Fusion weights | {'gemini-3.1-flash-lite': 0.4413, 'mistral-small': 0.5587} | agreement=0.8415
+2026-07-25 16:04:22 | INFO     | main | [req_011f80cc3280] Pipeline complete | task=factual | response_len=2250 chars | total=24553.08ms
+2026-07-25 16:09:19 | INFO     | main | [req_efbf7e63e7f0] Incoming query | user=vineet_final_test | query='What is a vector database in simple terms?'
+2026-07-25 16:09:19 | INFO     | main | [req_efbf7e63e7f0] Task classified | task_type=factual | query='What is a vector database in simple terms?'
+2026-07-25 16:09:19 | INFO     | main | [req_efbf7e63e7f0] Calling 3 models in parallel
+2026-07-25 16:09:19 | WARNING  | main | [req_efbf7e63e7f0] Model FAILED  | model=cerebras-gpt-oss | error=No API key set for cerebras-gpt-oss — add it to your .env file.
+2026-07-25 16:09:22 | INFO     | main | [req_efbf7e63e7f0] Model OK      | model=mistral-small | latency=3000ms
+2026-07-25 16:09:23 | INFO     | main | [req_efbf7e63e7f0] Model OK      | model=gemini-3.1-flash-lite | latency=3233ms
+2026-07-25 16:09:35 | DEBUG    | main | [req_efbf7e63e7f0] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-25 16:09:35 | DEBUG    | main | [req_efbf7e63e7f0] RCKS | model=mistral-small | R=1.000 C=0.850 K=1.000 S=0.600 | score=0.9025 | tier=HIGH
+2026-07-25 16:09:35 | DEBUG    | main | [req_efbf7e63e7f0] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=1.000 K=1.000 S=0.400 | score=0.9100 | tier=HIGH
+2026-07-25 16:09:36 | DEBUG    | main | [req_efbf7e63e7f0] Fusion weights | {'mistral-small': 0.5579, 'gemini-3.1-flash-lite': 0.4421} | agreement=0.8271
+2026-07-25 16:09:46 | INFO     | main | [req_efbf7e63e7f0] Pipeline complete | task=factual | response_len=2372 chars | total=27093.57ms
+2026-07-25 16:26:56 | INFO     | main | Shutdown — Bayesian priors saved to priors.json
+2026-07-25 16:28:24 | INFO     | pipeline_logger | Logger initialised — writing to logs/pipeline.log
+2026-07-25 16:28:24 | INFO     | main | AQQAI v4.0.0 started — Bayesian store ready (5 models loaded)
+2026-07-25 16:28:24 | INFO     | main | Registered models: ['gemini-3.1-flash-lite', 'cerebras-gpt-oss', 'mistral-small']
+2026-07-25 16:29:34 | INFO     | main | [req_6b622463bb71] Incoming query | user=vineet_final_test | query='What is a vector database in simple terms?'
+2026-07-25 16:29:34 | INFO     | main | [req_6b622463bb71] Task classified | task_type=factual | query='What is a vector database in simple terms?'
+2026-07-25 16:29:34 | INFO     | main | [req_6b622463bb71] Calling 3 models in parallel
+2026-07-25 16:29:34 | WARNING  | main | [req_6b622463bb71] Model FAILED  | model=cerebras-gpt-oss | error=No API key set for cerebras-gpt-oss — add it to your .env file.
+2026-07-25 16:29:37 | INFO     | main | [req_6b622463bb71] Model OK      | model=mistral-small | latency=3035ms
+2026-07-25 16:29:38 | INFO     | main | [req_6b622463bb71] Model OK      | model=gemini-3.1-flash-lite | latency=3255ms
+2026-07-25 16:29:50 | DEBUG    | main | [req_6b622463bb71] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-25 16:29:50 | DEBUG    | main | [req_6b622463bb71] RCKS | model=mistral-small | R=1.000 C=0.850 K=1.000 S=0.800 | score=0.9325 | tier=HIGH
+2026-07-25 16:29:50 | DEBUG    | main | [req_6b622463bb71] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.974 K=1.000 S=0.400 | score=0.9036 | tier=HIGH
+2026-07-25 16:29:50 | DEBUG    | main | [req_6b622463bb71] Fusion weights | {'mistral-small': 0.561, 'gemini-3.1-flash-lite': 0.439} | agreement=0.8634
+2026-07-25 16:29:58 | INFO     | main | [req_6b622463bb71] Pipeline complete | task=factual | response_len=1909 chars | total=23477.51ms
+2026-07-25 16:30:05 | INFO     | main | [req_3ca7d6278f84] Incoming query | user=vineet_final_test | query='What is a vector database in simple terms?'
+2026-07-25 16:30:05 | INFO     | main | [req_3ca7d6278f84] Task classified | task_type=factual | query='What is a vector database in simple terms?'
+2026-07-25 16:30:05 | INFO     | main | [req_3ca7d6278f84] Calling 3 models in parallel
+2026-07-25 16:30:05 | WARNING  | main | [req_3ca7d6278f84] Model FAILED  | model=cerebras-gpt-oss | error=No API key set for cerebras-gpt-oss — add it to your .env file.
+2026-07-25 16:30:07 | INFO     | main | [req_3ca7d6278f84] Model OK      | model=mistral-small | latency=2231ms
+2026-07-25 16:30:08 | INFO     | main | [req_3ca7d6278f84] Model OK      | model=gemini-3.1-flash-lite | latency=3419ms
+2026-07-25 16:30:26 | DEBUG    | main | [req_3ca7d6278f84] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-25 16:30:26 | DEBUG    | main | [req_3ca7d6278f84] RCKS | model=mistral-small | R=1.000 C=0.791 K=1.000 S=0.400 | score=0.8578 | tier=HIGH
+2026-07-25 16:30:26 | DEBUG    | main | [req_3ca7d6278f84] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=1.000 K=1.000 S=0.400 | score=0.9100 | tier=HIGH
+2026-07-25 16:30:26 | DEBUG    | main | [req_3ca7d6278f84] Fusion weights | {'mistral-small': 0.5551, 'gemini-3.1-flash-lite': 0.4449} | agreement=0.8415
+2026-07-25 16:30:33 | INFO     | main | [req_3ca7d6278f84] Pipeline complete | task=factual | response_len=1763 chars | total=27986.82ms
+2026-07-25 16:36:13 | INFO     | main | Shutdown — Bayesian priors saved to priors.json
+2026-07-25 16:37:14 | INFO     | pipeline_logger | Logger initialised — writing to logs/pipeline.log
+2026-07-25 16:37:14 | INFO     | main | AQQAI v4.0.0 started — Bayesian store ready (5 models loaded)
+2026-07-25 16:37:14 | INFO     | main | Registered models: ['gemini-3.1-flash-lite', 'cerebras-gpt-oss', 'mistral-small']
+2026-07-25 16:38:36 | INFO     | main | [req_00f3a9ef0c7b] Incoming query | user=vineet_test | query='What is the capital of Japan?'
+2026-07-25 16:38:36 | INFO     | main | [req_00f3a9ef0c7b] Task classified | task_type=factual | query='What is the capital of Japan?'
+2026-07-25 16:38:36 | INFO     | main | [req_00f3a9ef0c7b] Calling 3 models in parallel
+2026-07-25 16:38:36 | WARNING  | main | [req_00f3a9ef0c7b] Model FAILED  | model=cerebras-gpt-oss | error=HTTP 402 from cerebras-gpt-oss — check account credits/billing
+2026-07-25 16:38:37 | INFO     | main | [req_00f3a9ef0c7b] Model OK      | model=mistral-small | latency=743ms
+2026-07-25 16:38:37 | INFO     | main | [req_00f3a9ef0c7b] Model OK      | model=gemini-3.1-flash-lite | latency=1505ms
+2026-07-25 16:38:38 | DEBUG    | main | [req_00f3a9ef0c7b] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-25 16:38:38 | DEBUG    | main | [req_00f3a9ef0c7b] RCKS | model=mistral-small | R=1.000 C=1.000 K=0.794 S=1.000 | score=0.9383 | tier=HIGH
+2026-07-25 16:38:38 | DEBUG    | main | [req_00f3a9ef0c7b] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.750 K=0.676 S=1.000 | score=0.8404 | tier=MEDIUM
+2026-07-25 16:38:38 | DEBUG    | main | [req_00f3a9ef0c7b] Fusion weights | {'mistral-small': 0.566, 'gemini-3.1-flash-lite': 0.434} | agreement=0.8311
+2026-07-25 16:38:38 | INFO     | main | [req_00f3a9ef0c7b] Pipeline complete | task=factual | response_len=187 chars | total=2577.57ms
+2026-07-25 16:38:38 | INFO     | main | [score_e50c66e00ea2] Manual score request | task_type=factual | model_id=manual_test_case | query='What is the capital of Japan?'
+2026-07-25 16:38:39 | DEBUG    | main | [score_e50c66e00ea2] Manual score result | {'model_id': 'manual_test_case', 'relevance': 1.0, 'coherence': 1.0, 'completeness': 0.7944, 'consistency': 1.0, 'weighted_score': 0.9383, 'confidence_tier': 'HIGH', 'latency_ms': 0.0, 'success': True, 'error': None, 'layer2_factual': {'penalty': 0.0, 'hedge_flags': [], 'numerical_flags': [], 'hedge_count': 0, 'numerical_conflict_count': 0}, 'content': "The capital of Japan is **Tokyo**. It is the largest city in Japan and serves as the country's political, economic, and cultural center.\n\nWould you like to know more about Tokyo or Japan?"}
+2026-07-25 16:38:39 | INFO     | main | [req_d0b395f2ff57] Incoming query | user=vineet_test | query="Summarize in one sentence: 'The library was filled with students preparing for e"
+2026-07-25 16:38:39 | INFO     | main | [req_d0b395f2ff57] Task classified | task_type=coding | query="Summarize in one sentence: 'The library was filled with students preparing for e"
+2026-07-25 16:38:39 | INFO     | main | [req_d0b395f2ff57] Calling 3 models in parallel
+2026-07-25 16:38:39 | WARNING  | main | [req_d0b395f2ff57] Model FAILED  | model=cerebras-gpt-oss | error=HTTP 402 from cerebras-gpt-oss — check account credits/billing
+2026-07-25 16:38:40 | INFO     | main | [req_d0b395f2ff57] Model OK      | model=mistral-small | latency=580ms
+2026-07-25 16:38:40 | INFO     | main | [req_d0b395f2ff57] Model OK      | model=gemini-3.1-flash-lite | latency=1134ms
+2026-07-25 16:38:40 | DEBUG    | main | [req_d0b395f2ff57] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-25 16:38:40 | DEBUG    | main | [req_d0b395f2ff57] RCKS | model=mistral-small | R=1.000 C=0.750 K=0.709 S=1.000 | score=0.6503 | tier=MEDIUM
+2026-07-25 16:38:40 | DEBUG    | main | [req_d0b395f2ff57] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.750 K=0.368 S=1.000 | score=0.5479 | tier=LOW
+2026-07-25 16:38:40 | DEBUG    | main | [req_d0b395f2ff57] Fusion weights | {'mistral-small': 0.5369, 'gemini-3.1-flash-lite': 0.4631} | agreement=0.6969
+2026-07-25 16:38:40 | INFO     | main | [req_d0b395f2ff57] Pipeline complete | task=coding | response_len=135 chars | total=1381.73ms
+2026-07-25 16:38:40 | INFO     | main | [score_12a067477b1a] Manual score request | task_type=summary | model_id=manual_test_case | query="Summarize in one sentence: 'The library was filled with students preparing for e"
+2026-07-25 16:38:40 | DEBUG    | main | [score_12a067477b1a] Manual score result | {'model_id': 'manual_test_case', 'relevance': 1.0, 'coherence': 0.75, 'completeness': 0.7092, 'consistency': 1.0, 'weighted_score': 0.8503, 'confidence_tier': 'HIGH', 'latency_ms': 0.0, 'success': True, 'error': None, 'content': 'Students in the library were studying for exams—some read quietly, others typed on laptops, and a few discussed notes in hushed voices.'}
+2026-07-25 16:38:40 | INFO     | main | [req_a06c72ae5e26] Incoming query | user=vineet_test | query='Give a creative analogy explaining how a neural network learns, for a 10-year-ol'
+2026-07-25 16:38:40 | INFO     | main | [req_a06c72ae5e26] Task classified | task_type=creative | query='Give a creative analogy explaining how a neural network learns, for a 10-year-ol'
+2026-07-25 16:38:40 | INFO     | main | [req_a06c72ae5e26] Calling 3 models in parallel
+2026-07-25 16:38:41 | WARNING  | main | [req_a06c72ae5e26] Model FAILED  | model=cerebras-gpt-oss | error=HTTP 402 from cerebras-gpt-oss — check account credits/billing
+2026-07-25 16:38:43 | INFO     | main | [req_a06c72ae5e26] Model OK      | model=mistral-small | latency=2931ms
+2026-07-25 16:38:44 | INFO     | main | [req_a06c72ae5e26] Model OK      | model=gemini-3.1-flash-lite | latency=3240ms
+2026-07-25 16:38:59 | DEBUG    | main | [req_a06c72ae5e26] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-25 16:38:59 | DEBUG    | main | [req_a06c72ae5e26] RCKS | model=mistral-small | R=1.000 C=1.000 K=1.000 S=0.400 | score=0.9100 | tier=HIGH
+2026-07-25 16:38:59 | DEBUG    | main | [req_a06c72ae5e26] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=1.000 K=1.000 S=0.400 | score=0.9100 | tier=HIGH
+2026-07-25 16:38:59 | DEBUG    | main | [req_a06c72ae5e26] Fusion weights | {'mistral-small': 0.5685, 'gemini-3.1-flash-lite': 0.4315} | agreement=0.6125
+2026-07-25 16:39:07 | INFO     | main | [req_a06c72ae5e26] Pipeline complete | task=creative | response_len=2219 chars | total=26916.48ms
+2026-07-25 16:39:07 | INFO     | main | [score_0bd2ad875e64] Manual score request | task_type=creative | model_id=manual_test_case | query='Give a creative analogy explaining how a neural network learns, for a 10-year-ol'
+2026-07-25 16:39:14 | DEBUG    | main | [score_0bd2ad875e64] Manual score result | {'model_id': 'manual_test_case', 'relevance': 1.0, 'coherence': 1.0, 'completeness': 1.0, 'consistency': 0.4, 'weighted_score': 0.91, 'confidence_tier': 'HIGH', 'latency_ms': 0.0, 'success': True, 'error': None, 'content': 'Sure! Here’s a fun analogy to explain how a neural network learns:\n\n**Imagine a neural network is like a team of detectives trying to solve a mystery.**\n\n1. **The Clues (Input Data):** The detectives start with pieces of information—like fingerprints, footprints, or witness statements. This is like the data you feed into a neural network (pictures, words, numbers, etc.).\n\n2. **The Brainstorming (Weights & Layers):** Each detective has a special power (like matching fingerprints or analyzing footprints). These powers are like the "weights" in a neural network—some clues are more important than others. The detectives work together in layers (like a detective agency with different teams) to piece together the mystery.\n\n3. **Making Mistakes (Errors):** Sometimes the detectives guess wrong—like blaming the wrong suspect. The neural network does the same thing at first! It makes mistakes and gets feedback (like a teacher correcting it).\n\n4. **Learning from Feedback (Backpropagation):** The head detective (like a teacher) tells the team, *"No, the real clue was the footprint!"* The neural network adjusts its weights to get better next time—just like the detectives improve their skills.\n\n5. **Getting Smarter (Training):** After practicing with many mysteries, the detectives (neural network) become really good at solving them. They recognize patterns faster and make fewer mistakes.\n\n**Final Thought:** Just like detectives get better with practice, a neural network learns by making mistakes and improving—until it becomes a pro at recognizing things, like cats in photos or words in sentences!\n\nWould you like another analogy, maybe with baking or sports? 😊\n\n### Additional Insights\n* Imagine you are trying to teach a **blindfolded robot** how to sort colorful LEGO bricks into different bins.\n\nThe robot has no idea what colors are, so at first, it just grabs bricks and tosses them randomly into bins.\n* Most of the time, the blue brick ends up in the yellow bin, and the red brick ends up in the green bin.\n* It’s a total mess!\n\nHere is how the robot learns, step-by-step:\n\n### 1.\n* The "Oops!" Moment (The Error)\nEvery time the robot drops a brick into the wrong bin, you stand there with a whistle.'}
+2026-07-25 16:39:14 | INFO     | main | [req_3456af28e32b] Incoming query | user=vineet_test | query='Write a 3-line poem about the ocean.'
+2026-07-25 16:39:14 | INFO     | main | [req_3456af28e32b] Task classified | task_type=creative | query='Write a 3-line poem about the ocean.'
+2026-07-25 16:39:14 | INFO     | main | [req_3456af28e32b] Calling 3 models in parallel
+2026-07-25 16:39:15 | WARNING  | main | [req_3456af28e32b] Model FAILED  | model=cerebras-gpt-oss | error=HTTP 402 from cerebras-gpt-oss — check account credits/billing
+2026-07-25 16:39:15 | INFO     | main | [req_3456af28e32b] Model OK      | model=mistral-small | latency=910ms
+2026-07-25 16:39:15 | INFO     | main | [req_3456af28e32b] Model OK      | model=gemini-3.1-flash-lite | latency=1200ms
+2026-07-25 16:39:16 | DEBUG    | main | [req_3456af28e32b] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-25 16:39:16 | DEBUG    | main | [req_3456af28e32b] RCKS | model=mistral-small | R=1.000 C=0.750 K=0.070 S=1.000 | score=0.6585 | tier=MEDIUM
+2026-07-25 16:39:16 | DEBUG    | main | [req_3456af28e32b] RCKS | model=gemini-3.1-flash-lite | R=0.956 C=0.750 K=0.083 S=1.000 | score=0.6491 | tier=MEDIUM
+2026-07-25 16:39:16 | DEBUG    | main | [req_3456af28e32b] Fusion weights | {'mistral-small': 0.5692, 'gemini-3.1-flash-lite': 0.4308} | agreement=0.5665
+2026-07-25 16:39:16 | INFO     | main | [req_3456af28e32b] Pipeline complete | task=creative | response_len=104 chars | total=1433.79ms
+2026-07-25 16:39:16 | INFO     | main | [score_1e7fe2707b75] Manual score request | task_type=creative | model_id=manual_test_case | query='Write a 3-line poem about the ocean.'
+2026-07-25 16:39:16 | DEBUG    | main | [score_1e7fe2707b75] Manual score result | {'model_id': 'manual_test_case', 'relevance': 1.0, 'coherence': 0.75, 'completeness': 0.07, 'consistency': 1.0, 'weighted_score': 0.6585, 'confidence_tier': 'MEDIUM', 'latency_ms': 0.0, 'success': True, 'error': None, 'content': 'Waves hum lullabies to the moon,\nSalt-kissed winds weave dreams in tune,\nEndless blue—my heart’s lagoon.'}
+2026-07-25 16:39:16 | INFO     | main | [req_98652459576d] Incoming query | user=vineet_test | query='Why do leaves change color in autumn?'
+2026-07-25 16:39:16 | INFO     | main | [req_98652459576d] Task classified | task_type=reasoning | query='Why do leaves change color in autumn?'
+2026-07-25 16:39:16 | INFO     | main | [req_98652459576d] Calling 3 models in parallel
+2026-07-25 16:39:16 | WARNING  | main | [req_98652459576d] Model FAILED  | model=cerebras-gpt-oss | error=HTTP 402 from cerebras-gpt-oss — check account credits/billing
+2026-07-25 16:39:19 | INFO     | main | [req_98652459576d] Model OK      | model=mistral-small | latency=2871ms
+2026-07-25 16:39:19 | INFO     | main | [req_98652459576d] Model OK      | model=gemini-3.1-flash-lite | latency=3493ms
+2026-07-25 16:39:32 | DEBUG    | main | [req_98652459576d] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-25 16:39:32 | DEBUG    | main | [req_98652459576d] RCKS | model=mistral-small | R=1.000 C=0.850 K=1.000 S=0.600 | score=0.9025 | tier=HIGH
+2026-07-25 16:39:32 | DEBUG    | main | [req_98652459576d] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.850 K=1.000 S=0.600 | score=0.9025 | tier=HIGH
+2026-07-25 16:39:32 | DEBUG    | main | [req_98652459576d] Fusion weights | {'mistral-small': 0.547, 'gemini-3.1-flash-lite': 0.453} | agreement=0.7953
+2026-07-25 16:39:43 | INFO     | main | [req_98652459576d] Pipeline complete | task=reasoning | response_len=2430 chars | total=27037.1ms
+2026-07-25 16:39:43 | INFO     | main | [score_4703a00a2325] Manual score request | task_type=factual | model_id=manual_test_case | query='Why do leaves change color in autumn?'
+2026-07-25 16:39:49 | DEBUG    | main | [score_4703a00a2325] Manual score result | {'model_id': 'manual_test_case', 'relevance': 1.0, 'coherence': 0.85, 'completeness': 1.0, 'consistency': 0.6, 'weighted_score': 0.7525, 'confidence_tier': 'MEDIUM', 'latency_ms': 0.0, 'success': True, 'error': None, 'layer2_factual': {'penalty': 0.15, 'hedge_flags': [], 'numerical_flags': ["numerical conflict: '1' in different contexts — 'Here’s a step-by-step explanation:\n\n1.' vs 'eakdown of why and how it happens:\n\n### 1.'"], 'hedge_count': 0, 'numerical_conflict_count': 1}, 'content': 'Leaves change color in autumn due to a combination of factors related to the breakdown of chlorophyll and the unmasking of other pigments. Here’s a step-by-step explanation:\n\n1. **Chlorophyll Breakdown**:\n   - During the growing season, leaves are green because of **chlorophyll**, the pigment that absorbs sunlight to drive photosynthesis.\n   - As days shorten and temperatures drop, chlorophyll production slows down and eventually stops.\n   - The existing chlorophyll breaks down, revealing other pigments that were present but masked by the green chlorophyll.\n\n2. **Other Pigments Revealed**:\n   - **Carotenoids** (yellow and orange pigments) are present in the leaf year-round but are usually hidden by chlorophyll. They become visible as chlorophyll fades.\n   - **Anthocyanins** (red and purple pigments) are produced in some leaves in the fall, influenced by factors like sugar accumulation and bright light. These pigments are not always present but can enhance the reds and purples seen in some trees (e.g., maples).\n\n3. **Environmental Triggers**:\n   - Cooler temperatures and shorter daylight hours signal the tree to prepare for winter.\n   - The tree begins to form a **corky layer** (abscission layer) at the base of the leaf stem, which eventually causes the leaf to detach. While the leaf is still attached, it continues to produce and break down pigments.\n\n4. **Nutrient Recycling**:\n   - The tree reabsorbs nutrients (like nitrogen and phosphorus) from the leaf before it falls, which contributes to the color change process.\n\n### Summary:\nThe vibrant fall colors are the result of chlorophyll fading, allowing carotenoids (yellows and oranges) to show, and sometimes anthocyanins (reds and purples) forming in response to environmental conditions. The process is a natural part of the tree’s preparation for winter dormancy.\n\nWould you like details on why some trees turn red while others turn yellow?\n\n### Additional Insights\n* It is essentially a process of the tree "shutting down" for the winter.\n\nHere is the step-by-step breakdown of why and how it happens:\n\n### 1.\n* Chlorophyll is the chemical that allows plants to perform photosynthesis—turning sunlight into food.\n* Because the tree is constantly producing new chlorophyll, the green color remains dominant all summer long.\n\n### 2.\n* The Trigger: Less Light and Cooler Temperatures\nAs autumn approaches, the days get shorter and the nights get longer.'}
+2026-07-25 16:39:51 | INFO     | main | [req_a15821d23677] Incoming query | user=vineet_test | query='What is the capital of Japan?'
+2026-07-25 16:39:51 | INFO     | main | [req_a15821d23677] Task classified | task_type=factual | query='What is the capital of Japan?'
+2026-07-25 16:39:51 | INFO     | main | [req_a15821d23677] Calling 3 models in parallel
+2026-07-25 16:39:51 | WARNING  | main | [req_a15821d23677] Model FAILED  | model=cerebras-gpt-oss | error=HTTP 402 from cerebras-gpt-oss — check account credits/billing
+2026-07-25 16:39:52 | INFO     | main | [req_a15821d23677] Model OK      | model=mistral-small | latency=791ms
+2026-07-25 16:39:52 | INFO     | main | [req_a15821d23677] Model OK      | model=gemini-3.1-flash-lite | latency=1079ms
+2026-07-25 16:39:53 | DEBUG    | main | [req_a15821d23677] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-25 16:39:53 | DEBUG    | main | [req_a15821d23677] RCKS | model=mistral-small | R=1.000 C=1.000 K=0.838 S=1.000 | score=0.9514 | tier=HIGH
+2026-07-25 16:39:53 | DEBUG    | main | [req_a15821d23677] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.750 K=0.676 S=1.000 | score=0.8404 | tier=MEDIUM
+2026-07-25 16:39:53 | DEBUG    | main | [req_a15821d23677] Fusion weights | {'mistral-small': 0.5781, 'gemini-3.1-flash-lite': 0.4219} | agreement=0.8454
+2026-07-25 16:39:54 | INFO     | main | [req_a15821d23677] Pipeline complete | task=factual | response_len=249 chars | total=2746.2ms
+2026-07-25 16:39:54 | INFO     | main | [score_9dde17399539] Manual score request | task_type=factual | model_id=manual_test_case | query='What is the capital of Japan?'
+2026-07-25 16:39:55 | DEBUG    | main | [score_9dde17399539] Manual score result | {'model_id': 'manual_test_case', 'relevance': 1.0, 'coherence': 1.0, 'completeness': 0.8381, 'consistency': 1.0, 'weighted_score': 0.9514, 'confidence_tier': 'HIGH', 'latency_ms': 0.0, 'success': True, 'error': None, 'layer2_factual': {'penalty': 0.0, 'hedge_flags': [], 'numerical_flags': [], 'hedge_count': 0, 'numerical_conflict_count': 0}, 'content': "The capital of Japan is **Tokyo**. It is the largest city in Japan and serves as the country's political, economic, and cultural center.\n\nFun fact: Tokyo was formerly known as **Edo** until it was renamed in 1868 when it became the imperial capital."}
+2026-07-25 16:39:55 | INFO     | main | [req_b573b3b2e7b9] Incoming query | user=vineet_test | query="Summarize in one sentence: 'The library was filled with students preparing for e"
+2026-07-25 16:39:55 | INFO     | main | [req_b573b3b2e7b9] Task classified | task_type=coding | query="Summarize in one sentence: 'The library was filled with students preparing for e"
+2026-07-25 16:39:55 | INFO     | main | [req_b573b3b2e7b9] Calling 3 models in parallel
+2026-07-25 16:39:55 | WARNING  | main | [req_b573b3b2e7b9] Model FAILED  | model=cerebras-gpt-oss | error=HTTP 402 from cerebras-gpt-oss — check account credits/billing
+2026-07-25 16:39:56 | INFO     | main | [req_b573b3b2e7b9] Model OK      | model=mistral-small | latency=642ms
+2026-07-25 16:39:56 | INFO     | main | [req_b573b3b2e7b9] Model OK      | model=gemini-3.1-flash-lite | latency=1117ms
+2026-07-25 16:39:56 | DEBUG    | main | [req_b573b3b2e7b9] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-25 16:39:56 | DEBUG    | main | [req_b573b3b2e7b9] RCKS | model=mistral-small | R=1.000 C=0.750 K=0.715 S=1.000 | score=0.6519 | tier=MEDIUM
+2026-07-25 16:39:56 | DEBUG    | main | [req_b573b3b2e7b9] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.750 K=0.371 S=1.000 | score=0.5487 | tier=LOW
+2026-07-25 16:39:57 | DEBUG    | main | [req_b573b3b2e7b9] Fusion weights | {'mistral-small': 0.5913, 'gemini-3.1-flash-lite': 0.4087} | agreement=0.7952
+2026-07-25 16:39:57 | INFO     | main | [req_b573b3b2e7b9] Pipeline complete | task=coding | response_len=158 chars | total=1702.68ms
+2026-07-25 16:39:57 | INFO     | main | [score_73a634bd070d] Manual score request | task_type=summary | model_id=manual_test_case | query="Summarize in one sentence: 'The library was filled with students preparing for e"
+2026-07-25 16:39:57 | DEBUG    | main | [score_73a634bd070d] Manual score result | {'model_id': 'manual_test_case', 'relevance': 1.0, 'coherence': 0.75, 'completeness': 0.7146, 'consistency': 1.0, 'weighted_score': 0.8519, 'confidence_tier': 'HIGH', 'latency_ms': 0.0, 'success': True, 'error': None, 'content': 'The library was bustling with students—some reading quietly, others typing on laptops, and a few discussing notes in hushed voices—as they prepared for exams.'}
+2026-07-25 16:39:57 | INFO     | main | [req_904ad1d2edb5] Incoming query | user=vineet_test | query='Give a creative analogy explaining how a neural network learns, for a 10-year-ol'
+2026-07-25 16:39:57 | INFO     | main | [req_904ad1d2edb5] Task classified | task_type=creative | query='Give a creative analogy explaining how a neural network learns, for a 10-year-ol'
+2026-07-25 16:39:57 | INFO     | main | [req_904ad1d2edb5] Calling 3 models in parallel
+2026-07-25 16:39:57 | WARNING  | main | [req_904ad1d2edb5] Model FAILED  | model=cerebras-gpt-oss | error=HTTP 402 from cerebras-gpt-oss — check account credits/billing
+2026-07-25 16:39:59 | INFO     | main | [req_904ad1d2edb5] Model OK      | model=mistral-small | latency=2406ms
+2026-07-25 16:40:00 | INFO     | main | [req_904ad1d2edb5] Model OK      | model=gemini-3.1-flash-lite | latency=3515ms
+2026-07-25 16:40:13 | DEBUG    | main | [req_904ad1d2edb5] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-25 16:40:13 | DEBUG    | main | [req_904ad1d2edb5] RCKS | model=mistral-small | R=1.000 C=0.833 K=1.000 S=0.600 | score=0.8982 | tier=HIGH
+2026-07-25 16:40:13 | DEBUG    | main | [req_904ad1d2edb5] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.850 K=0.675 S=0.400 | score=0.7750 | tier=MEDIUM
+2026-07-25 16:40:13 | DEBUG    | main | [req_904ad1d2edb5] Fusion weights | {'mistral-small': 0.5766, 'gemini-3.1-flash-lite': 0.4234} | agreement=0.5828
+2026-07-25 16:40:20 | INFO     | main | [req_904ad1d2edb5] Pipeline complete | task=creative | response_len=1722 chars | total=23366.58ms
+2026-07-25 16:40:20 | INFO     | main | [score_4dc514773a32] Manual score request | task_type=creative | model_id=manual_test_case | query='Give a creative analogy explaining how a neural network learns, for a 10-year-ol'
+2026-07-25 16:40:25 | DEBUG    | main | [score_4dc514773a32] Manual score result | {'model_id': 'manual_test_case', 'relevance': 1.0, 'coherence': 0.9306, 'completeness': 1.0, 'consistency': 0.4, 'weighted_score': 0.8926, 'confidence_tier': 'HIGH', 'latency_ms': 0.0, 'success': True, 'error': None, 'content': 'Sure! Here’s a fun analogy to explain how a neural network learns:\n\nImagine a neural network is like a **team of detectives trying to solve a mystery** (like figuring out if a picture shows a cat or a dog).\n\n1. **The Detectives Start Guessers** – At first, the detectives are clueless. They make wild guesses (like "Is it a cat? Maybe a pizza?").\n2. **They Get Clues** – They look at small details (pointy ears, whiskers, furry tail) to help decide.\n3. **They Make Mistakes** – Sometimes they guess wrong (like calling a dog a cat), but that’s okay!\n4. **The Boss Gives Feedback** – A smart boss (the "loss function") tells them when they’re wrong and how to improve.\n5. **They Adjust Their Strategy** – The detectives tweak their clues (weights) to get better next time (like paying more attention to tails).\n6. **They Get Smarter** – After many cases, they become really good at spotting cats vs. dogs!\n\nJust like the detectives, the neural network learns by **making mistakes, getting feedback, and improving**—until it’s a super-sleuth at solving problems!\n\nWould you like another analogy with a different theme? 😊\n\n### Additional Insights\n* Imagine you have a **"Robot Chef"** who wants to learn how to bake the world’s most delicious chocolate chip cookie, but he has never been in a kitchen before.\n\nHere is how he learns, step-by-step, just like a neural network:\n\n### 1.\n* The Guess (The Forward Pass)\nThe robot stands in the kitchen with a pile of ingredients.\n* He doesn’t have a recipe, so he just throws things into a bowl: a cup of flour, a whole onion, a gallon of vinegar, and one chocolate chip.\n* He mixes it up, bakes it, and hands it to you.\n\nYou take one bite, make a disgusted face, and say, **"Yuck!'}
+2026-07-25 16:40:25 | INFO     | main | [req_e46ead656a4c] Incoming query | user=vineet_test | query='Write a 3-line poem about the ocean.'
+2026-07-25 16:40:25 | INFO     | main | [req_e46ead656a4c] Task classified | task_type=creative | query='Write a 3-line poem about the ocean.'
+2026-07-25 16:40:25 | INFO     | main | [req_e46ead656a4c] Calling 3 models in parallel
+2026-07-25 16:40:26 | WARNING  | main | [req_e46ead656a4c] Model FAILED  | model=cerebras-gpt-oss | error=HTTP 402 from cerebras-gpt-oss — check account credits/billing
+2026-07-25 16:40:26 | INFO     | main | [req_e46ead656a4c] Model OK      | model=mistral-small | latency=910ms
+2026-07-25 16:40:27 | INFO     | main | [req_e46ead656a4c] Model OK      | model=gemini-3.1-flash-lite | latency=1271ms
+2026-07-25 16:40:27 | DEBUG    | main | [req_e46ead656a4c] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-25 16:40:27 | DEBUG    | main | [req_e46ead656a4c] RCKS | model=mistral-small | R=1.000 C=0.750 K=0.057 S=1.000 | score=0.6546 | tier=MEDIUM
+2026-07-25 16:40:27 | DEBUG    | main | [req_e46ead656a4c] RCKS | model=gemini-3.1-flash-lite | R=0.891 C=0.750 K=0.092 S=1.000 | score=0.6325 | tier=MEDIUM
+2026-07-25 16:40:27 | DEBUG    | main | [req_e46ead656a4c] Fusion weights | {'mistral-small': 0.5783, 'gemini-3.1-flash-lite': 0.4217} | agreement=0.6447
+2026-07-25 16:40:27 | INFO     | main | [req_e46ead656a4c] Pipeline complete | task=creative | response_len=91 chars | total=1470.75ms
+2026-07-25 16:40:27 | INFO     | main | [score_b1be9a404d62] Manual score request | task_type=creative | model_id=manual_test_case | query='Write a 3-line poem about the ocean.'
+2026-07-25 16:40:27 | DEBUG    | main | [score_b1be9a404d62] Manual score result | {'model_id': 'manual_test_case', 'relevance': 1.0, 'coherence': 0.75, 'completeness': 0.0569, 'consistency': 1.0, 'weighted_score': 0.6546, 'confidence_tier': 'MEDIUM', 'latency_ms': 0.0, 'success': True, 'error': None, 'content': 'Waves whisper secrets to the shore,\nEndless blue forevermore,\nDepths hold mysteries untold.'}
+2026-07-25 16:40:27 | INFO     | main | [req_062aa98dc36d] Incoming query | user=vineet_test | query='Why do leaves change color in autumn?'
+2026-07-25 16:40:27 | INFO     | main | [req_062aa98dc36d] Task classified | task_type=reasoning | query='Why do leaves change color in autumn?'
+2026-07-25 16:40:27 | INFO     | main | [req_062aa98dc36d] Calling 3 models in parallel
+2026-07-25 16:40:27 | WARNING  | main | [req_062aa98dc36d] Model FAILED  | model=cerebras-gpt-oss | error=HTTP 402 from cerebras-gpt-oss — check account credits/billing
+2026-07-25 16:40:30 | INFO     | main | [req_062aa98dc36d] Model OK      | model=gemini-3.1-flash-lite | latency=3423ms
+2026-07-25 16:40:31 | INFO     | main | [req_062aa98dc36d] Model OK      | model=mistral-small | latency=4420ms
+2026-07-25 16:40:46 | DEBUG    | main | [req_062aa98dc36d] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-25 16:40:46 | DEBUG    | main | [req_062aa98dc36d] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.850 K=1.000 S=0.400 | score=0.8725 | tier=HIGH
+2026-07-25 16:40:46 | DEBUG    | main | [req_062aa98dc36d] RCKS | model=mistral-small | R=1.000 C=0.850 K=1.000 S=0.400 | score=0.8725 | tier=HIGH
+2026-07-25 16:40:46 | DEBUG    | main | [req_062aa98dc36d] Fusion weights | {'gemini-3.1-flash-lite': 0.453, 'mistral-small': 0.547} | agreement=0.8771
+2026-07-25 16:40:56 | INFO     | main | [req_062aa98dc36d] Pipeline complete | task=reasoning | response_len=3030 chars | total=29205.91ms
+2026-07-25 16:40:56 | INFO     | main | [score_fbb72be377e7] Manual score request | task_type=factual | model_id=manual_test_case | query='Why do leaves change color in autumn?'
+2026-07-25 16:41:06 | DEBUG    | main | [score_fbb72be377e7] Manual score result | {'model_id': 'manual_test_case', 'relevance': 1.0, 'coherence': 1.0, 'completeness': 1.0, 'consistency': 0.4, 'weighted_score': 0.91, 'confidence_tier': 'HIGH', 'latency_ms': 0.0, 'success': True, 'error': None, 'layer2_factual': {'penalty': 0.0, 'hedge_flags': [], 'numerical_flags': [], 'hedge_count': 0, 'numerical_conflict_count': 0}, 'content': 'Leaves change color in autumn due to a combination of biochemical processes that occur as the days grow shorter and temperatures drop. Here’s a step-by-step breakdown of why and how it happens:\n\n### **1. Chlorophyll Breakdown**\n- During spring and summer, leaves are green because of **chlorophyll**, the pigment that helps plants absorb sunlight for photosynthesis.\n- As daylight decreases and temperatures drop, trees **stop producing chlorophyll** and begin breaking it down.\n- With less chlorophyll, other pigments (hidden during the growing season) start to show.\n\n### **2. Other Pigments Reveal Themselves**\nThree main pigments contribute to autumn colors:\n\n| **Pigment**       | **Color**       | **Role** |\n|-------------------|----------------|----------|\n| **Chlorophyll**   | Green          | Dominates in summer, breaks down in fall. |\n| **Carotenoids**   | Yellow, Orange | Present all year but masked by chlorophyll; break down more slowly. |\n| **Anthocyanins**  | Red, Purple    | Produced in fall (not present all year); triggered by sunlight and sugar buildup. |\n\n- **Yellow & Orange (Carotenoids):** These pigments are always in leaves but are only visible when chlorophyll fades.\n- **Red & Purple (Anthocyanins):** These are **newly produced** in fall, often in response to bright light and excess sugars trapped in leaves due to cool nights and warm days.\n\n### **3. Environmental Triggers**\nSeveral factors influence color intensity:\n- **Daylight:** Shorter days signal trees to slow down chlorophyll production.\n- **Temperature:** Cool nights (but not freezing) enhance red colors, while warm, sunny days boost sugar production (fueling anthocyanin formation).\n- **Soil Moisture:** Adequate rainfall leads to more vibrant colors, while drought can dull them.\n\n### **4. The Process of Leaf Fall**\n- Once chlorophyll is gone, the tree forms a **separation layer** (a corky membrane) at the base of the leaf stem, cutting off water and nutrients.\n- The leaf eventually dries out and falls due to gravity or wind.\n\n### **Why Don’t All Trees Turn the Same Color?**\nDifferent tree species produce different pigments:\n- **Maples, Oaks, and Dogwoods** → Often red/purple (high anthocyanins).\n- **Birches, Hickories, and Aspens** → Often yellow (carotenoids dominate).\n- **Elms and Beeches** → Often brown (tannins remain after other pigments fade).\n\n### **Fun Fact:**\n- Some trees (like evergreens) retain chlorophyll year-round, so they don’t change color.\n- The **brightest autumns** occur after a warm, wet summer followed by cool, sunny fall days.\n\nWould you like details on a specific tree’s color-changing\n\n### Additional Insights\n* The Role of Chlorophyll\nDuring the spring and summer, leaves are like tiny food factories.\n* They contain a pigment called **chlorophyll**, which is essential for photosynthesis (turning sunlight into energy).\n* The Trigger: Less Light and Cooler Temps\nAs autumn approaches, the days get shorter and the nights get longer.\n* Trees are highly sensitive to these changes in light.'}
+2026-07-26 00:53:40 | INFO     | pipeline_logger | Logger initialised — writing to logs/pipeline.log
+2026-07-26 00:53:40 | INFO     | main | AQQAI v4.0.0 started — Bayesian store ready (5 models loaded)
+2026-07-26 00:53:40 | INFO     | main | Registered models: ['gemini-3.1-flash-lite', 'cerebras-gpt-oss', 'mistral-small']
+2026-07-26 00:54:38 | INFO     | main | [req_f724ceb94808] Incoming query | user=vineet_test | query='What is the capital of Japan?'
+2026-07-26 00:54:38 | INFO     | main | [req_f724ceb94808] Task classified | task_type=factual | query='What is the capital of Japan?'
+2026-07-26 00:54:38 | INFO     | main | [req_f724ceb94808] Calling 3 models in parallel
+2026-07-26 00:54:38 | WARNING  | main | [req_f724ceb94808] Model FAILED  | model=cerebras-gpt-oss | error=HTTP 402 from cerebras-gpt-oss — check account credits/billing
+2026-07-26 00:54:38 | INFO     | main | [req_f724ceb94808] Model OK      | model=mistral-small | latency=509ms
+2026-07-26 00:54:39 | INFO     | main | [req_f724ceb94808] Model OK      | model=gemini-3.1-flash-lite | latency=1110ms
+2026-07-26 00:54:39 | DEBUG    | main | [req_f724ceb94808] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-26 00:54:39 | DEBUG    | main | [req_f724ceb94808] RCKS | model=mistral-small | R=1.000 C=0.750 K=0.676 S=1.000 | score=0.8404 | tier=MEDIUM
+2026-07-26 00:54:39 | DEBUG    | main | [req_f724ceb94808] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.750 K=0.676 S=1.000 | score=0.8404 | tier=MEDIUM
+2026-07-26 00:54:40 | DEBUG    | main | [req_f724ceb94808] Fusion weights | {'mistral-small': 0.5781, 'gemini-3.1-flash-lite': 0.4219} | agreement=0.933
+2026-07-26 00:54:40 | INFO     | main | [req_f724ceb94808] Pipeline complete | task=factual | response_len=34 chars | total=1891.25ms
+2026-07-26 00:54:40 | INFO     | main | [score_a3465b33d53a] Manual score request | task_type=factual | model_id=manual_test_case | query='What is the capital of Japan?'
+2026-07-26 00:54:40 | DEBUG    | main | [score_a3465b33d53a] Manual score result | {'model_id': 'manual_test_case', 'relevance': 1.0, 'coherence': 0.75, 'completeness': 0.6763, 'consistency': 1.0, 'weighted_score': 0.8404, 'confidence_tier': 'MEDIUM', 'latency_ms': 0.0, 'success': True, 'error': None, 'layer2_factual': {'penalty': 0.0, 'hedge_flags': [], 'numerical_flags': [], 'hedge_count': 0, 'numerical_conflict_count': 0}, 'content': 'The capital of Japan is **Tokyo**.'}
+2026-07-26 00:54:40 | INFO     | main | [req_8b4afdc4dcf5] Incoming query | user=vineet_test | query="Summarize in one sentence: 'The library was filled with students preparing for e"
+2026-07-26 00:54:40 | INFO     | main | [req_8b4afdc4dcf5] Task classified | task_type=summary | query="Summarize in one sentence: 'The library was filled with students preparing for e"
+2026-07-26 00:54:40 | INFO     | main | [req_8b4afdc4dcf5] Calling 3 models in parallel
+2026-07-26 00:54:40 | WARNING  | main | [req_8b4afdc4dcf5] Model FAILED  | model=cerebras-gpt-oss | error=HTTP 402 from cerebras-gpt-oss — check account credits/billing
+2026-07-26 00:54:41 | INFO     | main | [req_8b4afdc4dcf5] Model OK      | model=gemini-3.1-flash-lite | latency=1078ms
+2026-07-26 00:54:41 | INFO     | main | [req_8b4afdc4dcf5] Model OK      | model=mistral-small | latency=1129ms
+2026-07-26 00:54:41 | DEBUG    | main | [req_8b4afdc4dcf5] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-26 00:54:41 | DEBUG    | main | [req_8b4afdc4dcf5] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.750 K=0.371 S=1.000 | score=0.7487 | tier=MEDIUM
+2026-07-26 00:54:41 | DEBUG    | main | [req_8b4afdc4dcf5] RCKS | model=mistral-small | R=1.000 C=0.750 K=0.709 S=1.000 | score=0.8503 | tier=HIGH
+2026-07-26 00:54:41 | DEBUG    | main | [req_8b4afdc4dcf5] Fusion weights | {'gemini-3.1-flash-lite': 0.456, 'mistral-small': 0.544} | agreement=0.7833
+2026-07-26 00:54:41 | INFO     | main | [req_8b4afdc4dcf5] Pipeline complete | task=summary | response_len=142 chars | total=1535.03ms
+2026-07-26 00:54:41 | INFO     | main | [score_57586c454f3d] Manual score request | task_type=summary | model_id=manual_test_case | query="Summarize in one sentence: 'The library was filled with students preparing for e"
+2026-07-26 00:54:41 | DEBUG    | main | [score_57586c454f3d] Manual score result | {'model_id': 'manual_test_case', 'relevance': 1.0, 'coherence': 0.75, 'completeness': 0.7092, 'consistency': 1.0, 'weighted_score': 0.8503, 'confidence_tier': 'HIGH', 'latency_ms': 0.0, 'success': True, 'error': None, 'content': 'The library was busy with students studying in various ways—some reading quietly, others typing on laptops, and a few discussing notes softly.'}
+2026-07-26 00:54:41 | INFO     | main | [req_4b8eb4b37744] Incoming query | user=vineet_test | query='Give a creative analogy explaining how a neural network learns, for a 10-year-ol'
+2026-07-26 00:54:41 | INFO     | main | [req_4b8eb4b37744] Task classified | task_type=creative | query='Give a creative analogy explaining how a neural network learns, for a 10-year-ol'
+2026-07-26 00:54:41 | INFO     | main | [req_4b8eb4b37744] Calling 3 models in parallel
+2026-07-26 00:54:42 | WARNING  | main | [req_4b8eb4b37744] Model FAILED  | model=cerebras-gpt-oss | error=HTTP 402 from cerebras-gpt-oss — check account credits/billing
+2026-07-26 00:54:45 | INFO     | main | [req_4b8eb4b37744] Model OK      | model=mistral-small | latency=3607ms
+2026-07-26 00:54:47 | INFO     | main | [req_4b8eb4b37744] Model OK      | model=gemini-3.1-flash-lite | latency=5380ms
+2026-07-26 00:55:01 | DEBUG    | main | [req_4b8eb4b37744] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-26 00:55:01 | DEBUG    | main | [req_4b8eb4b37744] RCKS | model=mistral-small | R=1.000 C=0.960 K=1.000 S=0.600 | score=0.9300 | tier=HIGH
+2026-07-26 00:55:01 | DEBUG    | main | [req_4b8eb4b37744] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.972 K=1.000 S=0.320 | score=0.8909 | tier=HIGH
+2026-07-26 00:55:02 | DEBUG    | main | [req_4b8eb4b37744] Fusion weights | {'mistral-small': 0.5804, 'gemini-3.1-flash-lite': 0.4196} | agreement=0.5018
+2026-07-26 00:55:10 | INFO     | main | [req_4b8eb4b37744] Pipeline complete | task=creative | response_len=2398 chars | total=29011.12ms
+2026-07-26 00:55:10 | INFO     | main | [score_5d6b11f0ea5a] Manual score request | task_type=creative | model_id=manual_test_case | query='Give a creative analogy explaining how a neural network learns, for a 10-year-ol'
+2026-07-26 00:55:17 | DEBUG    | main | [score_5d6b11f0ea5a] Manual score result | {'model_id': 'manual_test_case', 'relevance': 1.0, 'coherence': 1.0, 'completeness': 1.0, 'consistency': 0.12, 'weighted_score': 0.868, 'confidence_tier': 'HIGH', 'latency_ms': 0.0, 'success': True, 'error': None, 'content': 'Sure! Here\'s a fun analogy to explain how a neural network learns, just like training a super-smart robot pet:\n\n---\n\n**Imagine a neural network is like a puppy learning to fetch a ball.**\n\n1. **Random Guesses at First** – At the start, the puppy doesn’t know anything. When you throw the ball, it might run in the wrong direction, trip over its paws, or just stare at you blankly. The neural network starts the same way—it makes wild guesses!\n\n2. **Getting Corrected (Feedback)** – Every time the puppy fails (like running away from the ball), you say, *"No, silly! This way!"* and gently guide it back. The neural network gets feedback too—if it guesses wrong, it adjusts its "brain" (the math inside) to do better next time.\n\n3. **Practice Makes Perfect** – After many tries, the puppy starts running the right way because it remembers what worked before. The neural network does the same—it tweaks its connections (like adjusting strings in a puppet) until it gets the answer right most of the time.\n\n4. **Hidden Layers = More Puppies!** – A simple neural network is like one puppy learning. A deep neural network is like having a whole pack of puppies, each helping the others figure things out faster. One puppy might notice the ball’s color, another the distance, and together they make a great team!\n\n5. **Magic of Learning** – At first, the puppy is clumsy, but with practice, it becomes super fast and accurate. A neural network does the same—it starts dumb but, with enough examples, becomes a genius at recognizing patterns (like faces, words, or even cat videos!).\n\n**Final Thought:** Just like the puppy learns by playing and getting better, a neural network learns by making mistakes and improving—until it’s a pro!\n\nWould you like an even simpler version or a different analogy? 😊\n\n### Additional Insights\n* Imagine you are trying to teach a **blindfolded robot** how to sort blocks into two piles: "Good Blocks" and "Bad Blocks."\n\nThe robot doesn\'t have eyes, but it has a thousand tiny knobs on its head that it can turn left or right.\n\n### 1.\n* The Guessing Game (Forward Pass)\nYou hand the robot a block.\n* It has no idea what it is, so it randomly turns some knobs and decides, "I think this is a \'Good Block\'!" and drops it into the Good pile.\n* If the block was actually a "Bad Block," **you ring a loud buzzer.** If it was a "Good Block," **you give it a high-five.**\n\n### 2.'}
+2026-07-26 00:55:17 | INFO     | main | [req_4dd2ab05acc8] Incoming query | user=vineet_test | query='Write a 3-line poem about the ocean.'
+2026-07-26 00:55:17 | INFO     | main | [req_4dd2ab05acc8] Task classified | task_type=creative | query='Write a 3-line poem about the ocean.'
+2026-07-26 00:55:17 | INFO     | main | [req_4dd2ab05acc8] Calling 3 models in parallel
+2026-07-26 00:55:17 | WARNING  | main | [req_4dd2ab05acc8] Model FAILED  | model=cerebras-gpt-oss | error=HTTP 402 from cerebras-gpt-oss — check account credits/billing
+2026-07-26 00:55:18 | INFO     | main | [req_4dd2ab05acc8] Model OK      | model=mistral-small | latency=694ms
+2026-07-26 00:55:21 | INFO     | main | [req_4dd2ab05acc8] Model OK      | model=gemini-3.1-flash-lite | latency=4271ms
+2026-07-26 00:55:22 | DEBUG    | main | [req_4dd2ab05acc8] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-26 00:55:22 | DEBUG    | main | [req_4dd2ab05acc8] RCKS | model=mistral-small | R=0.970 C=1.000 K=0.729 S=1.000 | score=0.9098 | tier=HIGH
+2026-07-26 00:55:22 | DEBUG    | main | [req_4dd2ab05acc8] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.750 K=0.083 S=1.000 | score=0.6624 | tier=MEDIUM
+2026-07-26 00:55:22 | DEBUG    | main | [req_4dd2ab05acc8] Fusion weights | {'mistral-small': 0.5957, 'gemini-3.1-flash-lite': 0.4043} | agreement=0.6821
+2026-07-26 00:55:22 | INFO     | main | [req_4dd2ab05acc8] Pipeline complete | task=creative | response_len=112 chars | total=4759.58ms
+2026-07-26 00:55:22 | INFO     | main | [score_0919db88abff] Manual score request | task_type=creative | model_id=manual_test_case | query='Write a 3-line poem about the ocean.'
+2026-07-26 00:55:22 | DEBUG    | main | [score_0919db88abff] Manual score result | {'model_id': 'manual_test_case', 'relevance': 0.9704, 'coherence': 1.0, 'completeness': 0.7288, 'consistency': 1.0, 'weighted_score': 0.9098, 'confidence_tier': 'HIGH', 'latency_ms': 0.0, 'success': True, 'error': None, 'content': 'The ocean whispers secrets to the shore,\nWaves dance and crash, forevermore.\nEndless blue, a mystery to explore.'}
+2026-07-26 00:55:22 | INFO     | main | [req_dcd253cd133b] Incoming query | user=vineet_test | query='Why do leaves change color in autumn?'
+2026-07-26 00:55:22 | INFO     | main | [req_dcd253cd133b] Task classified | task_type=reasoning | query='Why do leaves change color in autumn?'
+2026-07-26 00:55:22 | INFO     | main | [req_dcd253cd133b] Calling 3 models in parallel
+2026-07-26 00:55:22 | WARNING  | main | [req_dcd253cd133b] Model FAILED  | model=cerebras-gpt-oss | error=HTTP 402 from cerebras-gpt-oss — check account credits/billing
+2026-07-26 00:55:23 | INFO     | main | [req_dcd253cd133b] Model OK      | model=mistral-small | latency=1198ms
+2026-07-26 00:55:32 | INFO     | main | [req_dcd253cd133b] Model OK      | model=gemini-3.1-flash-lite | latency=10256ms
+2026-07-26 00:55:40 | DEBUG    | main | [req_dcd253cd133b] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-26 00:55:40 | DEBUG    | main | [req_dcd253cd133b] RCKS | model=mistral-small | R=1.000 C=1.000 K=0.978 S=1.000 | score=0.9934 | tier=HIGH
+2026-07-26 00:55:40 | DEBUG    | main | [req_dcd253cd133b] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.850 K=1.000 S=0.600 | score=0.9025 | tier=HIGH
+2026-07-26 00:55:40 | DEBUG    | main | [req_dcd253cd133b] Fusion weights | {'mistral-small': 0.557, 'gemini-3.1-flash-lite': 0.443} | agreement=0.8535
+2026-07-26 00:55:44 | INFO     | main | [req_dcd253cd133b] Pipeline complete | task=reasoning | response_len=1081 chars | total=22343.69ms
+2026-07-26 00:55:44 | INFO     | main | [score_125f495fab01] Manual score request | task_type=factual | model_id=manual_test_case | query='Why do leaves change color in autumn?'
+2026-07-26 00:55:50 | DEBUG    | main | [score_125f495fab01] Manual score result | {'model_id': 'manual_test_case', 'relevance': 1.0, 'coherence': 1.0, 'completeness': 1.0, 'consistency': 1.0, 'weighted_score': 1.0, 'confidence_tier': 'HIGH', 'latency_ms': 0.0, 'success': True, 'error': None, 'layer2_factual': {'penalty': 0.0, 'hedge_flags': [], 'numerical_flags': [], 'hedge_count': 0, 'numerical_conflict_count': 0}, 'content': 'Leaves change color in autumn due to the breakdown of **chlorophyll**, the green pigment responsible for photosynthesis, which masks other pigments in the leaves. As days shorten and temperatures drop, trees prepare for winter by halting chlorophyll production. This reveals hidden pigments like **carotenoids** (yellows and oranges) and **anthocyanins** (reds and purples), which are produced as a byproduct of sugar accumulation in the leaves. The vibrant fall colors result from this interplay of pigments. 🍂🍁\n\n### Additional Insights\n* It involves a combination of decreasing sunlight, cooling temperatures, and the chemical breakdown of pigments within the leaves.\n\nHere is the step-by-step breakdown of why it happens:\n\n### 1.\n* The Role of Chlorophyll\nDuring spring and summer, leaves act as food factories.\n* They contain a green pigment called **chlorophyll**, which is essential for **photosynthesis**—the process of converting sunlight into energy (sugar) for the tree.\n* The Trigger: Less Daylight\nAs autumn approaches, the days grow shorter and the nights grow longer.'}
+2026-07-26 00:55:52 | INFO     | main | [req_be5517250c43] Incoming query | user=vineet_test | query='What is the capital of Japan?'
+2026-07-26 00:55:52 | INFO     | main | [req_be5517250c43] Task classified | task_type=factual | query='What is the capital of Japan?'
+2026-07-26 00:55:52 | INFO     | main | [req_be5517250c43] Calling 3 models in parallel
+2026-07-26 00:55:52 | WARNING  | main | [req_be5517250c43] Model FAILED  | model=cerebras-gpt-oss | error=HTTP 402 from cerebras-gpt-oss — check account credits/billing
+2026-07-26 00:55:52 | INFO     | main | [req_be5517250c43] Model OK      | model=mistral-small | latency=499ms
+2026-07-26 00:55:56 | INFO     | main | [req_be5517250c43] Model OK      | model=gemini-3.1-flash-lite | latency=4317ms
+2026-07-26 00:55:56 | DEBUG    | main | [req_be5517250c43] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-26 00:55:56 | DEBUG    | main | [req_be5517250c43] RCKS | model=mistral-small | R=1.000 C=0.750 K=0.676 S=1.000 | score=0.8404 | tier=MEDIUM
+2026-07-26 00:55:56 | DEBUG    | main | [req_be5517250c43] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.750 K=0.676 S=1.000 | score=0.8404 | tier=MEDIUM
+2026-07-26 00:55:56 | DEBUG    | main | [req_be5517250c43] Fusion weights | {'mistral-small': 0.5781, 'gemini-3.1-flash-lite': 0.4219} | agreement=0.933
+2026-07-26 00:55:56 | INFO     | main | [req_be5517250c43] Pipeline complete | task=factual | response_len=34 chars | total=4533.7ms
+2026-07-26 00:55:56 | INFO     | main | [score_a8219ccfddc8] Manual score request | task_type=factual | model_id=manual_test_case | query='What is the capital of Japan?'
+2026-07-26 00:55:56 | DEBUG    | main | [score_a8219ccfddc8] Manual score result | {'model_id': 'manual_test_case', 'relevance': 1.0, 'coherence': 0.75, 'completeness': 0.6763, 'consistency': 1.0, 'weighted_score': 0.8404, 'confidence_tier': 'MEDIUM', 'latency_ms': 0.0, 'success': True, 'error': None, 'layer2_factual': {'penalty': 0.0, 'hedge_flags': [], 'numerical_flags': [], 'hedge_count': 0, 'numerical_conflict_count': 0}, 'content': 'The capital of Japan is **Tokyo**.'}
+2026-07-26 00:55:56 | INFO     | main | [req_a42faa2960ee] Incoming query | user=vineet_test | query="Summarize in one sentence: 'The library was filled with students preparing for e"
+2026-07-26 00:55:56 | INFO     | main | [req_a42faa2960ee] Task classified | task_type=summary | query="Summarize in one sentence: 'The library was filled with students preparing for e"
+2026-07-26 00:55:56 | INFO     | main | [req_a42faa2960ee] Calling 3 models in parallel
+2026-07-26 00:55:57 | WARNING  | main | [req_a42faa2960ee] Model FAILED  | model=cerebras-gpt-oss | error=HTTP 402 from cerebras-gpt-oss — check account credits/billing
+2026-07-26 00:55:57 | INFO     | main | [req_a42faa2960ee] Model OK      | model=mistral-small | latency=633ms
+2026-07-26 00:56:02 | INFO     | main | [req_a42faa2960ee] Model OK      | model=gemini-3.1-flash-lite | latency=5583ms
+2026-07-26 00:56:02 | DEBUG    | main | [req_a42faa2960ee] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-26 00:56:02 | DEBUG    | main | [req_a42faa2960ee] RCKS | model=mistral-small | R=1.000 C=0.750 K=0.712 S=1.000 | score=0.8511 | tier=HIGH
+2026-07-26 00:56:02 | DEBUG    | main | [req_a42faa2960ee] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.750 K=0.368 S=1.000 | score=0.7479 | tier=MEDIUM
+2026-07-26 00:56:02 | DEBUG    | main | [req_a42faa2960ee] Fusion weights | {'mistral-small': 0.5569, 'gemini-3.1-flash-lite': 0.4431} | agreement=0.7537
+2026-07-26 00:56:02 | INFO     | main | [req_a42faa2960ee] Pipeline complete | task=summary | response_len=146 chars | total=5789.46ms
+2026-07-26 00:56:02 | INFO     | main | [score_8a59a9672e08] Manual score request | task_type=summary | model_id=manual_test_case | query="Summarize in one sentence: 'The library was filled with students preparing for e"
+2026-07-26 00:56:02 | DEBUG    | main | [score_8a59a9672e08] Manual score result | {'model_id': 'manual_test_case', 'relevance': 1.0, 'coherence': 0.75, 'completeness': 0.7119, 'consistency': 1.0, 'weighted_score': 0.8511, 'confidence_tier': 'HIGH', 'latency_ms': 0.0, 'success': True, 'error': None, 'content': 'The library was bustling with students reviewing for exams, some studying quietly, others using laptops, and a few discussing notes in low voices.'}
+2026-07-26 00:56:02 | INFO     | main | [req_cde5403acb93] Incoming query | user=vineet_test | query='Give a creative analogy explaining how a neural network learns, for a 10-year-ol'
+2026-07-26 00:56:02 | INFO     | main | [req_cde5403acb93] Task classified | task_type=creative | query='Give a creative analogy explaining how a neural network learns, for a 10-year-ol'
+2026-07-26 00:56:02 | INFO     | main | [req_cde5403acb93] Calling 3 models in parallel
+2026-07-26 00:56:03 | WARNING  | main | [req_cde5403acb93] Model FAILED  | model=cerebras-gpt-oss | error=HTTP 402 from cerebras-gpt-oss — check account credits/billing
+2026-07-26 00:56:05 | INFO     | main | [req_cde5403acb93] Model OK      | model=mistral-small | latency=2534ms
+2026-07-26 00:56:12 | INFO     | main | [req_cde5403acb93] Model OK      | model=gemini-3.1-flash-lite | latency=9914ms
+2026-07-26 00:56:24 | DEBUG    | main | [req_cde5403acb93] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-26 00:56:24 | DEBUG    | main | [req_cde5403acb93] RCKS | model=mistral-small | R=1.000 C=0.893 K=0.675 S=1.000 | score=0.8758 | tier=HIGH
+2026-07-26 00:56:24 | DEBUG    | main | [req_cde5403acb93] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.850 K=1.000 S=0.400 | score=0.8725 | tier=HIGH
+2026-07-26 00:56:25 | DEBUG    | main | [req_cde5403acb93] Fusion weights | {'mistral-small': 0.685, 'gemini-3.1-flash-lite': 0.315} | agreement=0.7653
+2026-07-26 00:56:31 | INFO     | main | [req_cde5403acb93] Pipeline complete | task=creative | response_len=1345 chars | total=28753.88ms
+2026-07-26 00:56:31 | INFO     | main | [score_72100eca357b] Manual score request | task_type=creative | model_id=manual_test_case | query='Give a creative analogy explaining how a neural network learns, for a 10-year-ol'
+2026-07-26 00:56:38 | DEBUG    | main | [score_72100eca357b] Manual score result | {'model_id': 'manual_test_case', 'relevance': 1.0, 'coherence': 0.8863, 'completeness': 1.0, 'consistency': 0.4, 'weighted_score': 0.8816, 'confidence_tier': 'HIGH', 'latency_ms': 0.0, 'success': True, 'error': None, 'content': 'Sure! Imagine a neural network is like a **super-smart pet dog** trying to learn how to fetch your slippers.\n\nHere’s how it works:\n\n1. **You Teach It (Training Data)** – Every time you throw a slipper, you tell the dog, *"Good job!"* if it brings back the right one (like a red slipper) or *"Nope!"* if it brings back something wrong (like your shoe).\n\n2. **It Makes Mistakes (Weights & Errors)** – At first, the dog guesses randomly—maybe it brings back your shoe instead of the slipper. But you correct it, and it learns a little bit.\n\n3. **It Adjusts Its Brain (Backpropagation)** – The dog’s brain (like the neural network’s "weights") changes slightly each time. If it keeps messing up, it figures out, *"Oh, maybe I should sniff for red first!"*\n\n4. **It Gets Better! (Learning)** – After lots of tries, the dog starts fetching the right slipper almost every time—just like how a neural network gets smarter with practice.\n\nSo, a neural network is like a dog that learns from its mistakes until it’s a pro at the game! 🐶🔥\n\n### Additional Insights\n* The "Guessing" Phase (Random Weights)\nAt the start, the robot has no idea what it’s doing.\n* You give it a bowl, some flour, and chocolate chips.\n* The robot just throws random amounts of ingredients into a bowl and tosses it in the oven.\n* It’s either a pile of salty dust or a burnt rock.'}
+2026-07-26 00:56:38 | INFO     | main | [req_57a4cb3cb8e8] Incoming query | user=vineet_test | query='Write a 3-line poem about the ocean.'
+2026-07-26 00:56:38 | INFO     | main | [req_57a4cb3cb8e8] Task classified | task_type=creative | query='Write a 3-line poem about the ocean.'
+2026-07-26 00:56:38 | INFO     | main | [req_57a4cb3cb8e8] Calling 3 models in parallel
+2026-07-26 00:56:38 | WARNING  | main | [req_57a4cb3cb8e8] Model FAILED  | model=cerebras-gpt-oss | error=HTTP 402 from cerebras-gpt-oss — check account credits/billing
+2026-07-26 00:56:38 | INFO     | main | [req_57a4cb3cb8e8] Model OK      | model=mistral-small | latency=686ms
+2026-07-26 00:56:40 | INFO     | main | [req_57a4cb3cb8e8] Model OK      | model=gemini-3.1-flash-lite | latency=1759ms
+2026-07-26 00:56:40 | DEBUG    | main | [req_57a4cb3cb8e8] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-26 00:56:40 | DEBUG    | main | [req_57a4cb3cb8e8] RCKS | model=mistral-small | R=0.805 C=0.750 K=0.061 S=1.000 | score=0.5975 | tier=LOW
+2026-07-26 00:56:40 | DEBUG    | main | [req_57a4cb3cb8e8] RCKS | model=gemini-3.1-flash-lite | R=0.835 C=0.750 K=0.092 S=1.000 | score=0.6155 | tier=MEDIUM
+2026-07-26 00:56:40 | DEBUG    | main | [req_57a4cb3cb8e8] Fusion weights | {'mistral-small': 0.5944, 'gemini-3.1-flash-lite': 0.4056} | agreement=0.5658
+2026-07-26 00:56:40 | INFO     | main | [req_57a4cb3cb8e8] Pipeline complete | task=creative | response_len=94 chars | total=1942.17ms
+2026-07-26 00:56:40 | INFO     | main | [score_81377ddc0481] Manual score request | task_type=creative | model_id=manual_test_case | query='Write a 3-line poem about the ocean.'
+2026-07-26 00:56:40 | DEBUG    | main | [score_81377ddc0481] Manual score result | {'model_id': 'manual_test_case', 'relevance': 0.8055, 'coherence': 0.75, 'completeness': 0.0612, 'consistency': 1.0, 'weighted_score': 0.5975, 'confidence_tier': 'LOW', 'latency_ms': 0.0, 'success': True, 'error': None, 'content': 'Waves crash in endless song,\nBlue horizons whisper strong,\nEndless depths where dreams belong.'}
+2026-07-26 00:56:40 | INFO     | main | [req_cea72c086903] Incoming query | user=vineet_test | query='Why do leaves change color in autumn?'
+2026-07-26 00:56:40 | INFO     | main | [req_cea72c086903] Task classified | task_type=reasoning | query='Why do leaves change color in autumn?'
+2026-07-26 00:56:40 | INFO     | main | [req_cea72c086903] Calling 3 models in parallel
+2026-07-26 00:56:40 | WARNING  | main | [req_cea72c086903] Model FAILED  | model=cerebras-gpt-oss | error=HTTP 402 from cerebras-gpt-oss — check account credits/billing
+2026-07-26 00:56:43 | INFO     | main | [req_cea72c086903] Model OK      | model=gemini-3.1-flash-lite | latency=3669ms
+2026-07-26 00:56:44 | INFO     | main | [req_cea72c086903] Model OK      | model=mistral-small | latency=4197ms
+2026-07-26 00:56:55 | DEBUG    | main | [req_cea72c086903] RCKS | model=cerebras-gpt-oss | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-26 00:56:55 | DEBUG    | main | [req_cea72c086903] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.850 K=1.000 S=0.600 | score=0.9025 | tier=HIGH
+2026-07-26 00:56:55 | DEBUG    | main | [req_cea72c086903] RCKS | model=mistral-small | R=1.000 C=0.850 K=1.000 S=0.600 | score=0.9025 | tier=HIGH
+2026-07-26 00:56:55 | DEBUG    | main | [req_cea72c086903] Fusion weights | {'gemini-3.1-flash-lite': 0.443, 'mistral-small': 0.557} | agreement=0.8794
+2026-07-26 00:57:15 | INFO     | main | [req_cea72c086903] Pipeline complete | task=reasoning | response_len=3034 chars | total=34931.68ms
+2026-07-26 00:57:15 | INFO     | main | [score_7aaaf37e6790] Manual score request | task_type=factual | model_id=manual_test_case | query='Why do leaves change color in autumn?'
+2026-07-26 00:57:23 | DEBUG    | main | [score_7aaaf37e6790] Manual score result | {'model_id': 'manual_test_case', 'relevance': 1.0, 'coherence': 0.85, 'completeness': 1.0, 'consistency': 0.6, 'weighted_score': 0.9025, 'confidence_tier': 'HIGH', 'latency_ms': 0.0, 'success': True, 'error': None, 'layer2_factual': {'penalty': 0.0, 'hedge_flags': [], 'numerical_flags': [], 'hedge_count': 0, 'numerical_conflict_count': 0}, 'content': 'Leaves change color in autumn due to a combination of environmental changes and the breakdown of chlorophyll, the green pigment that drives photosynthesis. Here’s a step-by-step explanation of the process:\n\n### **1. Chlorophyll Breakdown (Green Fades)**\n- In spring and summer, chlorophyll (the pigment that makes leaves green) dominates, masking other pigments.\n- As days shorten and temperatures drop in autumn, chlorophyll production slows and eventually stops.\n- The existing chlorophyll breaks down, revealing other pigments that were present but hidden.\n\n### **2. Carotenoids (Yellows & Oranges Emerge)**\n- **Carotenoids** (yellow, orange, and brown pigments) are present in leaves year-round but are usually overshadowed by chlorophyll.\n- These pigments help capture light energy for photosynthesis and protect leaves from excess sunlight.\n- When chlorophyll fades, carotenoids become visible, giving leaves their yellow and orange hues (e.g., birch, aspen, hickory).\n\n### **3. Anthocyanins (Reds & Purples Appear)**\n- **Anthocyanins** (red, purple, and pink pigments) are not always present but are produced in some leaves in autumn due to:\n  - **Sugar trapping** – Cooler nights and sunny days trap sugars in leaves, leading to anthocyanin production.\n  - **Protective role** – These pigments may help leaves survive freezing temperatures and protect against light damage.\n- Trees like maples, oaks, and dogwoods display vibrant reds and purples because of anthocyanins.\n\n### **4. Tannins (Browns Persist)**\n- Tannins (brown pigments) are waste products that accumulate in leaves as they age.\n- When other pigments break down, tannins remain, giving some leaves a brownish tint (e.g., oak leaves).\n\n### **Why Don’t All Trees Change Color the Same Way?**\n- **Deciduous trees** (e.g., maples, oaks) lose leaves in autumn and show dramatic color changes.\n- **Evergreens** (e.g., pines, spruces) retain needles year-round and don’t change color significantly.\n- Some trees (like elms) may turn brown without vibrant colors because they lack anthocyanins.\n\n### **Factors Affecting Autumn Colors**\n- **Sunlight & Temperature** – Bright days and cool (but not freezing) nights enhance color production.\n- **Rainfall** – Drought can lead to early leaf drop with muted colors, while wet conditions prolong color.\n- **Genetics** – Some tree species are naturally more colorful than others.\n\n### **Final Stage: Leaf Drop**\n- As days shorten further, a layer of cells (**abscission layer**) forms at the base of the leaf stem, cutting off water and nutrients.\n- The leaf eventually dries out, turns brown, and falls to the ground.\n\n###\n\n### Additional Insights\n* Trees perceive these changes as a signal to prepare for winter.\n* This layer acts as a seal, gradually cutting off the flow of water and nutrients to the leaf.\n* As this happens:\n*   **Chlorophyll breaks down:** Without a constant supply of nutrients and light, the chlorophyll dies off.\n* As the leaf’s connection to the tree is cut, some sugars become trapped in the leaf.'}
+2026-07-26 23:03:24 | INFO     | pipeline_logger | Logger initialised — writing to logs/pipeline.log
+2026-07-26 23:03:24 | INFO     | main | AQQAI v4.0.0 started — Bayesian store ready (0 models loaded)
+2026-07-26 23:03:24 | INFO     | main | Registered models: ['gemini-3.1-flash-lite', 'groq-llama3', 'mistral-small']
+2026-07-26 23:10:28 | INFO     | main | [req_6bba439050ea] Incoming query | user=vineet_test | query='What is the capital of Japan?'
+2026-07-26 23:10:28 | INFO     | main | [req_6bba439050ea] Task classified | task_type=factual | query='What is the capital of Japan?'
+2026-07-26 23:10:28 | INFO     | main | [req_6bba439050ea] Calling 3 models in parallel
+2026-07-26 23:10:29 | WARNING  | main | [req_6bba439050ea] Model FAILED  | model=groq-llama3 | error=HTTP 401 from groq-llama3 — check API key
+2026-07-26 23:10:29 | INFO     | main | [req_6bba439050ea] Model OK      | model=mistral-small | latency=613ms
+2026-07-26 23:10:29 | INFO     | main | [req_6bba439050ea] Model OK      | model=gemini-3.1-flash-lite | latency=1108ms
+2026-07-26 23:10:30 | DEBUG    | main | [req_6bba439050ea] RCKS | model=groq-llama3 | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-26 23:10:30 | DEBUG    | main | [req_6bba439050ea] RCKS | model=mistral-small | R=1.000 C=0.750 K=0.676 S=1.000 | score=0.8404 | tier=MEDIUM
+2026-07-26 23:10:30 | DEBUG    | main | [req_6bba439050ea] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.750 K=0.676 S=1.000 | score=0.8404 | tier=MEDIUM
+2026-07-26 23:10:30 | DEBUG    | main | [req_6bba439050ea] Fusion weights | {'mistral-small': 0.5, 'gemini-3.1-flash-lite': 0.5} | agreement=0.933
+2026-07-26 23:10:30 | INFO     | main | [req_6bba439050ea] Pipeline complete | task=factual | response_len=34 chars | total=1756.54ms
+2026-07-26 23:10:30 | INFO     | main | [score_c3eb26efbe63] Manual score request | task_type=factual | model_id=manual_test_case | query='What is the capital of Japan?'
+2026-07-26 23:10:30 | DEBUG    | main | [score_c3eb26efbe63] Manual score result | {'model_id': 'manual_test_case', 'relevance': 1.0, 'coherence': 0.75, 'completeness': 0.6763, 'consistency': 1.0, 'weighted_score': 0.8404, 'confidence_tier': 'MEDIUM', 'latency_ms': 0.0, 'success': True, 'error': None, 'layer2_factual': {'penalty': 0.0, 'hedge_flags': [], 'numerical_flags': [], 'hedge_count': 0, 'numerical_conflict_count': 0}, 'content': 'The capital of Japan is **Tokyo**.'}
+2026-07-26 23:10:30 | INFO     | main | [req_0ce5f7401b94] Incoming query | user=vineet_test | query="Summarize in one sentence: 'The library was filled with students preparing for e"
+2026-07-26 23:10:30 | INFO     | main | [req_0ce5f7401b94] Task classified | task_type=summary | query="Summarize in one sentence: 'The library was filled with students preparing for e"
+2026-07-26 23:10:30 | INFO     | main | [req_0ce5f7401b94] Calling 3 models in parallel
+2026-07-26 23:10:30 | WARNING  | main | [req_0ce5f7401b94] Model FAILED  | model=groq-llama3 | error=HTTP 401 from groq-llama3 — check API key
+2026-07-26 23:10:31 | INFO     | main | [req_0ce5f7401b94] Model OK      | model=mistral-small | latency=859ms
+2026-07-26 23:10:31 | INFO     | main | [req_0ce5f7401b94] Model OK      | model=gemini-3.1-flash-lite | latency=1091ms
+2026-07-26 23:10:32 | DEBUG    | main | [req_0ce5f7401b94] RCKS | model=groq-llama3 | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-26 23:10:32 | DEBUG    | main | [req_0ce5f7401b94] RCKS | model=mistral-small | R=1.000 C=0.750 K=0.707 S=1.000 | score=0.8495 | tier=MEDIUM
+2026-07-26 23:10:32 | DEBUG    | main | [req_0ce5f7401b94] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.750 K=0.371 S=1.000 | score=0.7487 | tier=MEDIUM
+2026-07-26 23:10:32 | DEBUG    | main | [req_0ce5f7401b94] Fusion weights | {'mistral-small': 0.512, 'gemini-3.1-flash-lite': 0.488} | agreement=0.8159
+2026-07-26 23:10:32 | INFO     | main | [req_0ce5f7401b94] Pipeline complete | task=summary | response_len=136 chars | total=1415.6ms
+2026-07-26 23:10:32 | INFO     | main | [score_4b6e30851e5c] Manual score request | task_type=summary | model_id=manual_test_case | query="Summarize in one sentence: 'The library was filled with students preparing for e"
+2026-07-26 23:10:32 | DEBUG    | main | [score_4b6e30851e5c] Manual score result | {'model_id': 'manual_test_case', 'relevance': 1.0, 'coherence': 0.75, 'completeness': 0.7065, 'consistency': 1.0, 'weighted_score': 0.8495, 'confidence_tier': 'MEDIUM', 'latency_ms': 0.0, 'success': True, 'error': None, 'content': 'The library was a bustling hub of focused activity, with students quietly reading, typing, or discussing notes in preparation for exams.'}
+2026-07-26 23:10:32 | INFO     | main | [req_e84200dbfcd0] Incoming query | user=vineet_test | query='Give a creative analogy explaining how a neural network learns, for a 10-year-ol'
+2026-07-26 23:10:32 | INFO     | main | [req_e84200dbfcd0] Task classified | task_type=creative | query='Give a creative analogy explaining how a neural network learns, for a 10-year-ol'
+2026-07-26 23:10:32 | INFO     | main | [req_e84200dbfcd0] Calling 3 models in parallel
+2026-07-26 23:10:32 | WARNING  | main | [req_e84200dbfcd0] Model FAILED  | model=groq-llama3 | error=HTTP 401 from groq-llama3 — check API key
+2026-07-26 23:10:35 | INFO     | main | [req_e84200dbfcd0] Model OK      | model=mistral-small | latency=3197ms
+2026-07-26 23:10:35 | INFO     | main | [req_e84200dbfcd0] Model OK      | model=gemini-3.1-flash-lite | latency=3373ms
+2026-07-26 23:10:49 | DEBUG    | main | [req_e84200dbfcd0] RCKS | model=groq-llama3 | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-26 23:10:49 | DEBUG    | main | [req_e84200dbfcd0] RCKS | model=mistral-small | R=1.000 C=1.000 K=1.000 S=1.000 | score=1.0000 | tier=HIGH
+2026-07-26 23:10:49 | DEBUG    | main | [req_e84200dbfcd0] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.741 K=1.000 S=0.400 | score=0.8453 | tier=MEDIUM
+2026-07-26 23:10:50 | DEBUG    | main | [req_e84200dbfcd0] Fusion weights | {'mistral-small': 0.508, 'gemini-3.1-flash-lite': 0.492} | agreement=0.705
+2026-07-26 23:10:59 | INFO     | main | [req_e84200dbfcd0] Pipeline complete | task=creative | response_len=2156 chars | total=26892.98ms
+2026-07-26 23:10:59 | INFO     | main | [score_bd09ddfe1d69] Manual score request | task_type=creative | model_id=manual_test_case | query='Give a creative analogy explaining how a neural network learns, for a 10-year-ol'
+2026-07-26 23:11:07 | DEBUG    | main | [score_bd09ddfe1d69] Manual score result | {'model_id': 'manual_test_case', 'relevance': 1.0, 'coherence': 1.0, 'completeness': 1.0, 'consistency': 0.4, 'weighted_score': 0.91, 'confidence_tier': 'HIGH', 'latency_ms': 0.0, 'success': True, 'error': None, 'content': 'Sure! Here\'s a fun analogy to explain how a neural network learns:\n\n**Imagine a neural network is like a team of explorers mapping a mysterious cave.**\n\n1. **The Cave (The Problem):**\n   The cave is dark and twisty, and the explorers (our neural network) need to find the treasure (the correct answer). But they don’t know the layout yet!\n\n2. **The Torches (The Inputs):**\n   Each explorer holds a torch that lights up a small part of the cave. The brightness of their torch depends on what they see (the input data, like pictures of cats or dogs).\n\n3. **The Path (The Weights):**\n   The explorers walk through the cave, choosing paths based on how bright their torches are. Some paths seem promising at first (like a shortcut), but they might lead to dead ends. The explorers adjust their torch brightness (the weights) to find the best path.\n\n4. **The Treasure Hunt (Learning):**\n   Every time they find the treasure (get the right answer), they cheer and mark the path as good! If they hit a dead end (wrong answer), they groan and try a different path next time. Over time, they get better at picking the right paths because they remember what worked before.\n\n5. **The Map (The Model):**\n   After lots of practice, the explorers draw a map (the trained neural network) showing the best paths to the treasure. Now, when new explorers come in with new torches (new data), they can use the map to find the treasure faster!\n\n**So, just like the explorers learn from their mistakes, the neural network learns by adjusting its "paths" (weights) based on feedback—until it gets really good at solving problems!** 🏴\u200d☠️🔦🗺️\n\n### Additional Insights\n* The "Guessing" Phase (The First Try)\nAt the very beginning, your robot chef has no idea what it’s doing.\n* You give it a bowl of flour, sugar, and chocolate, and say, "Make a cookie!" \n\nThe robot throws in a handful of salt, dumps in a gallon of milk, and maybe throws in a shoe for good measure.\n* It puts this mess in the oven and pulls out something that looks like a burnt brick.\n* The "Feedback" Phase (The Taste Test)\nYou take a bite (yuck!) and give the robot a "score." You say, "That was a 0 out of 10.'}
+2026-07-26 23:11:07 | INFO     | main | [req_a23725ed6da2] Incoming query | user=vineet_test | query='Write a 3-line poem about the ocean.'
+2026-07-26 23:11:07 | INFO     | main | [req_a23725ed6da2] Task classified | task_type=creative | query='Write a 3-line poem about the ocean.'
+2026-07-26 23:11:07 | INFO     | main | [req_a23725ed6da2] Calling 3 models in parallel
+2026-07-26 23:11:07 | WARNING  | main | [req_a23725ed6da2] Model FAILED  | model=groq-llama3 | error=HTTP 401 from groq-llama3 — check API key
+2026-07-26 23:11:08 | INFO     | main | [req_a23725ed6da2] Model OK      | model=mistral-small | latency=736ms
+2026-07-26 23:11:08 | INFO     | main | [req_a23725ed6da2] Model OK      | model=gemini-3.1-flash-lite | latency=1122ms
+2026-07-26 23:11:08 | DEBUG    | main | [req_a23725ed6da2] RCKS | model=groq-llama3 | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-26 23:11:08 | DEBUG    | main | [req_a23725ed6da2] RCKS | model=mistral-small | R=1.000 C=0.750 K=0.070 S=1.000 | score=0.6585 | tier=MEDIUM
+2026-07-26 23:11:08 | DEBUG    | main | [req_a23725ed6da2] RCKS | model=gemini-3.1-flash-lite | R=0.964 C=0.750 K=0.092 S=1.000 | score=0.6542 | tier=MEDIUM
+2026-07-26 23:11:08 | DEBUG    | main | [req_a23725ed6da2] Fusion weights | {'mistral-small': 0.5083, 'gemini-3.1-flash-lite': 0.4917} | agreement=0.5757
+2026-07-26 23:11:08 | INFO     | main | [req_a23725ed6da2] Pipeline complete | task=creative | response_len=104 chars | total=1332.06ms
+2026-07-26 23:11:08 | INFO     | main | [score_e810a1ba4fb2] Manual score request | task_type=creative | model_id=manual_test_case | query='Write a 3-line poem about the ocean.'
+2026-07-26 23:11:08 | DEBUG    | main | [score_e810a1ba4fb2] Manual score result | {'model_id': 'manual_test_case', 'relevance': 1.0, 'coherence': 0.75, 'completeness': 0.07, 'consistency': 1.0, 'weighted_score': 0.6585, 'confidence_tier': 'MEDIUM', 'latency_ms': 0.0, 'success': True, 'error': None, 'content': 'Waves crash in endless song,\nSalt-kissed winds weave through the tide,\nHorizon hums where dreams belong.'}
+2026-07-26 23:11:08 | INFO     | main | [req_a181802632b6] Incoming query | user=vineet_test | query='Why do leaves change color in autumn?'
+2026-07-26 23:11:08 | INFO     | main | [req_a181802632b6] Task classified | task_type=reasoning | query='Why do leaves change color in autumn?'
+2026-07-26 23:11:08 | INFO     | main | [req_a181802632b6] Calling 3 models in parallel
+2026-07-26 23:11:08 | WARNING  | main | [req_a181802632b6] Model FAILED  | model=groq-llama3 | error=HTTP 401 from groq-llama3 — check API key
+2026-07-26 23:11:11 | INFO     | main | [req_a181802632b6] Model OK      | model=gemini-3.1-flash-lite | latency=3084ms
+2026-07-26 23:11:13 | INFO     | main | [req_a181802632b6] Model OK      | model=mistral-small | latency=4482ms
+2026-07-26 23:11:29 | DEBUG    | main | [req_a181802632b6] RCKS | model=groq-llama3 | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-26 23:11:29 | DEBUG    | main | [req_a181802632b6] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.850 K=1.000 S=0.400 | score=0.8725 | tier=HIGH
+2026-07-26 23:11:29 | DEBUG    | main | [req_a181802632b6] RCKS | model=mistral-small | R=1.000 C=0.850 K=1.000 S=0.400 | score=0.8725 | tier=HIGH
+2026-07-26 23:11:30 | DEBUG    | main | [req_a181802632b6] Fusion weights | {'gemini-3.1-flash-lite': 0.5, 'mistral-small': 0.5} | agreement=0.7721
+2026-07-26 23:11:39 | INFO     | main | [req_a181802632b6] Pipeline complete | task=reasoning | response_len=3605 chars | total=30408.69ms
+2026-07-26 23:11:39 | INFO     | main | [score_c83ac7a8cc44] Manual score request | task_type=factual | model_id=manual_test_case | query='Why do leaves change color in autumn?'
+2026-07-26 23:11:47 | DEBUG    | main | [score_c83ac7a8cc44] Manual score result | {'model_id': 'manual_test_case', 'relevance': 1.0, 'coherence': 0.85, 'completeness': 1.0, 'consistency': 0.4, 'weighted_score': 0.8725, 'confidence_tier': 'HIGH', 'latency_ms': 0.0, 'success': True, 'error': None, 'layer2_factual': {'penalty': 0.0, 'hedge_flags': [], 'numerical_flags': [], 'hedge_count': 0, 'numerical_conflict_count': 0}, 'content': 'The changing of leaf colors in autumn is a biological process triggered by the changing seasons, specifically the decrease in daylight and the cooling temperatures.\n\nHere is the step-by-step breakdown of why and how this happens:\n\n### 1. The Role of Chlorophyll\nDuring the spring and summer, leaves are green because they are filled with **chlorophyll**. Chlorophyll is the chemical that allows plants to absorb sunlight and convert it into energy (photosynthesis). Because the plant is actively growing and producing food during these months, the chlorophyll is constantly being broken down and replenished.\n\n### 2. The Trigger: Less Sunlight\nAs autumn approaches, the days get shorter and the nights get longer. Trees perceive these changes in light as a signal that winter is coming. In preparation for the cold, the tree begins to shut down its food-making factories. It stops producing new chlorophyll.\n\n### 3. The Colors Revealed\nAs the existing chlorophyll breaks down and is not replaced, the green color fades away. However, the leaf isn\'t just green; it contains other pigments that were hidden by the dominant green of the chlorophyll all summer long. Once the green is gone, these other colors finally become visible:\n\n*   **Carotenoids (Yellows and Oranges):** These pigments are present in the leaf all year round (they are the same pigments found in carrots and corn). They help the plant absorb light energy, but they are masked by the green chlorophyll until autumn.\n*   **Anthocyanins (Reds and Purples):** Unlike carotenoids, these pigments are not present all summer. They are produced in the autumn in response to the trapped sugars in the leaves as the veins begin to close off. Bright, sunny autumn days combined with cool nights encourage the production of these red pigments.\n\n### 4. The Final Stage: Why Brown?\nAfter the yellows, oranges, and reds have had their time, the leaf eventually turns brown. This happens because the leaf is dying and the cell walls are breaking down. The brown color comes from **tannins**, which are waste products left behind in the leaf after the other pigments have decomposed.\n\n### 5. Why do they fall off?\nOnce the tree stops producing chlorophyll, it creates a "separation layer" of cells at the base of the leaf stem. This layer gradually cuts off the flow of water and nutrients to the leaf. Eventually, the connection becomes so weak that a gust of wind or the weight of the leaf causes it to break away and fall to the ground.\n\n**Summary:** Leaves don\'t "change" color so much as they **reveal** the colors that were already there, while the tree prepares for its winter dormancy.\n\n### Additional Insights\n* Chlorophyll Breakdown (Green Fades)**\n- **Chlorophyll** (the green pigment in leaves) is essential for photosynthesis but is **unstable and breaks down quickly** in sunlight.\n- In autumn, **cooler temperatures and shorter daylight hours** signal deciduous trees to stop producing chlorophyll.\n- As chlorophyll breaks down, **other pigments** (hidden beneath it) become visible.\n\n### **2.\n* Other Pigments Revealed**\nThree main pigments contribute to autumn colors:\n- **Carotenoids** (Yellow/Orange) – Present all year but masked by chlorophyll.\n* Found in carrots, corn, and daffodils.\n- **Xanthophylls** (Yellow) – Similar to carotenoids, found in leaves and some flowers.\n- **Anthocyanins** (Red/Purple) – **Not always present**; these pigments are produced **in autumn** in response to **bright light and excess sugars** trapped in leaves.\n* They act as a **sunscreen** to protect leaves while nutrients are reabsorbed.\n\n### **3.'}
+2026-07-26 23:11:49 | INFO     | main | [req_f404f38ee5e5] Incoming query | user=vineet_test | query='What is the capital of Japan?'
+2026-07-26 23:11:49 | INFO     | main | [req_f404f38ee5e5] Task classified | task_type=factual | query='What is the capital of Japan?'
+2026-07-26 23:11:49 | INFO     | main | [req_f404f38ee5e5] Calling 3 models in parallel
+2026-07-26 23:11:49 | WARNING  | main | [req_f404f38ee5e5] Model FAILED  | model=groq-llama3 | error=HTTP 401 from groq-llama3 — check API key
+2026-07-26 23:11:50 | INFO     | main | [req_f404f38ee5e5] Model OK      | model=gemini-3.1-flash-lite | latency=1036ms
+2026-07-26 23:11:50 | INFO     | main | [req_f404f38ee5e5] Model OK      | model=mistral-small | latency=1097ms
+2026-07-26 23:11:51 | DEBUG    | main | [req_f404f38ee5e5] RCKS | model=groq-llama3 | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-26 23:11:51 | DEBUG    | main | [req_f404f38ee5e5] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.750 K=0.676 S=1.000 | score=0.8404 | tier=MEDIUM
+2026-07-26 23:11:51 | DEBUG    | main | [req_f404f38ee5e5] RCKS | model=mistral-small | R=1.000 C=1.000 K=0.781 S=1.000 | score=0.9344 | tier=HIGH
+2026-07-26 23:11:51 | DEBUG    | main | [req_f404f38ee5e5] Fusion weights | {'gemini-3.1-flash-lite': 0.4897, 'mistral-small': 0.5103} | agreement=0.8284
+2026-07-26 23:11:51 | INFO     | main | [req_f404f38ee5e5] Pipeline complete | task=factual | response_len=182 chars | total=1988.08ms
+2026-07-26 23:11:51 | INFO     | main | [score_048de5104e2a] Manual score request | task_type=factual | model_id=manual_test_case | query='What is the capital of Japan?'
+2026-07-26 23:11:52 | DEBUG    | main | [score_048de5104e2a] Manual score result | {'model_id': 'manual_test_case', 'relevance': 1.0, 'coherence': 1.0, 'completeness': 0.7812, 'consistency': 1.0, 'weighted_score': 0.9344, 'confidence_tier': 'HIGH', 'latency_ms': 0.0, 'success': True, 'error': None, 'layer2_factual': {'penalty': 0.0, 'hedge_flags': [], 'numerical_flags': [], 'hedge_count': 0, 'numerical_conflict_count': 0}, 'content': "The capital of Japan is **Tokyo**. It is the largest city in Japan and serves as the country's political, economic, and cultural center.\n\nWould you like more information about Tokyo?"}
+2026-07-26 23:11:52 | INFO     | main | [req_91d4759679e3] Incoming query | user=vineet_test | query="Summarize in one sentence: 'The library was filled with students preparing for e"
+2026-07-26 23:11:52 | INFO     | main | [req_91d4759679e3] Task classified | task_type=summary | query="Summarize in one sentence: 'The library was filled with students preparing for e"
+2026-07-26 23:11:52 | INFO     | main | [req_91d4759679e3] Calling 3 models in parallel
+2026-07-26 23:11:52 | WARNING  | main | [req_91d4759679e3] Model FAILED  | model=groq-llama3 | error=HTTP 401 from groq-llama3 — check API key
+2026-07-26 23:11:53 | INFO     | main | [req_91d4759679e3] Model OK      | model=gemini-3.1-flash-lite | latency=1104ms
+2026-07-26 23:11:53 | INFO     | main | [req_91d4759679e3] Model OK      | model=mistral-small | latency=1261ms
+2026-07-26 23:11:53 | DEBUG    | main | [req_91d4759679e3] RCKS | model=groq-llama3 | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-26 23:11:53 | DEBUG    | main | [req_91d4759679e3] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.750 K=0.371 S=1.000 | score=0.7487 | tier=MEDIUM
+2026-07-26 23:11:53 | DEBUG    | main | [req_91d4759679e3] RCKS | model=mistral-small | R=1.000 C=0.750 K=0.715 S=1.000 | score=0.8519 | tier=HIGH
+2026-07-26 23:11:53 | DEBUG    | main | [req_91d4759679e3] Fusion weights | {'gemini-3.1-flash-lite': 0.4755, 'mistral-small': 0.5245} | agreement=0.8252
+2026-07-26 23:11:53 | INFO     | main | [req_91d4759679e3] Pipeline complete | task=summary | response_len=152 chars | total=1518.6ms
+2026-07-26 23:11:53 | INFO     | main | [score_f21ed38e22a3] Manual score request | task_type=summary | model_id=manual_test_case | query="Summarize in one sentence: 'The library was filled with students preparing for e"
+2026-07-26 23:11:53 | DEBUG    | main | [score_f21ed38e22a3] Manual score result | {'model_id': 'manual_test_case', 'relevance': 1.0, 'coherence': 0.75, 'completeness': 0.7146, 'consistency': 1.0, 'weighted_score': 0.8519, 'confidence_tier': 'HIGH', 'latency_ms': 0.0, 'success': True, 'error': None, 'content': 'The library was bustling with students studying for exams in various ways—some read quietly, others worked on laptops, and a few discussed notes softly.'}
+2026-07-26 23:11:53 | INFO     | main | [req_bd66599f6376] Incoming query | user=vineet_test | query='Give a creative analogy explaining how a neural network learns, for a 10-year-ol'
+2026-07-26 23:11:53 | INFO     | main | [req_bd66599f6376] Task classified | task_type=creative | query='Give a creative analogy explaining how a neural network learns, for a 10-year-ol'
+2026-07-26 23:11:53 | INFO     | main | [req_bd66599f6376] Calling 3 models in parallel
+2026-07-26 23:11:53 | WARNING  | main | [req_bd66599f6376] Model FAILED  | model=groq-llama3 | error=HTTP 401 from groq-llama3 — check API key
+2026-07-26 23:11:56 | INFO     | main | [req_bd66599f6376] Model OK      | model=mistral-small | latency=2504ms
+2026-07-26 23:11:56 | INFO     | main | [req_bd66599f6376] Model OK      | model=gemini-3.1-flash-lite | latency=3180ms
+2026-07-26 23:12:06 | DEBUG    | main | [req_bd66599f6376] RCKS | model=groq-llama3 | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-26 23:12:06 | DEBUG    | main | [req_bd66599f6376] RCKS | model=mistral-small | R=1.000 C=1.000 K=1.000 S=0.800 | score=0.9700 | tier=HIGH
+2026-07-26 23:12:06 | DEBUG    | main | [req_bd66599f6376] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.667 K=0.675 S=0.400 | score=0.7293 | tier=MEDIUM
+2026-07-26 23:12:07 | DEBUG    | main | [req_bd66599f6376] Fusion weights | {'mistral-small': 0.5223, 'gemini-3.1-flash-lite': 0.4777} | agreement=0.5806
+2026-07-26 23:12:13 | INFO     | main | [req_bd66599f6376] Pipeline complete | task=creative | response_len=1701 chars | total=20041.14ms
+2026-07-26 23:12:13 | INFO     | main | [score_00d78c0ff037] Manual score request | task_type=creative | model_id=manual_test_case | query='Give a creative analogy explaining how a neural network learns, for a 10-year-ol'
+2026-07-26 23:12:18 | DEBUG    | main | [score_00d78c0ff037] Manual score result | {'model_id': 'manual_test_case', 'relevance': 1.0, 'coherence': 1.0, 'completeness': 1.0, 'consistency': 0.4, 'weighted_score': 0.91, 'confidence_tier': 'HIGH', 'latency_ms': 0.0, 'success': True, 'error': None, 'content': 'Sure! Here’s a fun analogy to explain how a neural network learns:\n\n**Imagine a neural network is like a group of kids playing a game of "Guess the Animal."**\n\n1. **The Game Starts:** The kids (the neural network) don’t know much at first—they just shout random guesses like "Is it a cat?" or "Is it a car?"\n\n2. **Getting Feedback:** An adult (the "teacher") tells them if they’re right or wrong. If they guess "cat" and it’s actually a dog, the adult says, "Nope! It’s a dog!"\n\n3. **Learning from Mistakes:** The kids adjust their next guesses based on what they learned. Maybe they remember that dogs bark and cats meow, so they use those clues next time.\n\n4. **Practicing More:** The more animals they guess (the more data they see), the better they get at spotting the right patterns—like floppy ears or a long tail.\n\n5. **Becoming Experts:** After playing many rounds, the kids (now the neural network) can guess animals super fast and accurately, just like how a well-trained neural network can recognize images or words!\n\n**Bonus:** Just like the kids improve by practicing, the neural network gets smarter by seeing more examples—over and over!\n\nWould you like me to tweak it for a specific type of learning (like images or sounds)? 😊\n\n### Additional Insights\n* Imagine you are trying to teach a **robot chef** how to bake the perfect chocolate chip cookie, but the robot has never seen a kitchen before.\n\nAt first, the robot is just guessing.\n* It throws a whole bag of flour, three raw eggs (shells and all!), and a handful of dirt into a bowl.\n* The "Taste Test" (The Output)\nYou take a bite of the cookie and make a face.\n* You tell the robot, "This is too salty and way too hard."\n\n### 2.'}
+2026-07-26 23:12:18 | INFO     | main | [req_ee22900c69ea] Incoming query | user=vineet_test | query='Write a 3-line poem about the ocean.'
+2026-07-26 23:12:18 | INFO     | main | [req_ee22900c69ea] Task classified | task_type=creative | query='Write a 3-line poem about the ocean.'
+2026-07-26 23:12:18 | INFO     | main | [req_ee22900c69ea] Calling 3 models in parallel
+2026-07-26 23:12:18 | WARNING  | main | [req_ee22900c69ea] Model FAILED  | model=groq-llama3 | error=HTTP 401 from groq-llama3 — check API key
+2026-07-26 23:12:19 | INFO     | main | [req_ee22900c69ea] Model OK      | model=mistral-small | latency=579ms
+2026-07-26 23:12:19 | INFO     | main | [req_ee22900c69ea] Model OK      | model=gemini-3.1-flash-lite | latency=1280ms
+2026-07-26 23:12:19 | DEBUG    | main | [req_ee22900c69ea] RCKS | model=groq-llama3 | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-26 23:12:19 | DEBUG    | main | [req_ee22900c69ea] RCKS | model=mistral-small | R=1.000 C=0.750 K=0.066 S=1.000 | score=0.6572 | tier=MEDIUM
+2026-07-26 23:12:19 | DEBUG    | main | [req_ee22900c69ea] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.750 K=0.092 S=1.000 | score=0.6651 | tier=MEDIUM
+2026-07-26 23:12:19 | DEBUG    | main | [req_ee22900c69ea] Fusion weights | {'mistral-small': 0.5217, 'gemini-3.1-flash-lite': 0.4783} | agreement=0.7223
+2026-07-26 23:12:19 | INFO     | main | [req_ee22900c69ea] Pipeline complete | task=creative | response_len=94 chars | total=1465.19ms
+2026-07-26 23:12:19 | INFO     | main | [score_ade6a007cfce] Manual score request | task_type=creative | model_id=manual_test_case | query='Write a 3-line poem about the ocean.'
+2026-07-26 23:12:19 | DEBUG    | main | [score_ade6a007cfce] Manual score result | {'model_id': 'manual_test_case', 'relevance': 1.0, 'coherence': 0.75, 'completeness': 0.0656, 'consistency': 1.0, 'weighted_score': 0.6572, 'confidence_tier': 'MEDIUM', 'latency_ms': 0.0, 'success': True, 'error': None, 'content': 'Waves whisper secrets to the shore,\nEndless blue forevermore,\nSalt and dreams in endless roar.'}
+2026-07-26 23:12:19 | INFO     | main | [req_8b5acb2b1525] Incoming query | user=vineet_test | query='Why do leaves change color in autumn?'
+2026-07-26 23:12:20 | INFO     | main | [req_8b5acb2b1525] Task classified | task_type=reasoning | query='Why do leaves change color in autumn?'
+2026-07-26 23:12:20 | INFO     | main | [req_8b5acb2b1525] Calling 3 models in parallel
+2026-07-26 23:12:20 | WARNING  | main | [req_8b5acb2b1525] Model FAILED  | model=groq-llama3 | error=HTTP 401 from groq-llama3 — check API key
+2026-07-26 23:12:22 | INFO     | main | [req_8b5acb2b1525] Model OK      | model=mistral-small | latency=2829ms
+2026-07-26 23:12:23 | INFO     | main | [req_8b5acb2b1525] Model OK      | model=gemini-3.1-flash-lite | latency=3086ms
+2026-07-26 23:12:30 | DEBUG    | main | [req_8b5acb2b1525] RCKS | model=groq-llama3 | R=0.000 C=0.000 K=0.000 S=0.000 | score=0.0000 | tier=LOW
+2026-07-26 23:12:30 | DEBUG    | main | [req_8b5acb2b1525] RCKS | model=mistral-small | R=1.000 C=0.882 K=1.000 S=0.800 | score=0.9404 | tier=HIGH
+2026-07-26 23:12:30 | DEBUG    | main | [req_8b5acb2b1525] RCKS | model=gemini-3.1-flash-lite | R=1.000 C=0.850 K=1.000 S=0.400 | score=0.8725 | tier=HIGH
+2026-07-26 23:12:30 | DEBUG    | main | [req_8b5acb2b1525] Fusion weights | {'mistral-small': 0.5073, 'gemini-3.1-flash-lite': 0.4927} | agreement=0.8187
+2026-07-26 23:12:37 | INFO     | main | [req_8b5acb2b1525] Pipeline complete | task=reasoning | response_len=2389 chars | total=17534.16ms
+2026-07-26 23:12:37 | INFO     | main | [score_37abbb6baf31] Manual score request | task_type=factual | model_id=manual_test_case | query='Why do leaves change color in autumn?'
+2026-07-26 23:12:42 | DEBUG    | main | [score_37abbb6baf31] Manual score result | {'model_id': 'manual_test_case', 'relevance': 1.0, 'coherence': 1.0, 'completeness': 1.0, 'consistency': 0.8, 'weighted_score': 0.82, 'confidence_tier': 'MEDIUM', 'latency_ms': 0.0, 'success': True, 'error': None, 'layer2_factual': {'penalty': 0.15, 'hedge_flags': [], 'numerical_flags': ["numerical conflict: '1' in different contexts — 'Here’s a step-by-step explanation:\n\n1.' vs '-step breakdown of why it happens:\n\n### 1.'"], 'hedge_count': 0, 'numerical_conflict_count': 1}, 'content': 'Leaves change color in autumn due to a combination of factors, primarily involving the breakdown of chlorophyll and the unmasking of other pigments. Here’s a step-by-step explanation:\n\n1. **Chlorophyll Breakdown**: During spring and summer, leaves are green because of chlorophyll, the pigment that helps plants absorb sunlight for photosynthesis. As days shorten and temperatures drop in autumn, chlorophyll production slows and eventually stops. The existing chlorophyll breaks down, revealing other pigments that were hidden.\n\n2. **Other Pigments Revealed**:\n   - **Carotenoids**: These yellow, orange, and brown pigments are present in leaves all year but are masked by chlorophyll. They contribute to the colors of leaves like maples and birches.\n   - **Anthocyanins**: These red and purple pigments are produced in some leaves (like maples) in response to bright light and excess sugars trapped in the leaves. They’re not always present but can intensify the fall colors.\n\n3. **Environmental Factors**:\n   - **Temperature**: Cooler nights (but not freezing) enhance anthocyanin production, leading to more vivid reds.\n   - **Light**: Shorter days and bright sunlight trigger the breakdown of chlorophyll and the production of anthocyanins.\n   - **Water**: A dry autumn can lead to earlier leaf drop, while wet conditions might prolong the color change.\n\n4. **Leaf Drop**: As chlorophyll breaks down entirely, the leaves lose their green color. The tree then forms a protective layer (abscission layer) at the base of the leaf stem, causing the leaf to detach and fall. This conserves water and nutrients during winter.\n\nIn summary, the vibrant autumn colors are the result of chlorophyll fading and other pigments—already present in the leaf—becoming visible. The exact hues depend on the tree species and local weather conditions.\n\n### Additional Insights\n* It involves a combination of decreasing sunlight, cooling temperatures, and the chemical breakdown of pigments within the leaves.\n\nHere is the step-by-step breakdown of why it happens:\n\n### 1.\n* The Role of Chlorophyll\nDuring the spring and summer, leaves act as food factories for trees.\n* They contain a pigment called **chlorophyll**, which is essential for photosynthesis (the process of converting sunlight into energy).\n* The Trigger: Less Daylight\nAs autumn approaches, the days get shorter and the nights get longer.'}
+2026-07-26 23:19:50 | INFO     | main | Shutdown — Bayesian priors saved to priors.json

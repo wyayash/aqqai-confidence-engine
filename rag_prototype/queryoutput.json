@@ -1,0 +1,66 @@
+{
+  "request_id": "req_4bb960b6fa15",
+  "query": "What is a vector database in simple terms?",
+  "task_type": "factual",
+  "final_response": "To understand a vector database, it helps to first understand how a \"regular\" database works.\n\n### The Regular Database (The Filing Cabinet)\nThink of a traditional database (like Excel or SQL) as a giant filing cabinet. Everything is stored in rows and columns. To find something, you have to use an exact keyword or ID. If you search for \"a cute animal,\" a regular database won’t find a picture of a puppy unless the file is literally labeled \"cute animal.\" It lacks **context.**\n\n### The Vector Database (The Map of Meaning)\nA vector database doesn't store data as text or numbers; it stores data as **coordinates on a map.**\n\n1. **Turning data into \"Vectors\":** Computers use AI to turn words, images, or audio into long lists of numbers called **Vectors**. These numbers represent the *meaning* of the data. **The Map:** Imagine a massive 3D map. Words with similar meanings are placed close together. \"Puppy\" and \"Dog\" would be parked right next to each other. \"Puppy\" and \"Refrigerator\" would be miles apart.\n3. **The Search:** Because everything is organized by meaning rather than keywords, you can ask the database for \"a cute animal,\" and it will look at the map, see where \"cute animal\" would be, and return the closest results—like \"puppy,\" \"kitten,\" or \"bunny\"—even if those exact words weren't in your search.\n\n---\n\n### Why is this a big deal?\n\n*   **It understands context:** It doesn't care if you use synonyms or different phrasing. It knows what you *mean*.\n*   **It powers AI:** This is the \"long-term memory\" for AI models like ChatGPT. When you ask an AI a question about your private documents, the AI uses a vector database to quickly find the relevant pieces of information based on the *meaning* of your question.\n*   **It handles messy data:** It works perfectly with things that are hard to organize, like photos, videos, and audio files. You can search for a photo by describing what is in it, rather than needing a filename.\n\n### The Summary\n*   **Traditional Database:** Searches for **exact matches** (keywords).\n*   **Vector Database:** Searches for **similar meanings** (concepts).\n\nIf a traditional database is like **searching for a specific book by its title**, a vector database is like **walking into a library and asking the librarian for \"something that will make me cry.\"** The librarian uses their understanding of the books (the vectors) to find the right ones for you.",
+  "fusion_weights": {
+    "mistral-small": 0.409,
+    "gemini-3.1-flash-lite": 0.591
+  },
+  "model_responses": [
+    {
+      "model_id": "cerebras-gpt-oss",
+      "relevance": 0,
+      "coherence": 0,
+      "completeness": 0,
+      "consistency": 0,
+      "weighted_score": 0,
+      "confidence_tier": "LOW",
+      "latency_ms": 0,
+      "success": false,
+      "error": "No API key set for cerebras-gpt-oss — add it to your .env file.",
+      "content": ""
+    },
+    {
+      "model_id": "mistral-small",
+      "relevance": 1,
+      "coherence": 1,
+      "completeness": 1,
+      "consistency": 0.4,
+      "weighted_score": 0.91,
+      "confidence_tier": "HIGH",
+      "latency_ms": 2945.4,
+      "success": true,
+      "error": null,
+      "layer2_factual": {
+        "penalty": 0,
+        "hedge_flags": [],
+        "numerical_flags": [],
+        "hedge_count": 0,
+        "numerical_conflict_count": 0
+      },
+      "content": "A **vector database** is a type of database designed to store and search **vector embeddings**—high-dimensional numerical representations of data (like text, images, or audio).\n\n### Simple Explanation:\nImagine you have a bunch of items (e.g., cat photos, sentences, or songs) and you want to find similar ones quickly. Instead of storing the raw data (like pixels or words), you first convert each item into a **vector** (a long list of numbers that represent its features).\n\nA vector database:\n1. **Stores** these vectors efficiently.\n2. **Searches** them fast by comparing how \"close\" or similar the vectors are (using techniques like **cosine similarity** or **Euclidean distance**).\n\n### Example:\n- **Text:** The sentence *\"The cat sat on the mat\"* might be converted into a vector like `[0.2, 0.8, -0.5, ...]`.\n- **Image:** A photo of a cat could be turned into a vector representing its colors, shapes, etc.\n- **Search:** If you search for \"animals on furniture,\" the database finds the closest vectors (e.g., cat photos) by comparing their numerical values.\n\n### Why Use It?\n- **Fast similarity search** (faster than scanning all raw data).\n- **Works for unstructured data** (text, images, audio).\n- **Used in AI apps** (recommendation systems, chatbots, image search).\n\n### Popular Tools:\n- **Pinecone**\n- **Milvus**\n- **Weaviate**\n- **FAISS** (by Meta)\n- **Qdrant**\n\nIn short: A vector database is like a **smart librarian** for AI-generated number lists, helping you find similar things quickly! 🚀"
+    },
+    {
+      "model_id": "gemini-3.1-flash-lite",
+      "relevance": 1,
+      "coherence": 0.9684,
+      "completeness": 1,
+      "consistency": 0.4,
+      "weighted_score": 0.9021,
+      "confidence_tier": "HIGH",
+      "latency_ms": 3572.92,
+      "success": true,
+      "error": null,
+      "layer2_factual": {
+        "penalty": 0,
+        "hedge_flags": [],
+        "numerical_flags": [],
+        "hedge_count": 0,
+        "numerical_conflict_count": 0
+      },
+      "content": "To understand a vector database, it helps to first understand how a \"regular\" database works.\n\n### The Regular Database (The Filing Cabinet)\nThink of a traditional database (like Excel or SQL) as a giant filing cabinet. Everything is stored in rows and columns. To find something, you have to use an exact keyword or ID. If you search for \"a cute animal,\" a regular database won’t find a picture of a puppy unless the file is literally labeled \"cute animal.\" It lacks **context.**\n\n### The Vector Database (The Map of Meaning)\nA vector database doesn't store data as text or numbers; it stores data as **coordinates on a map.**\n\n1.  **Turning data into \"Vectors\":** Computers use AI to turn words, images, or audio into long lists of numbers called **Vectors**. These numbers represent the *meaning* of the data. \n2.  **The Map:** Imagine a massive 3D map. Words with similar meanings are placed close together. \"Puppy\" and \"Dog\" would be parked right next to each other. \"Puppy\" and \"Refrigerator\" would be miles apart.\n3.  **The Search:** Because everything is organized by meaning rather than keywords, you can ask the database for \"a cute animal,\" and it will look at the map, see where \"cute animal\" would be, and return the closest results—like \"puppy,\" \"kitten,\" or \"bunny\"—even if those exact words weren't in your search.\n\n---\n\n### Why is this a big deal?\n\n*   **It understands context:** It doesn't care if you use synonyms or different phrasing. It knows what you *mean*.\n*   **It powers AI:** This is the \"long-term memory\" for AI models like ChatGPT. When you ask an AI a question about your private documents, the AI uses a vector database to quickly find the relevant pieces of information based on the *meaning* of your question.\n*   **It handles messy data:** It works perfectly with things that are hard to organize, like photos, videos, and audio files. You can search for a photo by describing what is in it, rather than needing a filename.\n\n### The Summary\n*   **Traditional Database:** Searches for **exact matches** (keywords).\n*   **Vector Database:** Searches for **similar meanings** (concepts).\n\nIf a traditional database is like **searching for a specific book by its title**, a vector database is like **walking into a library and asking the librarian for \"something that will make me cry.\"** The librarian uses their understanding of the books (the vectors) to find the right ones for you."
+    }
+  ],
+  "total_time_ms": 28206.59
+}
