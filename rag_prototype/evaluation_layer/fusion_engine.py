@@ -149,7 +149,7 @@ def extract_sentences(text: str) -> list[str]:
     filler ("Certainly!", markdown headers, bullets, "In summary") —
     these aren't real content and shouldn't compete for a fusion slot.
     """
-    parts = re.split(r'(?<=[.!?]) +', text.strip())
+    parts = re.split(r'(?<=[.!?])\s+|\n+', text.strip())
     sentences = []
     for p in parts:
         p = p.strip()
