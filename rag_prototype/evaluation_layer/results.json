@@ -2,9 +2,9 @@
   "round_1": [
     {
       "prompt": "What is the capital of Japan?",
-      "total_time_ms": 918.9,
+      "total_time_ms": 1497.9,
       "raw_query_response": {
-        "request_id": "req_99fe16442b18",
+        "request_id": "req_53be0657c9c3",
         "query": "What is the capital of Japan?",
         "task_type": "factual",
         "final_response": "The capital of Japan is **Tokyo**.",
@@ -22,7 +22,7 @@
             "consistency": 1.0,
             "weighted_score": 0.8404,
             "confidence_tier": "MEDIUM",
-            "latency_ms": 174.66,
+            "latency_ms": 245.52,
             "success": true,
             "error": null,
             "layer2_factual": {
@@ -42,7 +42,7 @@
             "consistency": 1.0,
             "weighted_score": 0.8404,
             "confidence_tier": "MEDIUM",
-            "latency_ms": 459.77,
+            "latency_ms": 475.8,
             "success": true,
             "error": null,
             "layer2_factual": {
@@ -62,7 +62,7 @@
             "consistency": 1.0,
             "weighted_score": 0.8404,
             "confidence_tier": "MEDIUM",
-            "latency_ms": 624.49,
+            "latency_ms": 990.96,
             "success": true,
             "error": null,
             "layer2_factual": {
@@ -75,13 +75,13 @@
             "content": "The capital of Japan is Tokyo."
           }
         ],
-        "total_time_ms": 910.51
+        "total_time_ms": 1489.2
       },
       "comparison": {
         "best_single_model": "groq-llama3",
         "best_single_model_score": 0.8404,
         "fused_response_scores": {
-          "request_id": "score_569b5bbf3f55",
+          "request_id": "score_87da546972a0",
           "query": "What is the capital of Japan?",
           "response": "The capital of Japan is **Tokyo**.",
           "task_type": "factual",
@@ -110,43 +110,43 @@
     },
     {
       "prompt": "Summarize in one sentence: 'The library was filled with students preparing for exams. Some were reading quietly, others typing on laptops, and a few discussing notes in hushed voices.'",
-      "total_time_ms": 1598.41,
+      "total_time_ms": 1567.03,
       "raw_query_response": {
-        "request_id": "req_5470dd6aa1e0",
+        "request_id": "req_ed81ab3770bf",
         "query": "Summarize in one sentence: 'The library was filled with students preparing for exams. Some were reading quietly, others typing on laptops, and a few discussing notes in hushed voices.'",
         "task_type": "summary",
-        "final_response": "The library was busy with students studying in various ways\u2014some reading quietly, others typing on laptops, and a few discussing notes softly.",
+        "final_response": "The library was bustling with students studying in various ways\u2014some reading quietly, others typing on laptops, and a few discussing notes in hushed voices.",
         "fusion_weights": {
-          "groq-llama3": 0.2021,
-          "mistral-small": 0.4433,
-          "gemini-3.1-flash-lite": 0.3546
+          "groq-llama3": 0.2087,
+          "mistral-small": 0.4571,
+          "gemini-3.1-flash-lite": 0.3341
         },
         "model_responses": [
           {
             "model_id": "groq-llama3",
             "relevance": 1.0,
             "coherence": 0.75,
-            "completeness": 0.7092,
+            "completeness": 0.7173,
             "consistency": 1.0,
-            "weighted_score": 0.8503,
+            "weighted_score": 0.8527,
             "confidence_tier": "HIGH",
-            "latency_ms": 227.38,
+            "latency_ms": 315.47,
             "success": true,
             "error": null,
-            "content": "The library was bustling with students actively preparing for exams, engaged in various quiet activities such as reading, typing, and discussing notes."
+            "content": "The library was bustling with students studying for exams, with some reading, others typing on laptops, and a few quietly discussing notes with one another."
           },
           {
             "model_id": "mistral-small",
             "relevance": 1.0,
             "coherence": 0.75,
-            "completeness": 0.7092,
+            "completeness": 0.7146,
             "consistency": 1.0,
-            "weighted_score": 0.8503,
+            "weighted_score": 0.8519,
             "confidence_tier": "HIGH",
-            "latency_ms": 576.83,
+            "latency_ms": 685.91,
             "success": true,
             "error": null,
-            "content": "The library was busy with students studying in various ways\u2014some reading quietly, others typing on laptops, and a few discussing notes softly."
+            "content": "The library was bustling with students studying in various ways\u2014some reading quietly, others typing on laptops, and a few discussing notes in hushed voices."
           },
           {
             "model_id": "gemini-3.1-flash-lite",
@@ -156,50 +156,50 @@
             "consistency": 1.0,
             "weighted_score": 0.7487,
             "confidence_tier": "MEDIUM",
-            "latency_ms": 1075.16,
+            "latency_ms": 1108.52,
             "success": true,
             "error": null,
-            "content": "The library was bustling with students engaged in various study activities as they prepared for their exams."
+            "content": "The library was bustling with students engaged in various quiet study activities to prepare for their exams."
           }
         ],
-        "total_time_ms": 1593.31
+        "total_time_ms": 1561.53
       },
       "comparison": {
         "best_single_model": "groq-llama3",
-        "best_single_model_score": 0.8503,
+        "best_single_model_score": 0.8527,
         "fused_response_scores": {
-          "request_id": "score_1e6cef1ceb14",
+          "request_id": "score_59cfffc9f41e",
           "query": "Summarize in one sentence: 'The library was filled with students preparing for exams. Some were reading quietly, others typing on laptops, and a few discussing notes in hushed voices.'",
-          "response": "The library was busy with students studying in various ways\u2014some reading quietly, others typing on laptops, and a few discussing notes softly.",
+          "response": "The library was bustling with students studying in various ways\u2014some reading quietly, others typing on laptops, and a few discussing notes in hushed voices.",
           "task_type": "summary",
           "scores": {
             "model_id": "manual_test_case",
             "relevance": 1.0,
             "coherence": 0.75,
-            "completeness": 0.7092,
+            "completeness": 0.7146,
             "consistency": 1.0,
-            "weighted_score": 0.8503,
+            "weighted_score": 0.8519,
             "confidence_tier": "HIGH",
             "latency_ms": 0.0,
             "success": true,
             "error": null,
-            "content": "The library was busy with students studying in various ways\u2014some reading quietly, others typing on laptops, and a few discussing notes softly."
+            "content": "The library was bustling with students studying in various ways\u2014some reading quietly, others typing on laptops, and a few discussing notes in hushed voices."
           }
         }
       }
     },
     {
       "prompt": "Give a creative analogy explaining how a neural network learns, for a 10-year-old.",
-      "total_time_ms": 33252.03,
+      "total_time_ms": 27378.29,
       "raw_query_response": {
-        "request_id": "req_15c29db91f04",
+        "request_id": "req_0a2763b48616",
         "query": "Give a creative analogy explaining how a neural network learns, for a 10-year-old.",
         "task_type": "creative",
-        "final_response": "Sure! Here's a fun analogy to explain how a neural network learns, like a kid playing a game of \"Guess the Animal\":\n\n---\n\nImagine you're playing a guessing game with a robot friend. The robot wants to learn what a **cat** is by looking at pictures.\n\n1. **First Guess (Random)**: The robot squints at the first picture (maybe a cat!) and guesses **\"dog!\"**\u2014because it doesn\u2019t know better yet. Oops!\n\n2. **Teacher\u2019s Help**: You (the teacher) say, *\"Nope! That\u2019s a cat!\"* and show it more pictures. The robot writes down clues like:\n   - *\"Fluffy tail? Maybe!\"*\n   - *\"Pointy ears? Sometimes!\"*\n   - *\"Does it bark? NO!\"*\n\n3. **Tweaking the Rules**: The robot realizes its first guess was wrong, so it adjusts its clues a tiny bit, like fixing a video game level after dying too many times.\n\n4. **Practice Makes Perfect**: After seeing **thousands** of cat (and not-cat) pictures, the robot gets really good at spotting:\n   - *\"If the animal has whiskers, pointy ears, and doesn\u2019t bark\u2026 it\u2019s probably a cat!\"*\n\n5. **Magic of Layers**: The robot isn\u2019t just looking at one clue\u2014it\u2019s like a detective checking **many hints at once** (fur, tail shape, meows vs. barks) in layers, just like how you\u2019d solve a puzzle step by step.\n\n**Result**: Now the robot can guess correctly almost every time\u2014all because it \"learned\" from its mistakes, just like you learn in school!\n\n---\n\n**Key Idea**: A neural network is like a robot detective that starts clueless, gets \"corrected\" by a teacher (the data), and keeps practicing until it\u2019s an expert. \ud83d\ude80\ud83d\udc31\n\n### Additional Insights\n* Imagine you have a **giant, messy pile of mixed-up LEGO bricks** and you want to build a perfect model of a spaceship, but there\u2019s no instruction manual.\n\nTo learn how to build it, you use a **\"Guess-and-Check\" Robot.** Here is how it works:\n\n### 1.\n* It makes a lumpy, weird-looking blob.\n* You look at it and say, \"Nope!\n* That doesn\u2019t look like a spaceship.\"\n\n### 2.\n* Imagine you have a huge library with an infinite number of books, and each book has a secret recipe for making a different kind of cookie.\n* **The Librarian Starts Exploring**: The librarian begins by picking a few books at random from the shelves and trying out their recipes.\n* They make a batch of cookies using each recipe and then taste them to see how they turn out.\n\n2.\n* **Tasting and Adjusting**: After tasting each batch, the librarian decides which cookies are closer to the perfect chocolate chip cookie and which ones need improvement.",
+        "final_response": "Sure! Here\u2019s a fun analogy to explain how a neural network learns:\n\nImagine a neural network is like a **super-smart puppy** learning to play fetch!\n\n1. **Random Guesses at First** \u2013 At the beginning, the puppy doesn\u2019t know how to fetch. It might run in the wrong direction or drop the ball too early. The neural network starts by making random guesses, just like the puppy\u2019s first clumsy attempts.\n\n2. **Getting Feedback (Rewards & Corrections)** \u2013 Every time the puppy brings back the right ball (or the wrong one), you cheer (\"Good job!\") or say \"No, try again!\" The neural network gets feedback too\u2014if it guesses right, it gets a little reward; if it\u2019s wrong, it adjusts its guesses.\n\n3. **Adjusting Its Brain (Changing Weights)** \u2013 The puppy remembers what worked before. If it always brings the red ball instead of the blue one, it learns to focus on red. Similarly, the neural network tweaks tiny \"weights\" (like memory knobs) to get better at guessing over time.\n\n4. **Practice Makes Perfect** \u2013 The more the puppy plays fetch, the better it gets. The more data the neural network sees, the more accurate it becomes\u2014until it\u2019s a fetch champion! (Or a super-smart AI!)\n\nSo, a neural network is like a puppy learning through trial, error, and lots of practice! \ud83d\udc36\ud83c\udfbe\n\n### Additional Insights\n* Imagine you have a **\"Robot Chef\"** who wants to learn how to bake the world\u2019s most delicious chocolate chip cookie, but he has never been in a kitchen before.\n\nHere is how he learns, step-by-step, just like a neural network:\n\n### 1.\n* The \"Random Guess\" (The Beginning)\nAt the very start, the Robot Chef knows *nothing*.\n* He throws flour, eggs, chocolate chips, and\u2014oops\u2014maybe a shoe into a bowl.\n* He bakes it, and it tastes like a disaster.\n* Imagine you have a huge library with an infinite number of books, and each book has a secret recipe for making a different kind of cookie.\n* You want to learn how to make the perfect chocolate chip cookie, but you don't know which book has the best recipe.\n\nA neural network is like a super-smart, magic librarian who helps you find the perfect cookie recipe.\n* At first, the librarian doesn't know which book has the best recipe, so they start by looking at a few books and trying to make cookies using those recipes.\n* The cookies might not turn out perfectly, but the librarian learns from their mistakes.\n\nThe librarian then uses that knowledge to look at a few more books, and they try again to make the perfect cookie.",
         "fusion_weights": {
-          "groq-llama3": 0.2058,
-          "gemini-3.1-flash-lite": 0.3563,
-          "mistral-small": 0.438
+          "groq-llama3": 0.2202,
+          "mistral-small": 0.4464,
+          "gemini-3.1-flash-lite": 0.3334
         },
         "model_responses": [
           {
@@ -210,76 +210,76 @@
             "consistency": 0.8,
             "weighted_score": 0.8725,
             "confidence_tier": "HIGH",
-            "latency_ms": 2151.84,
+            "latency_ms": 1673.46,
             "success": true,
             "error": null,
-            "content": "Imagine you have a huge library with an infinite number of books, and each book has a secret recipe for making a different kind of cookie. Now, imagine you want to learn how to make the perfect chocolate chip cookie, but you don't know which book has the best recipe.\n\nA neural network is like a super-smart, magic librarian who helps you find the perfect recipe. Here's how it works:\n\n1. **The Librarian Starts Exploring**: The librarian begins by picking a few books at random from the shelves and trying out their recipes. They make a batch of cookies using each recipe and then taste them to see how they turn out.\n\n2. **Tasting and Adjusting**: After tasting each batch, the librarian decides which cookies are closer to the perfect chocolate chip cookie and which ones need improvement. They then go back to the books and say, \"This book's recipe was a bit too sweet, and that book's recipe needed more chocolate chips.\"\n\n3. **Learning from Mistakes**: The librarian uses this information to adjust their search. They look for books with recipes that are similar to the ones that tasted good but also try to fix the mistakes they found. For example, they might look for a book with a recipe that has just the right amount of sweetness and plenty of chocolate chips.\n\n4. **Getting Better and Better**: The librarian keeps doing this\u2014picking books, making cookies, tasting them, and adjusting their search\u2014over and over. Each time, they get a little closer to finding the perfect recipe because they're learning from their mistakes and using that knowledge to make better choices.\n\n5. **The Perfect Recipe**: After a while, the librarian finds a book with a recipe that makes the most delicious chocolate chip cookies ever! They've learned how to make the perfect cookies by trying lots of different recipes, tasting them, and adjusting their search based on what they learned.\n\nThat's basically how a neural network learns. It tries different \"recipes\" (or solutions) to a problem, sees how well they work, and then adjusts its approach based on what it learned, until it finds the best solution. And just like the magic librarian, it can learn to do all sorts of things, from recognizing pictures to understanding what people say, by practicing and adjusting its approach over and over."
-          },
-          {
-            "model_id": "gemini-3.1-flash-lite",
-            "relevance": 0.9889,
-            "coherence": 0.85,
-            "completeness": 0.675,
-            "consistency": 0.4,
-            "weighted_score": 0.7717,
-            "confidence_tier": "MEDIUM",
-            "latency_ms": 2930.52,
-            "success": true,
-            "error": null,
-            "content": "Imagine you have a **giant, messy pile of mixed-up LEGO bricks** and you want to build a perfect model of a spaceship, but there\u2019s no instruction manual.\n\nTo learn how to build it, you use a **\"Guess-and-Check\" Robot.** Here is how it works:\n\n### 1. The First Guess (The Random Start)\nAt the very beginning, the robot has no idea what it\u2019s doing. It just grabs random bricks and snaps them together. It makes a lumpy, weird-looking blob. You look at it and say, \"Nope! That doesn\u2019t look like a spaceship.\"\n\n### 2. The \"Ouch\" Moment (The Error)\nThe robot has a special sensor that feels \"sad\" when it gets it wrong. We call this the **Error.** The bigger the mistake, the sadder the robot feels. If the robot builds a blob, the error is huge!\n\n### 3. The Adjustment (Backpropagation)\nThis is the secret sauce. The robot looks at its mess and thinks, *\"Okay, the wings are on the bottom, and the cockpit is missing. Next time, I\u2019ll move the wings up.\"* It goes back through the pieces it just connected and makes tiny, teeny-tiny tweaks to how they fit together. \n\n### 4. The Repeat (The Training)\nThe robot does this over and over again\u2014thousands, maybe millions of times. \n*   **Attempt 1:** A blob. (Error: 100%)\n*   **Attempt 100:** A box with a pointy top. (Error: 50%)\n*   **Attempt 1,000:** A ship that almost looks right, but the colors are wrong. (Error: 10%)\n*   **Attempt 1,000,000:** A perfect, sleek spaceship. (Error: 0%)\n\n### The Big Secret\nA neural network is just a computer version of this robot. It doesn't \"know\" what a cat, a dog, or a spaceship is. Instead, it makes a guess, sees how far off it is, and then **adjusts the connections** inside itself to make the next guess just a little bit better. \n\n**Learning is just the art of failing until you stop failing!**"
+            "content": "Imagine you have a huge library with an infinite number of books, and each book has a secret recipe for making a different kind of cookie. You want to learn how to make the perfect chocolate chip cookie, but you don't know which book has the best recipe.\n\nA neural network is like a super-smart, magic librarian who helps you find the perfect cookie recipe. At first, the librarian doesn't know which book has the best recipe, so they start by looking at a few books and trying to make cookies using those recipes. The cookies might not turn out perfectly, but the librarian learns from their mistakes.\n\nThe librarian then uses that knowledge to look at a few more books, and they try again to make the perfect cookie. This time, the cookies might be a little better, but still not perfect. The librarian keeps doing this, looking at more and more books, trying different recipes, and learning from their mistakes.\n\nAs the librarian keeps trying, they start to notice patterns in the recipes. They might see that some recipes use more sugar, while others use more chocolate chips. They start to understand how these patterns affect the final cookie, and they use that knowledge to make even better cookies.\n\nEventually, the librarian becomes so good at finding the perfect recipe that they can make the most delicious chocolate chip cookie in the library, just by looking at a few clues. That's kind of like how a neural network learns \u2013 it's a process of trying different things, making mistakes, and learning from those mistakes to become better and better at solving a problem.\n\nAnd just like the librarian can use their knowledge to make all sorts of different cookies, a neural network can use its knowledge to solve all sorts of different problems, like recognizing pictures, understanding speech, or even playing games!"
           },
           {
             "model_id": "mistral-small",
             "relevance": 1.0,
             "coherence": 1.0,
             "completeness": 1.0,
-            "consistency": 0.4,
-            "weighted_score": 0.91,
+            "consistency": 0.8,
+            "weighted_score": 0.97,
             "confidence_tier": "HIGH",
-            "latency_ms": 3261.96,
+            "latency_ms": 2516.38,
             "success": true,
             "error": null,
-            "content": "Sure! Here's a fun analogy to explain how a neural network learns, like a kid playing a game of \"Guess the Animal\":\n\n---\n\nImagine you're playing a guessing game with a robot friend. The robot wants to learn what a **cat** is by looking at pictures.\n\n1. **First Guess (Random)**: The robot squints at the first picture (maybe a cat!) and guesses **\"dog!\"**\u2014because it doesn\u2019t know better yet. Oops!\n\n2. **Teacher\u2019s Help**: You (the teacher) say, *\"Nope! That\u2019s a cat!\"* and show it more pictures. The robot writes down clues like:\n   - *\"Fluffy tail? Maybe!\"*\n   - *\"Pointy ears? Sometimes!\"*\n   - *\"Does it bark? NO!\"*\n\n3. **Tweaking the Rules**: The robot realizes its first guess was wrong, so it adjusts its clues a tiny bit, like fixing a video game level after dying too many times.\n\n4. **Practice Makes Perfect**: After seeing **thousands** of cat (and not-cat) pictures, the robot gets really good at spotting:\n   - *\"If the animal has whiskers, pointy ears, and doesn\u2019t bark\u2026 it\u2019s probably a cat!\"*\n\n5. **Magic of Layers**: The robot isn\u2019t just looking at one clue\u2014it\u2019s like a detective checking **many hints at once** (fur, tail shape, meows vs. barks) in layers, just like how you\u2019d solve a puzzle step by step.\n\n**Result**: Now the robot can guess correctly almost every time\u2014all because it \"learned\" from its mistakes, just like you learn in school!\n\n---\n\n**Key Idea**: A neural network is like a robot detective that starts clueless, gets \"corrected\" by a teacher (the data), and keeps practicing until it\u2019s an expert. \ud83d\ude80\ud83d\udc31"
+            "content": "Sure! Here\u2019s a fun analogy to explain how a neural network learns:\n\nImagine a neural network is like a **super-smart puppy** learning to play fetch!\n\n1. **Random Guesses at First** \u2013 At the beginning, the puppy doesn\u2019t know how to fetch. It might run in the wrong direction or drop the ball too early. The neural network starts by making random guesses, just like the puppy\u2019s first clumsy attempts.\n\n2. **Getting Feedback (Rewards & Corrections)** \u2013 Every time the puppy brings back the right ball (or the wrong one), you cheer (\"Good job!\") or say \"No, try again!\" The neural network gets feedback too\u2014if it guesses right, it gets a little reward; if it\u2019s wrong, it adjusts its guesses.\n\n3. **Adjusting Its Brain (Changing Weights)** \u2013 The puppy remembers what worked before. If it always brings the red ball instead of the blue one, it learns to focus on red. Similarly, the neural network tweaks tiny \"weights\" (like memory knobs) to get better at guessing over time.\n\n4. **Practice Makes Perfect** \u2013 The more the puppy plays fetch, the better it gets. The more data the neural network sees, the more accurate it becomes\u2014until it\u2019s a fetch champion! (Or a super-smart AI!)\n\nSo, a neural network is like a puppy learning through trial, error, and lots of practice! \ud83d\udc36\ud83c\udfbe"
+          },
+          {
+            "model_id": "gemini-3.1-flash-lite",
+            "relevance": 1.0,
+            "coherence": 0.85,
+            "completeness": 1.0,
+            "consistency": 0.4,
+            "weighted_score": 0.8725,
+            "confidence_tier": "HIGH",
+            "latency_ms": 2923.36,
+            "success": true,
+            "error": null,
+            "content": "Imagine you have a **\"Robot Chef\"** who wants to learn how to bake the world\u2019s most delicious chocolate chip cookie, but he has never been in a kitchen before.\n\nHere is how he learns, step-by-step, just like a neural network:\n\n### 1. The \"Random Guess\" (The Beginning)\nAt the very start, the Robot Chef knows *nothing*. He throws flour, eggs, chocolate chips, and\u2014oops\u2014maybe a shoe into a bowl. He bakes it, and it tastes like a disaster. He doesn't know what he did wrong; he just knows it doesn\u2019t taste like a cookie.\n\n### 2. The \"Taste Test\" (The Error)\nA human (the \"Teacher\") comes in and tastes the cookie. The human gives the robot a **\"Score.\"** If the cookie is burnt, the score is very low. If it\u2019s raw, the score is low. If it\u2019s delicious, the score is high. \n\nIn a neural network, this is called **\"Loss.\"** It\u2019s basically the robot saying, \"How far away am I from the perfect cookie?\"\n\n### 3. The \"Adjustment\" (Backpropagation)\nThis is the magic part. The robot looks at his recipe and thinks, *\"Okay, the score was low because it was too salty.\"* He goes back to his ingredients and turns the \"Salt\" dial down just a tiny bit. He also notices it was too crunchy, so he turns the \"Baking Time\" dial down a little bit, too.\n\nHe does this for *every single ingredient*. He doesn't change them by a lot\u2014just a tiny nudge\u2014so he doesn't accidentally ruin the parts that were actually working well.\n\n### 4. The \"Repetition\" (Training)\nThe robot bakes another cookie. This one is *slightly* better. He gets a better score! He repeats this process thousands and thousands of times. \n\n*   **Cookie 1,000:** Still bad, but now it looks like a blob.\n*   **Cookie 10,000:** It actually tastes like a cookie, but it's a bit dry.\n*   **Cookie 1,000,000:** It\u2019s perfect. \n\n### The Big Secret\nThe \"Neural Network\" is just the robot's giant brain full of thousands of **tiny dials**. \n\nAt the start, all the dials are set to random positions. By baking millions of cookies and getting feedback on every single one, the robot slowly turns those dials to the *exact* right spots. \n\n**So, a neural network isn't \"smart\" because it was born that way\u2014it\u2019s smart because it made a million mistakes and learned how to"
           }
         ],
-        "total_time_ms": 33246.34
+        "total_time_ms": 27371.91
       },
       "comparison": {
         "best_single_model": "mistral-small",
-        "best_single_model_score": 0.91,
+        "best_single_model_score": 0.97,
         "fused_response_scores": {
-          "request_id": "score_04900eaab7da",
+          "request_id": "score_7491bffcd0e4",
           "query": "Give a creative analogy explaining how a neural network learns, for a 10-year-old.",
-          "response": "Sure! Here's a fun analogy to explain how a neural network learns, like a kid playing a game of \"Guess the Animal\":\n\n---\n\nImagine you're playing a guessing game with a robot friend. The robot wants to learn what a **cat** is by looking at pictures.\n\n1. **First Guess (Random)**: The robot squints at the first picture (maybe a cat!) and guesses **\"dog!\"**\u2014because it doesn\u2019t know better yet. Oops!\n\n2. **Teacher\u2019s Help**: You (the teacher) say, *\"Nope! That\u2019s a cat!\"* and show it more pictures. The robot writes down clues like:\n   - *\"Fluffy tail? Maybe!\"*\n   - *\"Pointy ears? Sometimes!\"*\n   - *\"Does it bark? NO!\"*\n\n3. **Tweaking the Rules**: The robot realizes its first guess was wrong, so it adjusts its clues a tiny bit, like fixing a video game level after dying too many times.\n\n4. **Practice Makes Perfect**: After seeing **thousands** of cat (and not-cat) pictures, the robot gets really good at spotting:\n   - *\"If the animal has whiskers, pointy ears, and doesn\u2019t bark\u2026 it\u2019s probably a cat!\"*\n\n5. **Magic of Layers**: The robot isn\u2019t just looking at one clue\u2014it\u2019s like a detective checking **many hints at once** (fur, tail shape, meows vs. barks) in layers, just like how you\u2019d solve a puzzle step by step.\n\n**Result**: Now the robot can guess correctly almost every time\u2014all because it \"learned\" from its mistakes, just like you learn in school!\n\n---\n\n**Key Idea**: A neural network is like a robot detective that starts clueless, gets \"corrected\" by a teacher (the data), and keeps practicing until it\u2019s an expert. \ud83d\ude80\ud83d\udc31\n\n### Additional Insights\n* Imagine you have a **giant, messy pile of mixed-up LEGO bricks** and you want to build a perfect model of a spaceship, but there\u2019s no instruction manual.\n\nTo learn how to build it, you use a **\"Guess-and-Check\" Robot.** Here is how it works:\n\n### 1.\n* It makes a lumpy, weird-looking blob.\n* You look at it and say, \"Nope!\n* That doesn\u2019t look like a spaceship.\"\n\n### 2.\n* Imagine you have a huge library with an infinite number of books, and each book has a secret recipe for making a different kind of cookie.\n* **The Librarian Starts Exploring**: The librarian begins by picking a few books at random from the shelves and trying out their recipes.\n* They make a batch of cookies using each recipe and then taste them to see how they turn out.\n\n2.\n* **Tasting and Adjusting**: After tasting each batch, the librarian decides which cookies are closer to the perfect chocolate chip cookie and which ones need improvement.",
+          "response": "Sure! Here\u2019s a fun analogy to explain how a neural network learns:\n\nImagine a neural network is like a **super-smart puppy** learning to play fetch!\n\n1. **Random Guesses at First** \u2013 At the beginning, the puppy doesn\u2019t know how to fetch. It might run in the wrong direction or drop the ball too early. The neural network starts by making random guesses, just like the puppy\u2019s first clumsy attempts.\n\n2. **Getting Feedback (Rewards & Corrections)** \u2013 Every time the puppy brings back the right ball (or the wrong one), you cheer (\"Good job!\") or say \"No, try again!\" The neural network gets feedback too\u2014if it guesses right, it gets a little reward; if it\u2019s wrong, it adjusts its guesses.\n\n3. **Adjusting Its Brain (Changing Weights)** \u2013 The puppy remembers what worked before. If it always brings the red ball instead of the blue one, it learns to focus on red. Similarly, the neural network tweaks tiny \"weights\" (like memory knobs) to get better at guessing over time.\n\n4. **Practice Makes Perfect** \u2013 The more the puppy plays fetch, the better it gets. The more data the neural network sees, the more accurate it becomes\u2014until it\u2019s a fetch champion! (Or a super-smart AI!)\n\nSo, a neural network is like a puppy learning through trial, error, and lots of practice! \ud83d\udc36\ud83c\udfbe\n\n### Additional Insights\n* Imagine you have a **\"Robot Chef\"** who wants to learn how to bake the world\u2019s most delicious chocolate chip cookie, but he has never been in a kitchen before.\n\nHere is how he learns, step-by-step, just like a neural network:\n\n### 1.\n* The \"Random Guess\" (The Beginning)\nAt the very start, the Robot Chef knows *nothing*.\n* He throws flour, eggs, chocolate chips, and\u2014oops\u2014maybe a shoe into a bowl.\n* He bakes it, and it tastes like a disaster.\n* Imagine you have a huge library with an infinite number of books, and each book has a secret recipe for making a different kind of cookie.\n* You want to learn how to make the perfect chocolate chip cookie, but you don't know which book has the best recipe.\n\nA neural network is like a super-smart, magic librarian who helps you find the perfect cookie recipe.\n* At first, the librarian doesn't know which book has the best recipe, so they start by looking at a few books and trying to make cookies using those recipes.\n* The cookies might not turn out perfectly, but the librarian learns from their mistakes.\n\nThe librarian then uses that knowledge to look at a few more books, and they try again to make the perfect cookie.",
           "task_type": "creative",
           "scores": {
             "model_id": "manual_test_case",
             "relevance": 1.0,
             "coherence": 1.0,
             "completeness": 1.0,
-            "consistency": 0.4,
-            "weighted_score": 0.91,
+            "consistency": 0.2,
+            "weighted_score": 0.88,
             "confidence_tier": "HIGH",
             "latency_ms": 0.0,
             "success": true,
             "error": null,
-            "content": "Sure! Here's a fun analogy to explain how a neural network learns, like a kid playing a game of \"Guess the Animal\":\n\n---\n\nImagine you're playing a guessing game with a robot friend. The robot wants to learn what a **cat** is by looking at pictures.\n\n1. **First Guess (Random)**: The robot squints at the first picture (maybe a cat!) and guesses **\"dog!\"**\u2014because it doesn\u2019t know better yet. Oops!\n\n2. **Teacher\u2019s Help**: You (the teacher) say, *\"Nope! That\u2019s a cat!\"* and show it more pictures. The robot writes down clues like:\n   - *\"Fluffy tail? Maybe!\"*\n   - *\"Pointy ears? Sometimes!\"*\n   - *\"Does it bark? NO!\"*\n\n3. **Tweaking the Rules**: The robot realizes its first guess was wrong, so it adjusts its clues a tiny bit, like fixing a video game level after dying too many times.\n\n4. **Practice Makes Perfect**: After seeing **thousands** of cat (and not-cat) pictures, the robot gets really good at spotting:\n   - *\"If the animal has whiskers, pointy ears, and doesn\u2019t bark\u2026 it\u2019s probably a cat!\"*\n\n5. **Magic of Layers**: The robot isn\u2019t just looking at one clue\u2014it\u2019s like a detective checking **many hints at once** (fur, tail shape, meows vs. barks) in layers, just like how you\u2019d solve a puzzle step by step.\n\n**Result**: Now the robot can guess correctly almost every time\u2014all because it \"learned\" from its mistakes, just like you learn in school!\n\n---\n\n**Key Idea**: A neural network is like a robot detective that starts clueless, gets \"corrected\" by a teacher (the data), and keeps practicing until it\u2019s an expert. \ud83d\ude80\ud83d\udc31\n\n### Additional Insights\n* Imagine you have a **giant, messy pile of mixed-up LEGO bricks** and you want to build a perfect model of a spaceship, but there\u2019s no instruction manual.\n\nTo learn how to build it, you use a **\"Guess-and-Check\" Robot.** Here is how it works:\n\n### 1.\n* It makes a lumpy, weird-looking blob.\n* You look at it and say, \"Nope!\n* That doesn\u2019t look like a spaceship.\"\n\n### 2.\n* Imagine you have a huge library with an infinite number of books, and each book has a secret recipe for making a different kind of cookie.\n* **The Librarian Starts Exploring**: The librarian begins by picking a few books at random from the shelves and trying out their recipes.\n* They make a batch of cookies using each recipe and then taste them to see how they turn out.\n\n2.\n* **Tasting and Adjusting**: After tasting each batch, the librarian decides which cookies are closer to the perfect chocolate chip cookie and which ones need improvement."
+            "content": "Sure! Here\u2019s a fun analogy to explain how a neural network learns:\n\nImagine a neural network is like a **super-smart puppy** learning to play fetch!\n\n1. **Random Guesses at First** \u2013 At the beginning, the puppy doesn\u2019t know how to fetch. It might run in the wrong direction or drop the ball too early. The neural network starts by making random guesses, just like the puppy\u2019s first clumsy attempts.\n\n2. **Getting Feedback (Rewards & Corrections)** \u2013 Every time the puppy brings back the right ball (or the wrong one), you cheer (\"Good job!\") or say \"No, try again!\" The neural network gets feedback too\u2014if it guesses right, it gets a little reward; if it\u2019s wrong, it adjusts its guesses.\n\n3. **Adjusting Its Brain (Changing Weights)** \u2013 The puppy remembers what worked before. If it always brings the red ball instead of the blue one, it learns to focus on red. Similarly, the neural network tweaks tiny \"weights\" (like memory knobs) to get better at guessing over time.\n\n4. **Practice Makes Perfect** \u2013 The more the puppy plays fetch, the better it gets. The more data the neural network sees, the more accurate it becomes\u2014until it\u2019s a fetch champion! (Or a super-smart AI!)\n\nSo, a neural network is like a puppy learning through trial, error, and lots of practice! \ud83d\udc36\ud83c\udfbe\n\n### Additional Insights\n* Imagine you have a **\"Robot Chef\"** who wants to learn how to bake the world\u2019s most delicious chocolate chip cookie, but he has never been in a kitchen before.\n\nHere is how he learns, step-by-step, just like a neural network:\n\n### 1.\n* The \"Random Guess\" (The Beginning)\nAt the very start, the Robot Chef knows *nothing*.\n* He throws flour, eggs, chocolate chips, and\u2014oops\u2014maybe a shoe into a bowl.\n* He bakes it, and it tastes like a disaster.\n* Imagine you have a huge library with an infinite number of books, and each book has a secret recipe for making a different kind of cookie.\n* You want to learn how to make the perfect chocolate chip cookie, but you don't know which book has the best recipe.\n\nA neural network is like a super-smart, magic librarian who helps you find the perfect cookie recipe.\n* At first, the librarian doesn't know which book has the best recipe, so they start by looking at a few books and trying to make cookies using those recipes.\n* The cookies might not turn out perfectly, but the librarian learns from their mistakes.\n\nThe librarian then uses that knowledge to look at a few more books, and they try again to make the perfect cookie."
           }
         }
       }
     },
     {
       "prompt": "Write a 3-line poem about the ocean.",
-      "total_time_ms": 1310.0,
+      "total_time_ms": 1357.41,
       "raw_query_response": {
-        "request_id": "req_2bb95eb4406b",
+        "request_id": "req_77be82a83044",
         "query": "Write a 3-line poem about the ocean.",
         "task_type": "creative",
-        "final_response": "Waves whisper secrets to the shore,\nBlue horizons call once more,\nOcean's heart beats evermore.",
+        "final_response": "Waves crash in endless, salty song,\nBlue horizons stretch so wide and long,\nThe ocean hums its ancient tune.",
         "fusion_weights": {
-          "groq-llama3": 0.2093,
-          "mistral-small": 0.4452,
-          "gemini-3.1-flash-lite": 0.3456
+          "groq-llama3": 0.2236,
+          "mistral-small": 0.4535,
+          "gemini-3.1-flash-lite": 0.3229
         },
         "model_responses": [
           {
@@ -290,135 +290,135 @@
             "consistency": 1.0,
             "weighted_score": 0.8548,
             "confidence_tier": "HIGH",
-            "latency_ms": 316.56,
+            "latency_ms": 195.83,
             "success": true,
             "error": null,
-            "content": "The ocean's waves crash on the shore,\nA soothing melody ever in store,\nEndless blue, forever more."
+            "content": "The ocean's waves crash on the shore,\nA soothing melody evermore,\nEndless blue, a sight to adore."
           },
           {
             "model_id": "mistral-small",
             "relevance": 1.0,
             "coherence": 0.75,
-            "completeness": 0.7156,
+            "completeness": 0.7331,
             "consistency": 1.0,
-            "weighted_score": 0.8522,
+            "weighted_score": 0.8574,
             "confidence_tier": "HIGH",
-            "latency_ms": 635.97,
+            "latency_ms": 676.23,
             "success": true,
             "error": null,
-            "content": "Waves whisper secrets to the shore,\nBlue horizons call once more,\nOcean's heart beats evermore."
+            "content": "Waves crash in endless, salty song,\nBlue horizons stretch so wide and long,\nThe ocean hums its ancient tune."
           },
           {
             "model_id": "gemini-3.1-flash-lite",
-            "relevance": 0.9805,
+            "relevance": 1.0,
             "coherence": 0.75,
             "completeness": 0.0963,
             "consistency": 1.0,
-            "weighted_score": 0.6605,
+            "weighted_score": 0.6664,
             "confidence_tier": "MEDIUM",
-            "latency_ms": 1052.61,
+            "latency_ms": 1069.29,
             "success": true,
             "error": null,
-            "content": "Endless waves embrace the golden sand,\nA rhythmic pulse against the quiet shore,\nThe deep blue soul of all the waking land."
+            "content": "Endless waves embrace the golden sand,\nA rhythmic pulse against the quiet land,\nThe deep blue holds the secrets of the tide."
           }
         ],
-        "total_time_ms": 1304.23
+        "total_time_ms": 1351.53
       },
       "comparison": {
-        "best_single_model": "groq-llama3",
-        "best_single_model_score": 0.8548,
+        "best_single_model": "mistral-small",
+        "best_single_model_score": 0.8574,
         "fused_response_scores": {
-          "request_id": "score_837ff20bee7a",
+          "request_id": "score_b11b70064954",
           "query": "Write a 3-line poem about the ocean.",
-          "response": "Waves whisper secrets to the shore,\nBlue horizons call once more,\nOcean's heart beats evermore.",
+          "response": "Waves crash in endless, salty song,\nBlue horizons stretch so wide and long,\nThe ocean hums its ancient tune.",
           "task_type": "creative",
           "scores": {
             "model_id": "manual_test_case",
             "relevance": 1.0,
             "coherence": 0.75,
-            "completeness": 0.7156,
+            "completeness": 0.7331,
             "consistency": 1.0,
-            "weighted_score": 0.8522,
+            "weighted_score": 0.8574,
             "confidence_tier": "HIGH",
             "latency_ms": 0.0,
             "success": true,
             "error": null,
-            "content": "Waves whisper secrets to the shore,\nBlue horizons call once more,\nOcean's heart beats evermore."
+            "content": "Waves crash in endless, salty song,\nBlue horizons stretch so wide and long,\nThe ocean hums its ancient tune."
           }
         }
       }
     },
     {
       "prompt": "Why do leaves change color in autumn?",
-      "total_time_ms": 47554.3,
+      "total_time_ms": 37070.92,
       "raw_query_response": {
-        "request_id": "req_38404bf9be50",
+        "request_id": "req_cec08e70feed",
         "query": "Why do leaves change color in autumn?",
         "task_type": "reasoning",
-        "final_response": "Leaves change color in autumn primarily due to the breakdown of **chlorophyll** (the green pigment that drives photosynthesis) and the unmasking of other pigments that were present but hidden during the growing season. Here\u2019s a step-by-step breakdown of the process:\n\n### **1. Decline in Chlorophyll Production**\n- As daylight hours shorten and temperatures drop in autumn, trees prepare for dormancy.\n- The tree **stops producing chlorophyll**, the green pigment essential for photosynthesis.\n- With less chlorophyll, the leaf\u2019s true colors\u2014hidden beneath\u2014begin to emerge.\n\n### **2. Breakdown of Chlorophyll**\n- Chlorophyll is not stable and degrades quickly when production stops.\n- As it breaks down, the green color fades, revealing other pigments:\n  - **Carotenoids** (yellow, orange) \u2013 Present year-round but masked by chlorophyll.\n  - **Xanthophylls** (yellow) \u2013 Another group of pigments that become visible.\n  - **Anthocyanins** (red, purple, pink) \u2013 Produced in some trees (like maples) in response to bright light and excess sugars trapped in the leaves.\n\n### **3. Role of Other Pigments**\n- **Carotenoids & Xanthophylls**: These pigments are always present in leaves but are only visible when chlorophyll disappears. They give leaves their yellow and orange hues (e.g., birch, aspen, hickory).\n- **Anthocyanins**: These red and purple pigments are **not** present in all trees. They form in autumn when:\n  - Days are bright and sunny (promoting photosynthesis).\n  - Nights are cool (but not freezing).\n  - Sugar is trapped in the leaves due to active photosynthesis but reduced sugar transport (because the tree is preparing for dormancy).\n  - Examples: Maple, oak, dogwood.\n\n### **4. Environmental Factors Influencing Color**\n- **Temperature**: Cool (but not freezing) nights and warm, sunny days enhance red and purple colors by promoting anthocyanin production.\n- **Moisture**: Drought can cause leaves to drop early, dulling colors. Adequate rainfall in late summer promotes vibrant hues.\n- **Sunlight**: More sunlight increases sugar production, which can lead to brighter reds in anthocyanin-producing trees.\n\n### **5. Why Do Leaves Fall?**\n- Trees undergo a process called **abscission**, where a layer of cells (the **abscission layer**) forms at the base of the leaf stem.\n- This layer blocks the flow of water and nutrients, causing the leaf to detach.\n- The tree conserves water and energy during winter dormancy.\n\n### **Summary of Color Changes by Tree Type**\n| **Tree Type**       | **Primary Colors** | **Key Pigments**          |\n|---------------------|--------------------|---------------------------|\n| **Maple, Oak**      | Red, Orange        | Anthocyan\n\n### Additional Insights\n* The Role of Chlorophyll\nFor most of the spring and summer, leaves are green because they are packed with **chlorophyll**.\n* The \"Shutdown\" Signal\nAs autumn approaches, the days get shorter and the nights get longer.\n* Trees perceive these changes in light and temperature as a signal to prepare for winter.\n* The tree begins to cut off the supply of water and nutrients to the leaves.\n* **Daylight reduction**: As the days get shorter, the trees receive less sunlight, which triggers a response to stop producing chlorophyll, the green pigment that helps plants absorb sunlight for photosynthesis.\n2.\n* Carotenoids are responsible for the yellow, orange, and brown colors, while anthocyanins produce the red and purple hues.\n4.\n* **Weather conditions**: Weather factors like temperature, rainfall, and sunlight can influence the intensity and duration of the color change.\n* The specific colors and intensity can vary depending on the tree species, climate, and environmental conditions.\n\nHere's a rough guide to the typical color changes for different tree species:\n\n* Oaks: Red, brown, and tan\n* Maples: Orange, red, and yellow\n* Birch: Yellow and gold\n* Beech: Golden brown and copper\n* Ash: Purple and yellow\n* Elm: Yellow and brown\n\nKeep in mind that the exact color change can vary depending on the specific tree species, climate, and environmental conditions.",
+        "final_response": "Leaves change color in autumn due to a combination of biochemical processes influenced by environmental factors like temperature and daylight. Here\u2019s a step-by-step breakdown of what happens:\n\n### **1. Chlorophyll Breakdown (The Green Fade)**\n- **Chlorophyll** is the pigment responsible for the green color in leaves, and it plays a crucial role in photosynthesis.\n- As days shorten and temperatures drop, plants **slow down chlorophyll production** and begin breaking it down.\n- Without fresh chlorophyll, the green color fades, revealing other pigments that were previously masked.\n\n### **2. Revealing Hidden Pigments**\nThree key pigments contribute to autumn colors:\n\n- **Carotenoids (Yellow, Orange, Gold)**\n  - Present in leaves year-round but masked by chlorophyll.\n  - Responsible for colors in corn, carrots, and some fall leaves (e.g., birch, hickory).\n  - More stable than chlorophyll, so they persist longer.\n\n- **Anthocyanins (Red, Purple, Crimson)**\n  - **Not present in leaves all year**\u2014they are produced in autumn in response to:\n    - Bright light (especially sunny days)\n    - Excess sugars trapped in leaves (due to slowed photosynthesis)\n    - Cool (but not freezing) nights\n  - Found in maples, oaks, and sumacs, giving vibrant reds and purples.\n\n- **Tannins (Brown)**\n  - Waste products of metabolism that become visible as other pigments fade.\n  - Responsible for the brown hues in oak leaves and some dried leaves.\n\n### **3. Environmental Triggers**\n- **Shorter Days:** Reduced sunlight signals the plant to prepare for dormancy.\n- **Cooler Temperatures:** Slows chlorophyll production and accelerates pigment changes.\n- **Drought or Frost:** Can accelerate color changes or lead to early leaf drop.\n\n### **Why Don\u2019t All Trees Change Color the Same Way?**\n- **Species Differences:** Some trees (like maples) produce anthocyanins for reds, while others (like aspens) rely on carotenoids for yellows.\n- **Genetics:** The pigment profile is genetically determined.\n- **Environmental Stress:** Drought, pests, or pollution can alter color intensity or timing.\n\n### **Fun Fact:**\nThe most vivid fall colors occur when:\n\u2705 Days are sunny and cool (not too hot or cold)\n\u2705 Nights are chilly (but above freezing)\n\u2705 There\u2019s a good summer growing season followed by a dry autumn\n\nWould you like to know why some years have more spectacular fall colors than others?\n\n### Additional Insights\n* It involves a combination of chemistry, light, and temperature.\n* Chlorophyll is the chemical that allows plants to turn sunlight into food through photosynthesis.\n* The Trigger: Less Sunlight\nAs autumn approaches, the days get shorter and the nights get longer.\n* Trees perceive these changes as a signal that winter is coming.\n* As long as the days are long and the weather is warm, chlorophyll is constantly being produced and broken down, keeping the leaves green.\n\n**The Shortening of Days**\n\nAs the days get shorter in autumn, the amount of sunlight that reaches the leaves decreases.\n* This reduction in sunlight triggers a series of changes in the leaf.\n* The trees prepare for the upcoming winter by slowing down their food-making processes and storing energy in their roots, stems, and branches.\n\n**The Breakdown of Chlorophyll**\n\nAs the trees stop producing chlorophyll, the existing chlorophyll molecules begin to break down.\n* **Carotenoids**: These are yellow, orange, and brown pigments that are always present in leaves, but are usually hidden by the green color of the chlorophyll.",
         "fusion_weights": {
-          "groq-llama3": 0.2005,
-          "gemini-3.1-flash-lite": 0.3837,
-          "mistral-small": 0.4159
+          "groq-llama3": 0.2056,
+          "gemini-3.1-flash-lite": 0.374,
+          "mistral-small": 0.4204
         },
         "model_responses": [
           {
             "model_id": "groq-llama3",
             "relevance": 1.0,
-            "coherence": 0.9327,
+            "coherence": 1.0,
             "completeness": 1.0,
             "consistency": 1.0,
-            "weighted_score": 0.9832,
+            "weighted_score": 1.0,
             "confidence_tier": "HIGH",
-            "latency_ms": 1286.8,
+            "latency_ms": 1478.74,
             "success": true,
             "error": null,
-            "content": "Leaves change color in autumn due to a combination of factors, primarily driven by the reduction of daylight hours and the preparation of trees for the cold winter months. Here's a breakdown of the process:\n\n1. **Daylight reduction**: As the days get shorter, the trees receive less sunlight, which triggers a response to stop producing chlorophyll, the green pigment that helps plants absorb sunlight for photosynthesis.\n2. **Chlorophyll breakdown**: As the trees stop producing chlorophyll, the existing chlorophyll molecules begin to break down, revealing the hidden pigments of carotenoids (yellow, orange, and brown) and anthocyanins (red and purple).\n3. **Carotenoids and anthocyanins**: These pigments are always present in leaves, but are masked by the green color of chlorophyll during the growing season. Carotenoids are responsible for the yellow, orange, and brown colors, while anthocyanins produce the red and purple hues.\n4. **Sugar concentration**: As the trees prepare for winter, they seal off the connections between the leaves and the rest of the tree, trapping sugars and other nutrients in the leaves. This increased sugar concentration can enhance the production of anthocyanins, resulting in more intense red and purple colors.\n5. **Weather conditions**: Weather factors like temperature, rainfall, and sunlight can influence the intensity and duration of the color change. A warm, dry summer followed by a cool, moist autumn can produce the most vibrant colors.\n\nThe combination of these factors leads to the characteristic autumn color change, as the leaves transition from green to a kaleidoscope of colors before eventually falling off the tree. The specific colors and intensity can vary depending on the tree species, climate, and environmental conditions.\n\nHere's a rough guide to the typical color changes for different tree species:\n\n* Oaks: Red, brown, and tan\n* Maples: Orange, red, and yellow\n* Birch: Yellow and gold\n* Beech: Golden brown and copper\n* Ash: Purple and yellow\n* Elm: Yellow and brown\n\nKeep in mind that the exact color change can vary depending on the specific tree species, climate, and environmental conditions."
+            "content": "The changing colors of leaves in autumn is a natural process that occurs as the days get shorter and the weather gets cooler. Here's why it happens:\n\n**Chlorophyll and the Green Color**\n\nDuring the growing season, leaves are green because they contain a pigment called chlorophyll. Chlorophyll helps plants absorb sunlight, which is necessary for photosynthesis, the process by which plants produce energy. As long as the days are long and the weather is warm, chlorophyll is constantly being produced and broken down, keeping the leaves green.\n\n**The Shortening of Days**\n\nAs the days get shorter in autumn, the amount of sunlight that reaches the leaves decreases. This reduction in sunlight triggers a series of changes in the leaf. The trees prepare for the upcoming winter by slowing down their food-making processes and storing energy in their roots, stems, and branches.\n\n**The Breakdown of Chlorophyll**\n\nAs the trees stop producing chlorophyll, the existing chlorophyll molecules begin to break down. This allows other pigments in the leaf to become visible, which were previously masked by the green color of the chlorophyll. These pigments include:\n\n1. **Carotenoids**: These are yellow, orange, and brown pigments that are always present in leaves, but are usually hidden by the green color of the chlorophyll. Carotenoids are responsible for the yellow, orange, and brown colors of leaves.\n2. **Anthocyanins**: These are pigments that are produced in the fall as the sugar concentration in the leaf increases. Anthocyanins are responsible for the red and purple colors of leaves.\n\n**The Combination of Pigments**\n\nThe combination of the breakdown of chlorophyll and the presence of carotenoids and anthocyanins creates the characteristic autumn colors. The exact color of the leaves depends on the type of tree, the amount of sugar present, and the weather conditions.\n\n**The Final Step: Abscission**\n\nAs the trees prepare for winter, they seal off the connections between the leaves and the rest of the tree, a process called abscission. This causes the leaves to fall off, allowing the tree to conserve water and energy during the winter months.\n\nIn summary, the changing colors of leaves in autumn are a result of the breakdown of chlorophyll, the presence of other pigments, and the preparation of trees for the upcoming winter. The combination of these factors creates the beautiful and varied colors of autumn leaves."
           },
           {
             "model_id": "gemini-3.1-flash-lite",
             "relevance": 1.0,
             "coherence": 0.85,
             "completeness": 1.0,
-            "consistency": 0.6,
-            "weighted_score": 0.9025,
+            "consistency": 1.0,
+            "weighted_score": 0.9625,
             "confidence_tier": "HIGH",
-            "latency_ms": 3269.64,
+            "latency_ms": 3259.4,
             "success": true,
             "error": null,
-            "content": "The change in leaf color is a fascinating process driven by the changing seasons\u2014specifically the decrease in daylight and the drop in temperatures.\n\nHere is the step-by-step breakdown of why it happens:\n\n### 1. The Role of Chlorophyll\nFor most of the spring and summer, leaves are green because they are packed with **chlorophyll**. Chlorophyll is the chemical that allows trees to capture sunlight and turn it into energy (photosynthesis). Because the tree is constantly producing chlorophyll, the green color remains dominant throughout the warm months.\n\n### 2. The \"Shutdown\" Signal\nAs autumn approaches, the days get shorter and the nights get longer. Trees perceive these changes in light and temperature as a signal to prepare for winter. \n\nThe tree begins to cut off the supply of water and nutrients to the leaves. It forms a layer of cells at the base of the leaf stem (the abscission layer) that slowly seals the leaf off from the rest of the tree. This process ensures that the tree doesn't lose too much moisture during the dry, cold winter.\n\n### 3. The Colors Revealed\nBecause the leaf is no longer receiving nutrients or producing new chlorophyll, the existing chlorophyll breaks down and disappears. Once the green pigment is gone, other pigments that were hidden in the leaf all along are finally revealed:\n\n*   **Carotenoids (Yellows and Oranges):** These pigments are always present in the leaf, but they are masked by the strong green color of the chlorophyll during the summer. Once the green fades, the yellows and oranges become visible. These are the same pigments found in carrots and corn.\n*   **Anthocyanins (Reds and Purples):** Unlike carotenoids, these are not always in the leaf. They are produced in late summer and autumn as the leaf's sugar levels increase. When the leaf is sealed off from the tree, some sugars get trapped in the leaf. The breakdown of these sugars, combined with bright sunlight, creates these vibrant red and purple pigments. (This is why maples are often the most brilliant red\u2014they produce high amounts of anthocyanins.)\n\n### 4. Why do they eventually turn brown?\nAfter the yellows, oranges, and reds have had their moment, those colors eventually fade as well. What remains are tannins\u2014waste products left behind in the leaf. These turn the leaf a dull, dry brown before it eventually falls to the ground.\n\n### Summary\nThe colors were there the whole time! The green chlorophyll acted like a **mask**. When the tree stops feeding the leaf to save energy for the winter, the mask falls away, allowing the hidden colors to shine through before the leaf drops."
+            "content": "The changing of leaf colors in autumn is a biological process triggered by the changing seasons. It involves a combination of chemistry, light, and temperature. Here is the step-by-step breakdown of why it happens:\n\n### 1. The Role of Chlorophyll\nDuring the spring and summer, leaves are green because they are full of **chlorophyll**. Chlorophyll is the chemical that allows plants to turn sunlight into food through photosynthesis. Because the plant is constantly producing chlorophyll, the green color is dominant, masking other pigments that may be present in the leaf.\n\n### 2. The Trigger: Less Sunlight\nAs autumn approaches, the days get shorter and the nights get longer. Trees perceive these changes as a signal that winter is coming. In response, the tree prepares for dormancy (a state of rest) to survive the cold, dry months ahead.\n\n### 3. Cutting Off the Supply\nThe tree begins to form a layer of corky cells at the base of each leaf stem, known as the **abscission layer**. This layer acts like a valve, slowly cutting off the flow of water and nutrients to the leaf. Because the leaf is no longer receiving the resources it needs to produce new chlorophyll, the existing chlorophyll begins to break down and fade away.\n\n### 4. The Reveal of \"Hidden\" Colors\nOnce the green chlorophyll disappears, other pigments that were already in the leaf\u2014but hidden by the green\u2014begin to show through. These pigments include:\n*   **Carotenoids:** These produce the **yellows, oranges, and browns** (the same pigments found in carrots and corn). They are present in the leaf throughout the summer but are overpowered by the chlorophyll.\n*   **Anthocyanins:** These produce **reds and purples**. Unlike carotenoids, these are not usually present all summer. They are created in the autumn when sugars get trapped in the leaf as the veins close off. The combination of bright sunlight and cool autumn nights causes the leaf to produce these pigments, resulting in vivid reds and crimsons.\n\n### 5. Why do the colors vary?\nThe specific color a tree turns depends on its species and the weather:\n*   **Weather matters:** A warm, wet autumn can lead to duller colors, while a pattern of warm, sunny days and crisp, cool nights (but not freezing) usually produces the most brilliant reds.\n*   **Species matters:** Maples are famous for brilliant reds because they produce high levels of anthocyanins. Oaks often turn brown because of tannins (leftover waste products in the leaf). Birches and aspens typically turn a vibrant yellow because they contain mostly carotenoids.\n\n### 6. The Final Drop\nOnce the abscission layer is fully formed and the leaf is \"disconnected,\" the leaf eventually detaches and falls to the ground. This allows the tree to conserve energy and water, protecting it from the"
           },
           {
             "model_id": "mistral-small",
             "relevance": 1.0,
-            "coherence": 0.9137,
+            "coherence": 0.85,
             "completeness": 1.0,
-            "consistency": 0.4,
-            "weighted_score": 0.8884,
+            "consistency": 0.8,
+            "weighted_score": 0.9325,
             "confidence_tier": "HIGH",
-            "latency_ms": 4588.29,
+            "latency_ms": 4235.39,
             "success": true,
             "error": null,
-            "content": "Leaves change color in autumn primarily due to the breakdown of **chlorophyll** (the green pigment that drives photosynthesis) and the unmasking of other pigments that were present but hidden during the growing season. Here\u2019s a step-by-step breakdown of the process:\n\n### **1. Decline in Chlorophyll Production**\n- As daylight hours shorten and temperatures drop in autumn, trees prepare for dormancy.\n- The tree **stops producing chlorophyll**, the green pigment essential for photosynthesis.\n- With less chlorophyll, the leaf\u2019s true colors\u2014hidden beneath\u2014begin to emerge.\n\n### **2. Breakdown of Chlorophyll**\n- Chlorophyll is not stable and degrades quickly when production stops.\n- As it breaks down, the green color fades, revealing other pigments:\n  - **Carotenoids** (yellow, orange) \u2013 Present year-round but masked by chlorophyll.\n  - **Xanthophylls** (yellow) \u2013 Another group of pigments that become visible.\n  - **Anthocyanins** (red, purple, pink) \u2013 Produced in some trees (like maples) in response to bright light and excess sugars trapped in the leaves.\n\n### **3. Role of Other Pigments**\n- **Carotenoids & Xanthophylls**: These pigments are always present in leaves but are only visible when chlorophyll disappears. They give leaves their yellow and orange hues (e.g., birch, aspen, hickory).\n- **Anthocyanins**: These red and purple pigments are **not** present in all trees. They form in autumn when:\n  - Days are bright and sunny (promoting photosynthesis).\n  - Nights are cool (but not freezing).\n  - Sugar is trapped in the leaves due to active photosynthesis but reduced sugar transport (because the tree is preparing for dormancy).\n  - Examples: Maple, oak, dogwood.\n\n### **4. Environmental Factors Influencing Color**\n- **Temperature**: Cool (but not freezing) nights and warm, sunny days enhance red and purple colors by promoting anthocyanin production.\n- **Moisture**: Drought can cause leaves to drop early, dulling colors. Adequate rainfall in late summer promotes vibrant hues.\n- **Sunlight**: More sunlight increases sugar production, which can lead to brighter reds in anthocyanin-producing trees.\n\n### **5. Why Do Leaves Fall?**\n- Trees undergo a process called **abscission**, where a layer of cells (the **abscission layer**) forms at the base of the leaf stem.\n- This layer blocks the flow of water and nutrients, causing the leaf to detach.\n- The tree conserves water and energy during winter dormancy.\n\n### **Summary of Color Changes by Tree Type**\n| **Tree Type**       | **Primary Colors** | **Key Pigments**          |\n|---------------------|--------------------|---------------------------|\n| **Maple, Oak**      | Red, Orange        | Anthocyan"
+            "content": "Leaves change color in autumn due to a combination of biochemical processes influenced by environmental factors like temperature and daylight. Here\u2019s a step-by-step breakdown of what happens:\n\n### **1. Chlorophyll Breakdown (The Green Fade)**\n- **Chlorophyll** is the pigment responsible for the green color in leaves, and it plays a crucial role in photosynthesis.\n- As days shorten and temperatures drop, plants **slow down chlorophyll production** and begin breaking it down.\n- Without fresh chlorophyll, the green color fades, revealing other pigments that were previously masked.\n\n### **2. Revealing Hidden Pigments**\nThree key pigments contribute to autumn colors:\n\n- **Carotenoids (Yellow, Orange, Gold)**\n  - Present in leaves year-round but masked by chlorophyll.\n  - Responsible for colors in corn, carrots, and some fall leaves (e.g., birch, hickory).\n  - More stable than chlorophyll, so they persist longer.\n\n- **Anthocyanins (Red, Purple, Crimson)**\n  - **Not present in leaves all year**\u2014they are produced in autumn in response to:\n    - Bright light (especially sunny days)\n    - Excess sugars trapped in leaves (due to slowed photosynthesis)\n    - Cool (but not freezing) nights\n  - Found in maples, oaks, and sumacs, giving vibrant reds and purples.\n\n- **Tannins (Brown)**\n  - Waste products of metabolism that become visible as other pigments fade.\n  - Responsible for the brown hues in oak leaves and some dried leaves.\n\n### **3. Environmental Triggers**\n- **Shorter Days:** Reduced sunlight signals the plant to prepare for dormancy.\n- **Cooler Temperatures:** Slows chlorophyll production and accelerates pigment changes.\n- **Drought or Frost:** Can accelerate color changes or lead to early leaf drop.\n\n### **Why Don\u2019t All Trees Change Color the Same Way?**\n- **Species Differences:** Some trees (like maples) produce anthocyanins for reds, while others (like aspens) rely on carotenoids for yellows.\n- **Genetics:** The pigment profile is genetically determined.\n- **Environmental Stress:** Drought, pests, or pollution can alter color intensity or timing.\n\n### **Fun Fact:**\nThe most vivid fall colors occur when:\n\u2705 Days are sunny and cool (not too hot or cold)\n\u2705 Nights are chilly (but above freezing)\n\u2705 There\u2019s a good summer growing season followed by a dry autumn\n\nWould you like to know why some years have more spectacular fall colors than others?"
           }
         ],
-        "total_time_ms": 47546.79
+        "total_time_ms": 37065.43
       },
       "comparison": {
         "best_single_model": "groq-llama3",
-        "best_single_model_score": 0.9832,
+        "best_single_model_score": 1.0,
         "fused_response_scores": {
-          "request_id": "score_f95bf9b54f16",
+          "request_id": "score_3171430e6260",
           "query": "Why do leaves change color in autumn?",
-          "response": "Leaves change color in autumn primarily due to the breakdown of **chlorophyll** (the green pigment that drives photosynthesis) and the unmasking of other pigments that were present but hidden during the growing season. Here\u2019s a step-by-step breakdown of the process:\n\n### **1. Decline in Chlorophyll Production**\n- As daylight hours shorten and temperatures drop in autumn, trees prepare for dormancy.\n- The tree **stops producing chlorophyll**, the green pigment essential for photosynthesis.\n- With less chlorophyll, the leaf\u2019s true colors\u2014hidden beneath\u2014begin to emerge.\n\n### **2. Breakdown of Chlorophyll**\n- Chlorophyll is not stable and degrades quickly when production stops.\n- As it breaks down, the green color fades, revealing other pigments:\n  - **Carotenoids** (yellow, orange) \u2013 Present year-round but masked by chlorophyll.\n  - **Xanthophylls** (yellow) \u2013 Another group of pigments that become visible.\n  - **Anthocyanins** (red, purple, pink) \u2013 Produced in some trees (like maples) in response to bright light and excess sugars trapped in the leaves.\n\n### **3. Role of Other Pigments**\n- **Carotenoids & Xanthophylls**: These pigments are always present in leaves but are only visible when chlorophyll disappears. They give leaves their yellow and orange hues (e.g., birch, aspen, hickory).\n- **Anthocyanins**: These red and purple pigments are **not** present in all trees. They form in autumn when:\n  - Days are bright and sunny (promoting photosynthesis).\n  - Nights are cool (but not freezing).\n  - Sugar is trapped in the leaves due to active photosynthesis but reduced sugar transport (because the tree is preparing for dormancy).\n  - Examples: Maple, oak, dogwood.\n\n### **4. Environmental Factors Influencing Color**\n- **Temperature**: Cool (but not freezing) nights and warm, sunny days enhance red and purple colors by promoting anthocyanin production.\n- **Moisture**: Drought can cause leaves to drop early, dulling colors. Adequate rainfall in late summer promotes vibrant hues.\n- **Sunlight**: More sunlight increases sugar production, which can lead to brighter reds in anthocyanin-producing trees.\n\n### **5. Why Do Leaves Fall?**\n- Trees undergo a process called **abscission**, where a layer of cells (the **abscission layer**) forms at the base of the leaf stem.\n- This layer blocks the flow of water and nutrients, causing the leaf to detach.\n- The tree conserves water and energy during winter dormancy.\n\n### **Summary of Color Changes by Tree Type**\n| **Tree Type**       | **Primary Colors** | **Key Pigments**          |\n|---------------------|--------------------|---------------------------|\n| **Maple, Oak**      | Red, Orange        | Anthocyan\n\n### Additional Insights\n* The Role of Chlorophyll\nFor most of the spring and summer, leaves are green because they are packed with **chlorophyll**.\n* The \"Shutdown\" Signal\nAs autumn approaches, the days get shorter and the nights get longer.\n* Trees perceive these changes in light and temperature as a signal to prepare for winter.\n* The tree begins to cut off the supply of water and nutrients to the leaves.\n* **Daylight reduction**: As the days get shorter, the trees receive less sunlight, which triggers a response to stop producing chlorophyll, the green pigment that helps plants absorb sunlight for photosynthesis.\n2.\n* Carotenoids are responsible for the yellow, orange, and brown colors, while anthocyanins produce the red and purple hues.\n4.\n* **Weather conditions**: Weather factors like temperature, rainfall, and sunlight can influence the intensity and duration of the color change.\n* The specific colors and intensity can vary depending on the tree species, climate, and environmental conditions.\n\nHere's a rough guide to the typical color changes for different tree species:\n\n* Oaks: Red, brown, and tan\n* Maples: Orange, red, and yellow\n* Birch: Yellow and gold\n* Beech: Golden brown and copper\n* Ash: Purple and yellow\n* Elm: Yellow and brown\n\nKeep in mind that the exact color change can vary depending on the specific tree species, climate, and environmental conditions.",
+          "response": "Leaves change color in autumn due to a combination of biochemical processes influenced by environmental factors like temperature and daylight. Here\u2019s a step-by-step breakdown of what happens:\n\n### **1. Chlorophyll Breakdown (The Green Fade)**\n- **Chlorophyll** is the pigment responsible for the green color in leaves, and it plays a crucial role in photosynthesis.\n- As days shorten and temperatures drop, plants **slow down chlorophyll production** and begin breaking it down.\n- Without fresh chlorophyll, the green color fades, revealing other pigments that were previously masked.\n\n### **2. Revealing Hidden Pigments**\nThree key pigments contribute to autumn colors:\n\n- **Carotenoids (Yellow, Orange, Gold)**\n  - Present in leaves year-round but masked by chlorophyll.\n  - Responsible for colors in corn, carrots, and some fall leaves (e.g., birch, hickory).\n  - More stable than chlorophyll, so they persist longer.\n\n- **Anthocyanins (Red, Purple, Crimson)**\n  - **Not present in leaves all year**\u2014they are produced in autumn in response to:\n    - Bright light (especially sunny days)\n    - Excess sugars trapped in leaves (due to slowed photosynthesis)\n    - Cool (but not freezing) nights\n  - Found in maples, oaks, and sumacs, giving vibrant reds and purples.\n\n- **Tannins (Brown)**\n  - Waste products of metabolism that become visible as other pigments fade.\n  - Responsible for the brown hues in oak leaves and some dried leaves.\n\n### **3. Environmental Triggers**\n- **Shorter Days:** Reduced sunlight signals the plant to prepare for dormancy.\n- **Cooler Temperatures:** Slows chlorophyll production and accelerates pigment changes.\n- **Drought or Frost:** Can accelerate color changes or lead to early leaf drop.\n\n### **Why Don\u2019t All Trees Change Color the Same Way?**\n- **Species Differences:** Some trees (like maples) produce anthocyanins for reds, while others (like aspens) rely on carotenoids for yellows.\n- **Genetics:** The pigment profile is genetically determined.\n- **Environmental Stress:** Drought, pests, or pollution can alter color intensity or timing.\n\n### **Fun Fact:**\nThe most vivid fall colors occur when:\n\u2705 Days are sunny and cool (not too hot or cold)\n\u2705 Nights are chilly (but above freezing)\n\u2705 There\u2019s a good summer growing season followed by a dry autumn\n\nWould you like to know why some years have more spectacular fall colors than others?\n\n### Additional Insights\n* It involves a combination of chemistry, light, and temperature.\n* Chlorophyll is the chemical that allows plants to turn sunlight into food through photosynthesis.\n* The Trigger: Less Sunlight\nAs autumn approaches, the days get shorter and the nights get longer.\n* Trees perceive these changes as a signal that winter is coming.\n* As long as the days are long and the weather is warm, chlorophyll is constantly being produced and broken down, keeping the leaves green.\n\n**The Shortening of Days**\n\nAs the days get shorter in autumn, the amount of sunlight that reaches the leaves decreases.\n* This reduction in sunlight triggers a series of changes in the leaf.\n* The trees prepare for the upcoming winter by slowing down their food-making processes and storing energy in their roots, stems, and branches.\n\n**The Breakdown of Chlorophyll**\n\nAs the trees stop producing chlorophyll, the existing chlorophyll molecules begin to break down.\n* **Carotenoids**: These are yellow, orange, and brown pigments that are always present in leaves, but are usually hidden by the green color of the chlorophyll.",
           "task_type": "factual",
           "scores": {
             "model_id": "manual_test_case",
             "relevance": 1.0,
-            "coherence": 0.9133,
+            "coherence": 1.0,
             "completeness": 1.0,
             "consistency": 0.4,
-            "weighted_score": 0.8883,
+            "weighted_score": 0.91,
             "confidence_tier": "HIGH",
             "latency_ms": 0.0,
             "success": true,
@@ -430,7 +430,7 @@
               "hedge_count": 0,
               "numerical_conflict_count": 0
             },
-            "content": "Leaves change color in autumn primarily due to the breakdown of **chlorophyll** (the green pigment that drives photosynthesis) and the unmasking of other pigments that were present but hidden during the growing season. Here\u2019s a step-by-step breakdown of the process:\n\n### **1. Decline in Chlorophyll Production**\n- As daylight hours shorten and temperatures drop in autumn, trees prepare for dormancy.\n- The tree **stops producing chlorophyll**, the green pigment essential for photosynthesis.\n- With less chlorophyll, the leaf\u2019s true colors\u2014hidden beneath\u2014begin to emerge.\n\n### **2. Breakdown of Chlorophyll**\n- Chlorophyll is not stable and degrades quickly when production stops.\n- As it breaks down, the green color fades, revealing other pigments:\n  - **Carotenoids** (yellow, orange) \u2013 Present year-round but masked by chlorophyll.\n  - **Xanthophylls** (yellow) \u2013 Another group of pigments that become visible.\n  - **Anthocyanins** (red, purple, pink) \u2013 Produced in some trees (like maples) in response to bright light and excess sugars trapped in the leaves.\n\n### **3. Role of Other Pigments**\n- **Carotenoids & Xanthophylls**: These pigments are always present in leaves but are only visible when chlorophyll disappears. They give leaves their yellow and orange hues (e.g., birch, aspen, hickory).\n- **Anthocyanins**: These red and purple pigments are **not** present in all trees. They form in autumn when:\n  - Days are bright and sunny (promoting photosynthesis).\n  - Nights are cool (but not freezing).\n  - Sugar is trapped in the leaves due to active photosynthesis but reduced sugar transport (because the tree is preparing for dormancy).\n  - Examples: Maple, oak, dogwood.\n\n### **4. Environmental Factors Influencing Color**\n- **Temperature**: Cool (but not freezing) nights and warm, sunny days enhance red and purple colors by promoting anthocyanin production.\n- **Moisture**: Drought can cause leaves to drop early, dulling colors. Adequate rainfall in late summer promotes vibrant hues.\n- **Sunlight**: More sunlight increases sugar production, which can lead to brighter reds in anthocyanin-producing trees.\n\n### **5. Why Do Leaves Fall?**\n- Trees undergo a process called **abscission**, where a layer of cells (the **abscission layer**) forms at the base of the leaf stem.\n- This layer blocks the flow of water and nutrients, causing the leaf to detach.\n- The tree conserves water and energy during winter dormancy.\n\n### **Summary of Color Changes by Tree Type**\n| **Tree Type**       | **Primary Colors** | **Key Pigments**          |\n|---------------------|--------------------|---------------------------|\n| **Maple, Oak**      | Red, Orange        | Anthocyan\n\n### Additional Insights\n* The Role of Chlorophyll\nFor most of the spring and summer, leaves are green because they are packed with **chlorophyll**.\n* The \"Shutdown\" Signal\nAs autumn approaches, the days get shorter and the nights get longer.\n* Trees perceive these changes in light and temperature as a signal to prepare for winter.\n* The tree begins to cut off the supply of water and nutrients to the leaves.\n* **Daylight reduction**: As the days get shorter, the trees receive less sunlight, which triggers a response to stop producing chlorophyll, the green pigment that helps plants absorb sunlight for photosynthesis.\n2.\n* Carotenoids are responsible for the yellow, orange, and brown colors, while anthocyanins produce the red and purple hues.\n4.\n* **Weather conditions**: Weather factors like temperature, rainfall, and sunlight can influence the intensity and duration of the color change.\n* The specific colors and intensity can vary depending on the tree species, climate, and environmental conditions.\n\nHere's a rough guide to the typical color changes for different tree species:\n\n* Oaks: Red, brown, and tan\n* Maples: Orange, red, and yellow\n* Birch: Yellow and gold\n* Beech: Golden brown and copper\n* Ash: Purple and yellow\n* Elm: Yellow and brown\n\nKeep in mind that the exact color change can vary depending on the specific tree species, climate, and environmental conditions."
+            "content": "Leaves change color in autumn due to a combination of biochemical processes influenced by environmental factors like temperature and daylight. Here\u2019s a step-by-step breakdown of what happens:\n\n### **1. Chlorophyll Breakdown (The Green Fade)**\n- **Chlorophyll** is the pigment responsible for the green color in leaves, and it plays a crucial role in photosynthesis.\n- As days shorten and temperatures drop, plants **slow down chlorophyll production** and begin breaking it down.\n- Without fresh chlorophyll, the green color fades, revealing other pigments that were previously masked.\n\n### **2. Revealing Hidden Pigments**\nThree key pigments contribute to autumn colors:\n\n- **Carotenoids (Yellow, Orange, Gold)**\n  - Present in leaves year-round but masked by chlorophyll.\n  - Responsible for colors in corn, carrots, and some fall leaves (e.g., birch, hickory).\n  - More stable than chlorophyll, so they persist longer.\n\n- **Anthocyanins (Red, Purple, Crimson)**\n  - **Not present in leaves all year**\u2014they are produced in autumn in response to:\n    - Bright light (especially sunny days)\n    - Excess sugars trapped in leaves (due to slowed photosynthesis)\n    - Cool (but not freezing) nights\n  - Found in maples, oaks, and sumacs, giving vibrant reds and purples.\n\n- **Tannins (Brown)**\n  - Waste products of metabolism that become visible as other pigments fade.\n  - Responsible for the brown hues in oak leaves and some dried leaves.\n\n### **3. Environmental Triggers**\n- **Shorter Days:** Reduced sunlight signals the plant to prepare for dormancy.\n- **Cooler Temperatures:** Slows chlorophyll production and accelerates pigment changes.\n- **Drought or Frost:** Can accelerate color changes or lead to early leaf drop.\n\n### **Why Don\u2019t All Trees Change Color the Same Way?**\n- **Species Differences:** Some trees (like maples) produce anthocyanins for reds, while others (like aspens) rely on carotenoids for yellows.\n- **Genetics:** The pigment profile is genetically determined.\n- **Environmental Stress:** Drought, pests, or pollution can alter color intensity or timing.\n\n### **Fun Fact:**\nThe most vivid fall colors occur when:\n\u2705 Days are sunny and cool (not too hot or cold)\n\u2705 Nights are chilly (but above freezing)\n\u2705 There\u2019s a good summer growing season followed by a dry autumn\n\nWould you like to know why some years have more spectacular fall colors than others?\n\n### Additional Insights\n* It involves a combination of chemistry, light, and temperature.\n* Chlorophyll is the chemical that allows plants to turn sunlight into food through photosynthesis.\n* The Trigger: Less Sunlight\nAs autumn approaches, the days get shorter and the nights get longer.\n* Trees perceive these changes as a signal that winter is coming.\n* As long as the days are long and the weather is warm, chlorophyll is constantly being produced and broken down, keeping the leaves green.\n\n**The Shortening of Days**\n\nAs the days get shorter in autumn, the amount of sunlight that reaches the leaves decreases.\n* This reduction in sunlight triggers a series of changes in the leaf.\n* The trees prepare for the upcoming winter by slowing down their food-making processes and storing energy in their roots, stems, and branches.\n\n**The Breakdown of Chlorophyll**\n\nAs the trees stop producing chlorophyll, the existing chlorophyll molecules begin to break down.\n* **Carotenoids**: These are yellow, orange, and brown pigments that are always present in leaves, but are usually hidden by the green color of the chlorophyll."
           }
         }
       }
@@ -439,27 +439,47 @@
   "round_2": [
     {
       "prompt": "What is the capital of Japan?",
-      "total_time_ms": 1233.39,
+      "total_time_ms": 2155.85,
       "raw_query_response": {
-        "request_id": "req_348dee546626",
+        "request_id": "req_f705e064846e",
         "query": "What is the capital of Japan?",
         "task_type": "factual",
-        "final_response": "The capital of Japan is **Tokyo**.",
+        "final_response": "The capital of Japan is **Tokyo**. It is the largest city in Japan and serves as the country's political, economic, and cultural center. Tokyo is known for its modern skyscrapers, historic temples, vibrant neighborhoods, and advanced technology.",
         "fusion_weights": {
-          "groq-llama3": 0.1887,
-          "mistral-small": 0.4211,
-          "gemini-3.1-flash-lite": 0.3902
+          "mistral-small": 0.4317,
+          "gemini-3.1-flash-lite": 0.3831,
+          "groq-llama3": 0.1852
         },
         "model_responses": [
           {
-            "model_id": "groq-llama3",
+            "model_id": "mistral-small",
+            "relevance": 1.0,
+            "coherence": 1.0,
+            "completeness": 0.8119,
+            "consistency": 1.0,
+            "weighted_score": 0.9436,
+            "confidence_tier": "HIGH",
+            "latency_ms": 754.11,
+            "success": true,
+            "error": null,
+            "layer2_factual": {
+              "penalty": 0.0,
+              "hedge_flags": [],
+              "numerical_flags": [],
+              "hedge_count": 0,
+              "numerical_conflict_count": 0
+            },
+            "content": "The capital of Japan is **Tokyo**. It is the largest city in Japan and serves as the country's political, economic, and cultural center. Tokyo is known for its modern skyscrapers, historic temples, vibrant neighborhoods, and advanced technology."
+          },
+          {
+            "model_id": "gemini-3.1-flash-lite",
             "relevance": 1.0,
             "coherence": 0.75,
             "completeness": 0.6763,
             "consistency": 1.0,
             "weighted_score": 0.8404,
             "confidence_tier": "MEDIUM",
-            "latency_ms": 138.09,
+            "latency_ms": 991.06,
             "success": true,
             "error": null,
             "layer2_factual": {
@@ -472,34 +492,14 @@
             "content": "The capital of Japan is Tokyo."
           },
           {
-            "model_id": "mistral-small",
+            "model_id": "groq-llama3",
             "relevance": 1.0,
             "coherence": 0.75,
             "completeness": 0.6763,
             "consistency": 1.0,
             "weighted_score": 0.8404,
             "confidence_tier": "MEDIUM",
-            "latency_ms": 492.63,
-            "success": true,
-            "error": null,
-            "layer2_factual": {
-              "penalty": 0.0,
-              "hedge_flags": [],
-              "numerical_flags": [],
-              "hedge_count": 0,
-              "numerical_conflict_count": 0
-            },
-            "content": "The capital of Japan is **Tokyo**."
-          },
-          {
-            "model_id": "gemini-3.1-flash-lite",
-            "relevance": 1.0,
-            "coherence": 0.75,
-            "completeness": 0.6763,
-            "consistency": 1.0,
-            "weighted_score": 0.8404,
-            "confidence_tier": "MEDIUM",
-            "latency_ms": 953.67,
+            "latency_ms": 1138.21,
             "success": true,
             "error": null,
             "layer2_factual": {
@@ -512,24 +512,24 @@
             "content": "The capital of Japan is Tokyo."
           }
         ],
-        "total_time_ms": 1226.24
+        "total_time_ms": 2148.54
       },
       "comparison": {
-        "best_single_model": "groq-llama3",
-        "best_single_model_score": 0.8404,
+        "best_single_model": "mistral-small",
+        "best_single_model_score": 0.9436,
         "fused_response_scores": {
-          "request_id": "score_35efcac0e90a",
+          "request_id": "score_93aeb84b8013",
           "query": "What is the capital of Japan?",
-          "response": "The capital of Japan is **Tokyo**.",
+          "response": "The capital of Japan is **Tokyo**. It is the largest city in Japan and serves as the country's political, economic, and cultural center. Tokyo is known for its modern skyscrapers, historic temples, vibrant neighborhoods, and advanced technology.",
           "task_type": "factual",
           "scores": {
             "model_id": "manual_test_case",
             "relevance": 1.0,
-            "coherence": 0.75,
-            "completeness": 0.6763,
+            "coherence": 1.0,
+            "completeness": 0.8119,
             "consistency": 1.0,
-            "weighted_score": 0.8404,
-            "confidence_tier": "MEDIUM",
+            "weighted_score": 0.9436,
+            "confidence_tier": "HIGH",
             "latency_ms": 0.0,
             "success": true,
             "error": null,
@@ -540,23 +540,23 @@
               "hedge_count": 0,
               "numerical_conflict_count": 0
             },
-            "content": "The capital of Japan is **Tokyo**."
+            "content": "The capital of Japan is **Tokyo**. It is the largest city in Japan and serves as the country's political, economic, and cultural center. Tokyo is known for its modern skyscrapers, historic temples, vibrant neighborhoods, and advanced technology."
           }
         }
       }
     },
     {
       "prompt": "Summarize in one sentence: 'The library was filled with students preparing for exams. Some were reading quietly, others typing on laptops, and a few discussing notes in hushed voices.'",
-      "total_time_ms": 1674.61,
+      "total_time_ms": 1427.52,
       "raw_query_response": {
-        "request_id": "req_bca8ee2ac8b6",
+        "request_id": "req_bb2b993db45c",
         "query": "Summarize in one sentence: 'The library was filled with students preparing for exams. Some were reading quietly, others typing on laptops, and a few discussing notes in hushed voices.'",
         "task_type": "summary",
-        "final_response": "The library buzzed with students studying for exams\u2014some reading quietly, others typing on laptops, and a few discussing notes in hushed voices.",
+        "final_response": "The library was bustling with students studying for exams, some reading quietly, others typing on laptops, and a few discussing notes in hushed tones.",
         "fusion_weights": {
-          "groq-llama3": 0.2054,
-          "mistral-small": 0.4501,
-          "gemini-3.1-flash-lite": 0.3445
+          "groq-llama3": 0.2121,
+          "mistral-small": 0.4642,
+          "gemini-3.1-flash-lite": 0.3237
         },
         "model_responses": [
           {
@@ -567,236 +567,236 @@
             "consistency": 1.0,
             "weighted_score": 0.8535,
             "confidence_tier": "HIGH",
-            "latency_ms": 418.29,
+            "latency_ms": 348.62,
             "success": true,
             "error": null,
-            "content": "The library was bustling with students quietly and diligently preparing for exams, each using their preferred method of studying, whether reading, typing, or discussing with peers."
+            "content": "The library was bustling with students quietly and diligently preparing for exams, each studying in their own way, whether reading, typing, or discussing notes with classmates."
           },
           {
             "model_id": "mistral-small",
             "relevance": 1.0,
             "coherence": 0.75,
-            "completeness": 0.7092,
+            "completeness": 0.7146,
             "consistency": 1.0,
-            "weighted_score": 0.8503,
+            "weighted_score": 0.8519,
             "confidence_tier": "HIGH",
-            "latency_ms": 1101.77,
+            "latency_ms": 642.73,
             "success": true,
             "error": null,
-            "content": "The library buzzed with students studying for exams\u2014some reading quietly, others typing on laptops, and a few discussing notes in hushed voices."
+            "content": "The library was bustling with students studying for exams, some reading quietly, others typing on laptops, and a few discussing notes in hushed tones."
           },
           {
             "model_id": "gemini-3.1-flash-lite",
             "relevance": 1.0,
             "coherence": 0.75,
-            "completeness": 0.3708,
+            "completeness": 0.3681,
             "consistency": 1.0,
-            "weighted_score": 0.7487,
+            "weighted_score": 0.7479,
             "confidence_tier": "MEDIUM",
-            "latency_ms": 1108.26,
+            "latency_ms": 1049.84,
             "success": true,
             "error": null,
-            "content": "The library was bustling with students engaged in various study activities as they prepared for their exams."
+            "content": "The library was bustling with students engaged in various study activities to prepare for their exams."
           }
         ],
-        "total_time_ms": 1669.24
+        "total_time_ms": 1422.23
       },
       "comparison": {
         "best_single_model": "groq-llama3",
         "best_single_model_score": 0.8535,
         "fused_response_scores": {
-          "request_id": "score_c115e82634db",
+          "request_id": "score_b53b02e595d4",
           "query": "Summarize in one sentence: 'The library was filled with students preparing for exams. Some were reading quietly, others typing on laptops, and a few discussing notes in hushed voices.'",
-          "response": "The library buzzed with students studying for exams\u2014some reading quietly, others typing on laptops, and a few discussing notes in hushed voices.",
+          "response": "The library was bustling with students studying for exams, some reading quietly, others typing on laptops, and a few discussing notes in hushed tones.",
           "task_type": "summary",
           "scores": {
             "model_id": "manual_test_case",
             "relevance": 1.0,
             "coherence": 0.75,
-            "completeness": 0.7092,
+            "completeness": 0.7146,
             "consistency": 1.0,
-            "weighted_score": 0.8503,
+            "weighted_score": 0.8519,
             "confidence_tier": "HIGH",
             "latency_ms": 0.0,
             "success": true,
             "error": null,
-            "content": "The library buzzed with students studying for exams\u2014some reading quietly, others typing on laptops, and a few discussing notes in hushed voices."
+            "content": "The library was bustling with students studying for exams, some reading quietly, others typing on laptops, and a few discussing notes in hushed tones."
           }
         }
       }
     },
     {
       "prompt": "Give a creative analogy explaining how a neural network learns, for a 10-year-old.",
-      "total_time_ms": 39695.28,
+      "total_time_ms": 25455.93,
       "raw_query_response": {
-        "request_id": "req_1368d6a47197",
+        "request_id": "req_fa9b02273f30",
         "query": "Give a creative analogy explaining how a neural network learns, for a 10-year-old.",
         "task_type": "creative",
-        "final_response": "Imagine a neural network is like a **super-smart detective** trying to solve a mystery\u2014say, figuring out what kind of animal is in a picture.\n\nHere\u2019s how it works:\n\n1. **The Detective Starts Clueless** \u2013 At first, the detective doesn\u2019t know anything. They might guess \"dog\" for every picture, even if it\u2019s a cat or a bird. (This is like a neural network with random guesses.)\n\n2. **They Get Hints (Feedback)** \u2013 A friend shows them the right answer: *\"Nope, that\u2019s a cat!\"* The detective adjusts their thinking: *\"Oh, cats have pointy ears and whiskers, not floppy ears like dogs!\"*\n\n3. **Practice Makes Perfect** \u2013 The more pictures the detective sees (with the friend correcting them), the better they get. They start noticing tiny details: *\"This one has stripes\u2014must be a tiger!\"*\n\n4. **The Detective\u2019s Brain (Weights)** \u2013 Inside the detective\u2019s brain, tiny connections (like little gears) get stronger or weaker based on what works. If guessing \"dog\" is wrong often, that guess becomes less likely next time.\n\n5. **Finally, They Solve the Case!** \u2013 After lots of practice, the detective can look at a new picture and say, *\"That\u2019s a parrot!\"* without needing hints.\n\n**Neural Network = Detective**\n**Learning = Adjusting guesses based on mistakes**\n**Weights = The detective\u2019s memory of what works**\n\nThe more \"cases\" (examples) the detective sees, the smarter they get\u2014just like how a neural network learns from data! \ud83d\udd75\ufe0f\u2642\ufe0f\ud83d\udd0d\n\n### Additional Insights\n* Imagine you have a **giant robot chef** who wants to learn how to bake the world\u2019s most delicious chocolate chip cookie, but he has never been in a kitchen before.\n\nHere is how he learns, step-by-step, just like a neural network:\n\n### 1.\n* The Guessing Phase (The Random Start)\nAt first, the robot chef has no idea what he\u2019s doing.\n* He just throws ingredients into a bowl randomly\u2014maybe a cup of salt, a whole egg with the shell on, and a scoop of dirt.\n* He puts it in the oven and pulls out a burnt, lumpy mess.\n* Imagine you have a super cool, magical library with an infinite number of books.\n* Each book has a secret message inside, but you can't read it yet.\n* Your job is to figure out what the message says.\n\nThe library is like a neural network, and the books are like the things it's trying to learn about (like pictures of cats and dogs).\n\nWhen you first start, you don't know what's in any of the books.\n* But, you have a special helper, called a \"reader\", that looks at the books and tries to guess what the message says.",
+        "final_response": "Sure! Here\u2019s a fun analogy to explain how a neural network learns:\n\n**Imagine a neural network is like a team of detectives trying to solve a mystery\u2014like who stole the last cookie from the jar!**\n\n1. **The Brain (Neural Network):** The detectives (neurons) work together, passing clues back and forth. Each detective has a specialty\u2014some look for crumbs, others check for fingerprints, and one even remembers if the suspect usually takes cookies after lunch!\n\n2. **Training (Practice Makes Perfect):** At first, the detectives guess wrong\u2014maybe they blame the cat or the dog! But the \"boss\" (the loss function) says, *\"Nope, that\u2019s not right!\"* So they adjust their clues based on past mistakes, getting better each time.\n\n3. **Learning (Getting Smarter):** After many cases, the detectives start recognizing patterns\u2014like how the suspect always leaves a trail of chocolate. The more cases they solve, the better they get at spotting the real thief!\n\n4. **Prediction (Solving New Mysteries):** Now, when a new cookie goes missing, the detectives use their trained skills to point the finger at the right culprit\u2014maybe even before anyone else notices!\n\n**The magic? The more mysteries they solve, the sharper they become\u2014just like how a neural network learns from data!** \ud83d\udd75\ufe0f\u200d\u2642\ufe0f\ud83c\udf6a\n\n### Additional Insights\n* Imagine you are trying to teach a **blindfolded robot** how to sort colorful LEGO bricks into different bins.\n\nThe robot doesn't have eyes, so it has to learn by touch.\n* The Guess (The Forward Pass)\nYou hand the robot a red brick.\n* It says, \"I bet this is a blue brick!\" and drops it into the blue bin.\n* *BZZZT!* You tell the robot, \"Nope, that was wrong.\"\n\n### 2.\n* Imagine you have a huge library with an infinite number of books, and each book has a secret recipe for making the perfect sandwich.\n* But, there's a catch: the recipe is written in a code that you can't understand.\n\nA neural network is like a super-smart, magic librarian who wants to learn how to make the perfect sandwich.\n* The librarian starts by picking a few books at random and trying to decipher the code.\n* At first, the librarian makes a lot of mistakes and the sandwiches are yucky.\n\nBut, the librarian doesn't give up!",
         "fusion_weights": {
-          "groq-llama3": 0.213,
-          "gemini-3.1-flash-lite": 0.3411,
-          "mistral-small": 0.446
+          "groq-llama3": 0.227,
+          "mistral-small": 0.4605,
+          "gemini-3.1-flash-lite": 0.3125
         },
         "model_responses": [
           {
             "model_id": "groq-llama3",
             "relevance": 1.0,
             "coherence": 1.0,
-            "completeness": 0.675,
-            "consistency": 0.8,
-            "weighted_score": 0.8725,
+            "completeness": 1.0,
+            "consistency": 1.0,
+            "weighted_score": 1.0,
             "confidence_tier": "HIGH",
-            "latency_ms": 1760.52,
+            "latency_ms": 1366.57,
             "success": true,
             "error": null,
-            "content": "Imagine you have a super cool, magical library with an infinite number of books. Each book has a secret message inside, but you can't read it yet. Your job is to figure out what the message says.\n\nThe library is like a neural network, and the books are like the things it's trying to learn about (like pictures of cats and dogs).\n\nWhen you first start, you don't know what's in any of the books. But, you have a special helper, called a \"reader\", that looks at the books and tries to guess what the message says. The reader is like the neural network's brain.\n\nAt first, the reader makes lots of mistakes. It might say a book about a cat says \"dog\"! But, you correct the reader and say \"no, that's a cat!\". The reader then tries again, and again, and again.\n\nEach time the reader tries, it gets a little bit better. It starts to notice patterns in the books, like \"cats have whiskers\" and \"dogs have floppy ears\". The reader uses these patterns to make better guesses.\n\nAs the reader keeps practicing, it starts to create a special map of the library. It says \"oh, books with whiskers are usually about cats, and books with floppy ears are usually about dogs\". This map is like the neural network's memory, and it helps the reader make even better guesses.\n\nEventually, the reader becomes super good at figuring out the secret messages in the books. It can even look at a new book it's never seen before and say \"oh, that's a cat!\" or \"that's a dog!\".\n\nThat's kind of like how a neural network learns. It looks at lots of examples (like pictures of cats and dogs), makes guesses, and gets corrected. Over time, it creates a special map that helps it make better and better guesses, until it becomes really good at figuring out the answers!"
+            "content": "Imagine you have a huge library with an infinite number of books, and each book has a secret recipe for making the perfect sandwich. But, there's a catch: the recipe is written in a code that you can't understand.\n\nA neural network is like a super-smart, magic librarian who wants to learn how to make the perfect sandwich. The librarian starts by picking a few books at random and trying to decipher the code. At first, the librarian makes a lot of mistakes and the sandwiches are yucky.\n\nBut, the librarian doesn't give up! Instead, the librarian looks at the books again, and this time, it tries to find patterns in the code. It's like the librarian is saying, \"Hmm, this book has a picture of a tomato on the cover, and the recipe has the word 'tomato' in it. Maybe that's a clue!\"\n\nAs the librarian keeps looking at more books and trying to make sense of the code, it starts to get better and better at making sandwiches. It's like the librarian is building a special map in its brain that helps it connect the dots between the code and the ingredients.\n\nEventually, the librarian becomes a master sandwich-maker, and it can even create new, delicious recipes that it's never seen before! That's kind of like how a neural network learns: it starts with a bunch of random guesses, but as it looks at more and more examples, it starts to find patterns and connections that help it get better and better at making predictions or solving problems.\n\nAnd, just like the librarian, a neural network can keep learning and improving as long as it has more \"books\" (or data) to look at and practice with!"
+          },
+          {
+            "model_id": "mistral-small",
+            "relevance": 1.0,
+            "coherence": 1.0,
+            "completeness": 1.0,
+            "consistency": 1.0,
+            "weighted_score": 1.0,
+            "confidence_tier": "HIGH",
+            "latency_ms": 2512.01,
+            "success": true,
+            "error": null,
+            "content": "Sure! Here\u2019s a fun analogy to explain how a neural network learns:\n\n**Imagine a neural network is like a team of detectives trying to solve a mystery\u2014like who stole the last cookie from the jar!**\n\n1. **The Brain (Neural Network):** The detectives (neurons) work together, passing clues back and forth. Each detective has a specialty\u2014some look for crumbs, others check for fingerprints, and one even remembers if the suspect usually takes cookies after lunch!\n\n2. **Training (Practice Makes Perfect):** At first, the detectives guess wrong\u2014maybe they blame the cat or the dog! But the \"boss\" (the loss function) says, *\"Nope, that\u2019s not right!\"* So they adjust their clues based on past mistakes, getting better each time.\n\n3. **Learning (Getting Smarter):** After many cases, the detectives start recognizing patterns\u2014like how the suspect always leaves a trail of chocolate. The more cases they solve, the better they get at spotting the real thief!\n\n4. **Prediction (Solving New Mysteries):** Now, when a new cookie goes missing, the detectives use their trained skills to point the finger at the right culprit\u2014maybe even before anyone else notices!\n\n**The magic? The more mysteries they solve, the sharper they become\u2014just like how a neural network learns from data!** \ud83d\udd75\ufe0f\u200d\u2642\ufe0f\ud83c\udf6a"
           },
           {
             "model_id": "gemini-3.1-flash-lite",
             "relevance": 1.0,
             "coherence": 0.85,
             "completeness": 0.675,
-            "consistency": 0.2,
-            "weighted_score": 0.745,
+            "consistency": 0.4,
+            "weighted_score": 0.775,
             "confidence_tier": "MEDIUM",
-            "latency_ms": 2796.9,
+            "latency_ms": 2586.4,
             "success": true,
             "error": null,
-            "content": "Imagine you have a **giant robot chef** who wants to learn how to bake the world\u2019s most delicious chocolate chip cookie, but he has never been in a kitchen before.\n\nHere is how he learns, step-by-step, just like a neural network:\n\n### 1. The Guessing Phase (The Random Start)\nAt first, the robot chef has no idea what he\u2019s doing. He just throws ingredients into a bowl randomly\u2014maybe a cup of salt, a whole egg with the shell on, and a scoop of dirt. He puts it in the oven and pulls out a burnt, lumpy mess. \n\nIn a neural network, this is the \"random start.\" The computer starts by guessing blindly.\n\n### 2. The Taste Test (The Loss Function)\nYou take a tiny bite of his cookie and make a sour face. You tell the robot, \"That was terrible! It was way too salty and too crunchy.\" \n\nIn a neural network, this is called the **\"Loss Function.\"** It\u2019s just a fancy way of saying, \"Here is how far away you are from the perfect cookie.\"\n\n### 3. The \"Tweaking\" Phase (Backpropagation)\nThe robot thinks, *\"Okay, too salty. Next time, I\u2019ll use less salt. And it was too crunchy, so I\u2019ll use less flour.\"* He goes back to his recipe book and makes tiny adjustments to the amounts of every single ingredient.\n\nIn a neural network, this is called **\"Backpropagation.\"** The network looks at its mistake and travels backward through all the ingredients (the \"neurons\") to figure out which ones need to be turned up or turned down to get a better result next time.\n\n### 4. The Practice (The Training)\nThe robot makes another cookie. It\u2019s better! But still not perfect. So, he makes another. And another. And another. He makes 10,000 cookies. \n\nBy the 10,001st cookie, he has practiced so much that he knows exactly how much sugar, flour, and chocolate to use to make it perfect every single time.\n\n***\n\n### The Big Secret:\nA neural network is basically just a **very fast robot chef that makes a million mistakes in a row.** \n\nIt doesn't \"know\" what a cookie is, and it doesn't \"know\" what flavor is. It just keeps adjusting its ingredients until the \"taste test\" score stops getting better. Once it hits that perfect score, we say the network is **\"trained.\"** \n\nNow, whenever you ask it for a cookie, it doesn't have to guess anymore\u2014it just follows the perfect recipe it learned through all that practice!"
-          },
-          {
-            "model_id": "mistral-small",
-            "relevance": 1.0,
-            "coherence": 0.6164,
-            "completeness": 0.675,
-            "consistency": 1.0,
-            "weighted_score": 0.8066,
-            "confidence_tier": "MEDIUM",
-            "latency_ms": 2886.4,
-            "success": true,
-            "error": null,
-            "content": "Imagine a neural network is like a **super-smart detective** trying to solve a mystery\u2014say, figuring out what kind of animal is in a picture.\n\nHere\u2019s how it works:\n\n1. **The Detective Starts Clueless** \u2013 At first, the detective doesn\u2019t know anything. They might guess \"dog\" for every picture, even if it\u2019s a cat or a bird. (This is like a neural network with random guesses.)\n\n2. **They Get Hints (Feedback)** \u2013 A friend shows them the right answer: *\"Nope, that\u2019s a cat!\"* The detective adjusts their thinking: *\"Oh, cats have pointy ears and whiskers, not floppy ears like dogs!\"*\n\n3. **Practice Makes Perfect** \u2013 The more pictures the detective sees (with the friend correcting them), the better they get. They start noticing tiny details: *\"This one has stripes\u2014must be a tiger!\"*\n\n4. **The Detective\u2019s Brain (Weights)** \u2013 Inside the detective\u2019s brain, tiny connections (like little gears) get stronger or weaker based on what works. If guessing \"dog\" is wrong often, that guess becomes less likely next time.\n\n5. **Finally, They Solve the Case!** \u2013 After lots of practice, the detective can look at a new picture and say, *\"That\u2019s a parrot!\"* without needing hints.\n\n**Neural Network = Detective**\n**Learning = Adjusting guesses based on mistakes**\n**Weights = The detective\u2019s memory of what works**\n\nThe more \"cases\" (examples) the detective sees, the smarter they get\u2014just like how a neural network learns from data! \ud83d\udd75\ufe0f\u2642\ufe0f\ud83d\udd0d"
+            "content": "Imagine you are trying to teach a **blindfolded robot** how to sort colorful LEGO bricks into different bins.\n\nThe robot doesn't have eyes, so it has to learn by touch. Here is how the \"training\" happens:\n\n### 1. The Guess (The Forward Pass)\nYou hand the robot a red brick. The robot has no idea what it is, so it just takes a wild guess. It says, \"I bet this is a blue brick!\" and drops it into the blue bin. \n\n*BZZZT!* You tell the robot, \"Nope, that was wrong.\"\n\n### 2. The \"Oops\" Moment (The Loss Function)\nThe robot now calculates how \"wrong\" it was. If it put a red brick in the blue bin, that\u2019s a pretty big mistake. If it had put it in a \"yellow\" bin, that might be a *medium* mistake. This \"oops\" feeling is what scientists call the **Loss Function**. It\u2019s basically the robot\u2019s way of saying, \"Ouch, I missed the mark.\"\n\n### 3. The Adjustment (Backpropagation)\nThis is the magic part! The robot has thousands of tiny knobs inside its brain that control its decisions. When it makes a mistake, it goes backward through its internal wires and turns those knobs just a tiny, tiny bit. \n\nIt thinks, *\"Okay, the next time I feel something smooth and rectangular, I\u2019m going to turn the 'Blue Bin' knob down and the 'Red Bin' knob up.\"*\n\n### 4. Practice, Practice, Practice (The Iterations)\nAt first, the robot is terrible. It gets almost everything wrong. But you keep handing it bricks\u2014thousands of them!\n\n*   It makes a mistake.\n*   It feels the \"oops.\"\n*   It turns its knobs a tiny bit.\n*   It tries again.\n\n### The Result\nAfter a few thousand bricks, the robot has turned its knobs so perfectly that it doesn't even have to think anymore. You hand it a brick, and\u2014*click, clack, drop*\u2014it puts it in the right bin every single time.\n\n**In short:** A neural network is just a robot that learns by **making mistakes, feeling the \"oops,\" and turning its internal knobs until it gets it right!**"
           }
         ],
-        "total_time_ms": 39688.32
+        "total_time_ms": 25450.31
       },
       "comparison": {
         "best_single_model": "groq-llama3",
-        "best_single_model_score": 0.8725,
+        "best_single_model_score": 1.0,
         "fused_response_scores": {
-          "request_id": "score_14d439e9fbb4",
+          "request_id": "score_11063461e0e7",
           "query": "Give a creative analogy explaining how a neural network learns, for a 10-year-old.",
-          "response": "Imagine a neural network is like a **super-smart detective** trying to solve a mystery\u2014say, figuring out what kind of animal is in a picture.\n\nHere\u2019s how it works:\n\n1. **The Detective Starts Clueless** \u2013 At first, the detective doesn\u2019t know anything. They might guess \"dog\" for every picture, even if it\u2019s a cat or a bird. (This is like a neural network with random guesses.)\n\n2. **They Get Hints (Feedback)** \u2013 A friend shows them the right answer: *\"Nope, that\u2019s a cat!\"* The detective adjusts their thinking: *\"Oh, cats have pointy ears and whiskers, not floppy ears like dogs!\"*\n\n3. **Practice Makes Perfect** \u2013 The more pictures the detective sees (with the friend correcting them), the better they get. They start noticing tiny details: *\"This one has stripes\u2014must be a tiger!\"*\n\n4. **The Detective\u2019s Brain (Weights)** \u2013 Inside the detective\u2019s brain, tiny connections (like little gears) get stronger or weaker based on what works. If guessing \"dog\" is wrong often, that guess becomes less likely next time.\n\n5. **Finally, They Solve the Case!** \u2013 After lots of practice, the detective can look at a new picture and say, *\"That\u2019s a parrot!\"* without needing hints.\n\n**Neural Network = Detective**\n**Learning = Adjusting guesses based on mistakes**\n**Weights = The detective\u2019s memory of what works**\n\nThe more \"cases\" (examples) the detective sees, the smarter they get\u2014just like how a neural network learns from data! \ud83d\udd75\ufe0f\u2642\ufe0f\ud83d\udd0d\n\n### Additional Insights\n* Imagine you have a **giant robot chef** who wants to learn how to bake the world\u2019s most delicious chocolate chip cookie, but he has never been in a kitchen before.\n\nHere is how he learns, step-by-step, just like a neural network:\n\n### 1.\n* The Guessing Phase (The Random Start)\nAt first, the robot chef has no idea what he\u2019s doing.\n* He just throws ingredients into a bowl randomly\u2014maybe a cup of salt, a whole egg with the shell on, and a scoop of dirt.\n* He puts it in the oven and pulls out a burnt, lumpy mess.\n* Imagine you have a super cool, magical library with an infinite number of books.\n* Each book has a secret message inside, but you can't read it yet.\n* Your job is to figure out what the message says.\n\nThe library is like a neural network, and the books are like the things it's trying to learn about (like pictures of cats and dogs).\n\nWhen you first start, you don't know what's in any of the books.\n* But, you have a special helper, called a \"reader\", that looks at the books and tries to guess what the message says.",
+          "response": "Sure! Here\u2019s a fun analogy to explain how a neural network learns:\n\n**Imagine a neural network is like a team of detectives trying to solve a mystery\u2014like who stole the last cookie from the jar!**\n\n1. **The Brain (Neural Network):** The detectives (neurons) work together, passing clues back and forth. Each detective has a specialty\u2014some look for crumbs, others check for fingerprints, and one even remembers if the suspect usually takes cookies after lunch!\n\n2. **Training (Practice Makes Perfect):** At first, the detectives guess wrong\u2014maybe they blame the cat or the dog! But the \"boss\" (the loss function) says, *\"Nope, that\u2019s not right!\"* So they adjust their clues based on past mistakes, getting better each time.\n\n3. **Learning (Getting Smarter):** After many cases, the detectives start recognizing patterns\u2014like how the suspect always leaves a trail of chocolate. The more cases they solve, the better they get at spotting the real thief!\n\n4. **Prediction (Solving New Mysteries):** Now, when a new cookie goes missing, the detectives use their trained skills to point the finger at the right culprit\u2014maybe even before anyone else notices!\n\n**The magic? The more mysteries they solve, the sharper they become\u2014just like how a neural network learns from data!** \ud83d\udd75\ufe0f\u200d\u2642\ufe0f\ud83c\udf6a\n\n### Additional Insights\n* Imagine you are trying to teach a **blindfolded robot** how to sort colorful LEGO bricks into different bins.\n\nThe robot doesn't have eyes, so it has to learn by touch.\n* The Guess (The Forward Pass)\nYou hand the robot a red brick.\n* It says, \"I bet this is a blue brick!\" and drops it into the blue bin.\n* *BZZZT!* You tell the robot, \"Nope, that was wrong.\"\n\n### 2.\n* Imagine you have a huge library with an infinite number of books, and each book has a secret recipe for making the perfect sandwich.\n* But, there's a catch: the recipe is written in a code that you can't understand.\n\nA neural network is like a super-smart, magic librarian who wants to learn how to make the perfect sandwich.\n* The librarian starts by picking a few books at random and trying to decipher the code.\n* At first, the librarian makes a lot of mistakes and the sandwiches are yucky.\n\nBut, the librarian doesn't give up!",
           "task_type": "creative",
           "scores": {
             "model_id": "manual_test_case",
             "relevance": 1.0,
-            "coherence": 0.8075,
-            "completeness": 0.675,
-            "consistency": 0.8,
-            "weighted_score": 0.8244,
-            "confidence_tier": "MEDIUM",
+            "coherence": 1.0,
+            "completeness": 1.0,
+            "consistency": 0.6,
+            "weighted_score": 0.94,
+            "confidence_tier": "HIGH",
             "latency_ms": 0.0,
             "success": true,
             "error": null,
-            "content": "Imagine a neural network is like a **super-smart detective** trying to solve a mystery\u2014say, figuring out what kind of animal is in a picture.\n\nHere\u2019s how it works:\n\n1. **The Detective Starts Clueless** \u2013 At first, the detective doesn\u2019t know anything. They might guess \"dog\" for every picture, even if it\u2019s a cat or a bird. (This is like a neural network with random guesses.)\n\n2. **They Get Hints (Feedback)** \u2013 A friend shows them the right answer: *\"Nope, that\u2019s a cat!\"* The detective adjusts their thinking: *\"Oh, cats have pointy ears and whiskers, not floppy ears like dogs!\"*\n\n3. **Practice Makes Perfect** \u2013 The more pictures the detective sees (with the friend correcting them), the better they get. They start noticing tiny details: *\"This one has stripes\u2014must be a tiger!\"*\n\n4. **The Detective\u2019s Brain (Weights)** \u2013 Inside the detective\u2019s brain, tiny connections (like little gears) get stronger or weaker based on what works. If guessing \"dog\" is wrong often, that guess becomes less likely next time.\n\n5. **Finally, They Solve the Case!** \u2013 After lots of practice, the detective can look at a new picture and say, *\"That\u2019s a parrot!\"* without needing hints.\n\n**Neural Network = Detective**\n**Learning = Adjusting guesses based on mistakes**\n**Weights = The detective\u2019s memory of what works**\n\nThe more \"cases\" (examples) the detective sees, the smarter they get\u2014just like how a neural network learns from data! \ud83d\udd75\ufe0f\u2642\ufe0f\ud83d\udd0d\n\n### Additional Insights\n* Imagine you have a **giant robot chef** who wants to learn how to bake the world\u2019s most delicious chocolate chip cookie, but he has never been in a kitchen before.\n\nHere is how he learns, step-by-step, just like a neural network:\n\n### 1.\n* The Guessing Phase (The Random Start)\nAt first, the robot chef has no idea what he\u2019s doing.\n* He just throws ingredients into a bowl randomly\u2014maybe a cup of salt, a whole egg with the shell on, and a scoop of dirt.\n* He puts it in the oven and pulls out a burnt, lumpy mess.\n* Imagine you have a super cool, magical library with an infinite number of books.\n* Each book has a secret message inside, but you can't read it yet.\n* Your job is to figure out what the message says.\n\nThe library is like a neural network, and the books are like the things it's trying to learn about (like pictures of cats and dogs).\n\nWhen you first start, you don't know what's in any of the books.\n* But, you have a special helper, called a \"reader\", that looks at the books and tries to guess what the message says."
+            "content": "Sure! Here\u2019s a fun analogy to explain how a neural network learns:\n\n**Imagine a neural network is like a team of detectives trying to solve a mystery\u2014like who stole the last cookie from the jar!**\n\n1. **The Brain (Neural Network):** The detectives (neurons) work together, passing clues back and forth. Each detective has a specialty\u2014some look for crumbs, others check for fingerprints, and one even remembers if the suspect usually takes cookies after lunch!\n\n2. **Training (Practice Makes Perfect):** At first, the detectives guess wrong\u2014maybe they blame the cat or the dog! But the \"boss\" (the loss function) says, *\"Nope, that\u2019s not right!\"* So they adjust their clues based on past mistakes, getting better each time.\n\n3. **Learning (Getting Smarter):** After many cases, the detectives start recognizing patterns\u2014like how the suspect always leaves a trail of chocolate. The more cases they solve, the better they get at spotting the real thief!\n\n4. **Prediction (Solving New Mysteries):** Now, when a new cookie goes missing, the detectives use their trained skills to point the finger at the right culprit\u2014maybe even before anyone else notices!\n\n**The magic? The more mysteries they solve, the sharper they become\u2014just like how a neural network learns from data!** \ud83d\udd75\ufe0f\u200d\u2642\ufe0f\ud83c\udf6a\n\n### Additional Insights\n* Imagine you are trying to teach a **blindfolded robot** how to sort colorful LEGO bricks into different bins.\n\nThe robot doesn't have eyes, so it has to learn by touch.\n* The Guess (The Forward Pass)\nYou hand the robot a red brick.\n* It says, \"I bet this is a blue brick!\" and drops it into the blue bin.\n* *BZZZT!* You tell the robot, \"Nope, that was wrong.\"\n\n### 2.\n* Imagine you have a huge library with an infinite number of books, and each book has a secret recipe for making the perfect sandwich.\n* But, there's a catch: the recipe is written in a code that you can't understand.\n\nA neural network is like a super-smart, magic librarian who wants to learn how to make the perfect sandwich.\n* The librarian starts by picking a few books at random and trying to decipher the code.\n* At first, the librarian makes a lot of mistakes and the sandwiches are yucky.\n\nBut, the librarian doesn't give up!"
           }
         }
       }
     },
     {
       "prompt": "Write a 3-line poem about the ocean.",
-      "total_time_ms": 1155.9,
+      "total_time_ms": 1064.91,
       "raw_query_response": {
-        "request_id": "req_427efd447bcd",
+        "request_id": "req_8af5ec90eefa",
         "query": "Write a 3-line poem about the ocean.",
         "task_type": "creative",
-        "final_response": "Waves whisper secrets to the shore,\nBlue horizons call forevermore,\nEndless depths, I long to explore.",
+        "final_response": "Waves whisper secrets to the shore,\nBlue horizons, forevermore,\nTides dance with the moon's soft glow.",
         "fusion_weights": {
-          "groq-llama3": 0.2223,
-          "mistral-small": 0.4413,
-          "gemini-3.1-flash-lite": 0.3364
+          "groq-llama3": 0.2392,
+          "mistral-small": 0.4512,
+          "gemini-3.1-flash-lite": 0.3096
         },
         "model_responses": [
           {
             "model_id": "groq-llama3",
             "relevance": 1.0,
             "coherence": 0.75,
-            "completeness": 0.72,
+            "completeness": 0.7244,
             "consistency": 1.0,
-            "weighted_score": 0.8535,
+            "weighted_score": 0.8548,
             "confidence_tier": "HIGH",
-            "latency_ms": 209.12,
+            "latency_ms": 222.47,
             "success": true,
             "error": null,
-            "content": "The ocean's waves crash on the shore,\nA soothing melody evermore,\nEndless blue, forever in store."
+            "content": "The ocean's waves crash on the shore,\nA soothing melody forever more,\nPeaceful depths that secrets store."
           },
           {
             "model_id": "mistral-small",
-            "relevance": 1.0,
+            "relevance": 0.8188,
             "coherence": 0.75,
             "completeness": 0.07,
             "consistency": 1.0,
-            "weighted_score": 0.6585,
+            "weighted_score": 0.6041,
             "confidence_tier": "MEDIUM",
-            "latency_ms": 673.9,
+            "latency_ms": 725.92,
             "success": true,
             "error": null,
-            "content": "Waves whisper secrets to the shore,\nBlue horizons call forevermore,\nEndless depths, I long to explore."
+            "content": "Waves whisper secrets to the shore,\nBlue horizons, forevermore,\nTides dance with the moon's soft glow."
           },
           {
             "model_id": "gemini-3.1-flash-lite",
-            "relevance": 0.9365,
+            "relevance": 0.9363,
             "coherence": 0.75,
-            "completeness": 0.0963,
+            "completeness": 0.0744,
             "consistency": 1.0,
-            "weighted_score": 0.6473,
+            "weighted_score": 0.6407,
             "confidence_tier": "MEDIUM",
-            "latency_ms": 842.78,
+            "latency_ms": 782.71,
             "success": true,
             "error": null,
-            "content": "Endless waves embrace the golden sand,\nA rhythmic pulse against the quiet land,\nThe deep blue depths hold secrets in their hand."
+            "content": "Endless waves embrace the sand,\nA rhythmic pulse from deep blue light,\nHolding secrets far from land."
           }
         ],
-        "total_time_ms": 1149.35
+        "total_time_ms": 1059.02
       },
       "comparison": {
         "best_single_model": "groq-llama3",
-        "best_single_model_score": 0.8535,
+        "best_single_model_score": 0.8548,
         "fused_response_scores": {
-          "request_id": "score_b81be546fbaa",
+          "request_id": "score_e4668da9fa3c",
           "query": "Write a 3-line poem about the ocean.",
-          "response": "Waves whisper secrets to the shore,\nBlue horizons call forevermore,\nEndless depths, I long to explore.",
+          "response": "Waves whisper secrets to the shore,\nBlue horizons, forevermore,\nTides dance with the moon's soft glow.",
           "task_type": "creative",
           "scores": {
             "model_id": "manual_test_case",
-            "relevance": 1.0,
+            "relevance": 0.8188,
             "coherence": 0.75,
             "completeness": 0.07,
             "consistency": 1.0,
-            "weighted_score": 0.6585,
+            "weighted_score": 0.6041,
             "confidence_tier": "MEDIUM",
             "latency_ms": 0.0,
             "success": true,
             "error": null,
-            "content": "Waves whisper secrets to the shore,\nBlue horizons call forevermore,\nEndless depths, I long to explore."
+            "content": "Waves whisper secrets to the shore,\nBlue horizons, forevermore,\nTides dance with the moon's soft glow."
           }
         }
       }
     },
     {
       "prompt": "Why do leaves change color in autumn?",
-      "total_time_ms": 23164.38,
+      "total_time_ms": 23696.34,
       "raw_query_response": {
-        "request_id": "req_9190934a77bf",
+        "request_id": "req_61dc4e7dbdba",
         "query": "Why do leaves change color in autumn?",
         "task_type": "reasoning",
-        "final_response": "Leaves change color in autumn due to the breakdown of chlorophyll, the green pigment responsible for photosynthesis. As daylight decreases and temperatures drop, trees prepare for winter by slowing down photosynthesis. Chlorophyll breaks down, revealing other pigments that were present but masked during the growing season:\n\n1. **Carotenoids** (yellow, orange) \u2013 Present year-round but become visible as chlorophyll fades.\n2. **Anthocyanins** (red, purple) \u2013 Produced in some trees (like maples) in response to sunlight and excess sugars trapped in leaves.\n\nOther factors, such as weather conditions and tree species, influence the vibrancy and timing of fall colors.\n\n### Additional Insights\n* Chlorophyll is the chemical that allows plants to perform photosynthesis\u2014turning sunlight into food (glucose).\n* Because the plant is actively producing chlorophyll all summer, the green color is dominant.\n\n### 2.\n* The Trigger: Less Sunlight\nAs autumn approaches, the days get shorter and the nights get longer.\n* Trees perceive these changes as a signal to prepare for winter.\n* They become visible as the chlorophyll content decreases.\n2.\n* They are responsible for the red, purple, and crimson colors of some leaves.\n3.\n* **Betalains**: These are pigments that are responsible for the red and yellow colors of some leaves, particularly in beets and certain trees like the sugar maple.\n\n**How does the color change occur?**\n\nAs the trees stop producing chlorophyll and start to seal off the connections between the leaves and the rest of the tree, the following process occurs:\n\n1.\n* The carotenoids and anthocyanins become more prominent, producing the characteristic autumn colors.\n3.",
+        "final_response": "Leaves change color in autumn due to the breakdown of chlorophyll, the green pigment responsible for photosynthesis. As days shorten and temperatures drop, chlorophyll production slows and eventually stops. This reveals other pigments that were present but masked by chlorophyll:\n\n1. **Carotenoids** (yellows and oranges) \u2013 These pigments are present in leaves all year but become visible when chlorophyll fades.\n2. **Anthocyanins** (reds and purples) \u2013 These pigments are produced in some leaves in response to bright light and excess sugars trapped in the leaves as photosynthesis declines.\n\nThe vibrant fall foliage is a result of these pigments being unmasked and, in some cases, newly produced.\n\n### Additional Insights\n* It is essentially a \"shutdown\" sequence that prepares trees for winter.\n\nHere is the step-by-step breakdown of why it happens:\n\n### 1.\n* The Role of Chlorophyll\nDuring spring and summer, leaves act as food factories.\n* Chlorophyll is green, and because trees produce it in such high quantities, it masks all other pigments in the leaf.\n\n### 2.\n* Trees are highly sensitive to these changes in light.\n* As the days get shorter, the trees prepare for the winter by slowing down their food-making process, and the production of chlorophyll decreases.\n\n**What happens to the chlorophyll?**\n\nAs the chlorophyll content decreases, the hidden pigments in the leaf become visible.\n* **Betalains**: These are responsible for the red and purple colors in some plants, like beets and bougainvillea.\n\n**The color-changing process**\n\nAs the chlorophyll content decreases, the carotenoids and anthocyanins become more visible, creating the characteristic autumn colors:\n\n* Yellow: Carotenoids are responsible for the yellow color, which is often seen in birch, beech, and aspen trees.\n* Orange: A combination of carotenoids and anthocyanins produces the orange color, commonly seen in sugar maples and hickories.\n* Red: Anthocyanins produce the red color, often seen in maple, oak, and sweetgum trees.\n* Brown: The combination of all pigments, along with the breakdown of cellular structures, can produce a brown color, which is often seen in oak and beech trees.\n\n**Other factors that influence color change**\n\nWeather conditions, soil moisture, and tree health can also impact the intensity and duration of the color change.",
         "fusion_weights": {
-          "mistral-small": 0.4244,
-          "groq-llama3": 0.2023,
-          "gemini-3.1-flash-lite": 0.3733
+          "mistral-small": 0.4306,
+          "groq-llama3": 0.2008,
+          "gemini-3.1-flash-lite": 0.3686
         },
         "model_responses": [
           {
@@ -807,55 +807,55 @@
             "consistency": 1.0,
             "weighted_score": 1.0,
             "confidence_tier": "HIGH",
-            "latency_ms": 1519.07,
+            "latency_ms": 1402.96,
             "success": true,
             "error": null,
-            "content": "Leaves change color in autumn due to the breakdown of chlorophyll, the green pigment responsible for photosynthesis. As daylight decreases and temperatures drop, trees prepare for winter by slowing down photosynthesis. Chlorophyll breaks down, revealing other pigments that were present but masked during the growing season:\n\n1. **Carotenoids** (yellow, orange) \u2013 Present year-round but become visible as chlorophyll fades.\n2. **Anthocyanins** (red, purple) \u2013 Produced in some trees (like maples) in response to sunlight and excess sugars trapped in leaves.\n\nOther factors, such as weather conditions and tree species, influence the vibrancy and timing of fall colors."
+            "content": "Leaves change color in autumn due to the breakdown of chlorophyll, the green pigment responsible for photosynthesis. As days shorten and temperatures drop, chlorophyll production slows and eventually stops. This reveals other pigments that were present but masked by chlorophyll:\n\n1. **Carotenoids** (yellows and oranges) \u2013 These pigments are present in leaves all year but become visible when chlorophyll fades.\n2. **Anthocyanins** (reds and purples) \u2013 These pigments are produced in some leaves in response to bright light and excess sugars trapped in the leaves as photosynthesis declines.\n\nThe vibrant fall foliage is a result of these pigments being unmasked and, in some cases, newly produced."
           },
           {
             "model_id": "groq-llama3",
             "relevance": 1.0,
             "coherence": 1.0,
             "completeness": 1.0,
-            "consistency": 0.8,
-            "weighted_score": 0.97,
+            "consistency": 0.2,
+            "weighted_score": 0.88,
             "confidence_tier": "HIGH",
-            "latency_ms": 2136.96,
+            "latency_ms": 1561.55,
             "success": true,
             "error": null,
-            "content": "The changing of leaf colors in autumn, also known as fall foliage, is a natural process that occurs as the days get shorter and the weather gets cooler. Here's a simplified explanation:\n\n**Why do leaves change color?**\n\nDuring the growing season, leaves are green because they contain a pigment called chlorophyll, which helps plants absorb sunlight for photosynthesis. As the days get shorter and the weather gets cooler, the trees prepare for winter by slowing down their growth and storing energy. This means they produce less chlorophyll and start to break down the existing chlorophyll molecules.\n\n**What happens to the other pigments?**\n\nAs the chlorophyll content decreases, other pigments in the leaves become visible, causing the color change. These pigments include:\n\n1. **Carotenoids**: These are yellow, orange, and brown pigments that are always present in leaves, but are masked by the green color of chlorophyll. They become visible as the chlorophyll content decreases.\n2. **Anthocyanins**: These are red and purple pigments that are produced in the fall as the sugar concentration in the leaves increases. They are responsible for the red, purple, and crimson colors of some leaves.\n3. **Betalains**: These are pigments that are responsible for the red and yellow colors of some leaves, particularly in beets and certain trees like the sugar maple.\n\n**How does the color change occur?**\n\nAs the trees stop producing chlorophyll and start to seal off the connections between the leaves and the rest of the tree, the following process occurs:\n\n1. The chlorophyll content decreases, allowing the other pigments to become visible.\n2. The carotenoids and anthocyanins become more prominent, producing the characteristic autumn colors.\n3. The leaves eventually fall off the tree, as the tree seals off the connections to conserve energy and water during the winter months.\n\n** Factors that influence the color change**\n\nThe intensity and duration of the color change can be influenced by factors such as:\n\n1. Weather conditions: A warm, dry summer can lead to more intense colors, while a cool, wet summer can result in less vibrant colors.\n2. Tree species: Different tree species have different pigment compositions, which can affect the color change.\n3. Soil quality: The nutrient content of the soil can impact the health and color of the leaves.\n\nOverall, the changing of leaf colors in autumn is a natural process that is influenced by a combination of factors, including the decrease in chlorophyll content, the production of other pigments, and environmental conditions."
+            "content": "The changing colors of leaves in autumn, also known as fall foliage, is a natural process that occurs as the days get shorter and the weather gets cooler. Here's a simplified explanation:\n\n**Why do leaves change color?**\n\nLeaves change color because of the reduction in daylight hours and the decrease in temperature, which triggers a series of chemical reactions within the leaf. During the growing season, leaves are green due to the presence of chlorophyll, a pigment that helps plants absorb sunlight for photosynthesis. As the days get shorter, the trees prepare for the winter by slowing down their food-making process, and the production of chlorophyll decreases.\n\n**What happens to the chlorophyll?**\n\nAs the chlorophyll content decreases, the hidden pigments in the leaf become visible. These pigments include:\n\n1. **Carotenoids**: These are yellow, orange, and brown pigments that are always present in leaves, but are masked by the green color of chlorophyll during the growing season.\n2. **Anthocyanins**: These are responsible for the red and purple colors, and are produced in the fall as the sugar concentration in the leaf increases.\n3. **Betalains**: These are responsible for the red and purple colors in some plants, like beets and bougainvillea.\n\n**The color-changing process**\n\nAs the chlorophyll content decreases, the carotenoids and anthocyanins become more visible, creating the characteristic autumn colors:\n\n* Yellow: Carotenoids are responsible for the yellow color, which is often seen in birch, beech, and aspen trees.\n* Orange: A combination of carotenoids and anthocyanins produces the orange color, commonly seen in sugar maples and hickories.\n* Red: Anthocyanins produce the red color, often seen in maple, oak, and sweetgum trees.\n* Brown: The combination of all pigments, along with the breakdown of cellular structures, can produce a brown color, which is often seen in oak and beech trees.\n\n**Other factors that influence color change**\n\nWeather conditions, soil moisture, and tree health can also impact the intensity and duration of the color change. For example:\n\n* A warm, wet summer can lead to more intense colors, while a dry summer can result in less vibrant colors.\n* Trees under stress, such as those affected by disease or pests, may change color earlier or more rapidly than healthy trees.\n\nIn summary, the changing colors of leaves in autumn are a result of the reduction in daylight hours and the decrease in temperature, which triggers a series of chemical reactions that reveal the hidden pigments in the leaf. The combination of carotenoids, anthocyanins, and betalains produces the characteristic autumn colors, which can be influenced by weather conditions, soil moisture, and tree health."
           },
           {
             "model_id": "gemini-3.1-flash-lite",
             "relevance": 1.0,
             "coherence": 0.85,
             "completeness": 1.0,
-            "consistency": 0.4,
-            "weighted_score": 0.8725,
+            "consistency": 0.6,
+            "weighted_score": 0.9025,
             "confidence_tier": "HIGH",
-            "latency_ms": 3243.74,
+            "latency_ms": 3207.05,
             "success": true,
             "error": null,
-            "content": "The changing color of leaves in autumn is a biological process triggered by the changing seasons, specifically the reduction in daylight and the cooling temperatures.\n\nHere is the step-by-step breakdown of why this happens:\n\n### 1. The Role of Chlorophyll\nDuring the spring and summer, leaves are green because they are filled with **chlorophyll**. Chlorophyll is the chemical that allows plants to perform photosynthesis\u2014turning sunlight into food (glucose). Because the plant is actively producing chlorophyll all summer, the green color is dominant.\n\n### 2. The Trigger: Less Sunlight\nAs autumn approaches, the days get shorter and the nights get longer. Trees perceive these changes as a signal to prepare for winter. When the days become short and the temperature drops, the tree begins to shut down its food-making process.\n\n### 3. The Breakdown\nThe tree stops producing new chlorophyll and begins to break down the existing chlorophyll in the leaves. As the green chlorophyll fades away, the other pigments\u2014which were present in the leaf all summer but hidden by the intense green\u2014begin to show through.\n\n### 4. The \"Hidden\" Colors\nThe colors we see in autumn are actually pigments that have been there the whole time:\n*   **Carotenoids:** These produce **yellows and oranges**. These are the same pigments found in carrots and corn. They are always present in the leaf, but they are masked by the green chlorophyll during the summer.\n*   **Anthocyanins:** These produce **reds and purples**. Unlike carotenoids, these are often produced *only* in the autumn. As the leaf stops producing food, some sugars get trapped in the leaf. The breakdown of these sugars in the presence of bright sunlight creates anthocyanins.\n\n### 5. Why do they fall off?\nOnce the chlorophyll is gone, the tree forms a layer of \"cork\" cells where the leaf stem meets the branch. This layer acts like a seal, cutting off the flow of water and nutrients to the leaf. Eventually, the leaf dries up and falls off, which helps the tree conserve energy and moisture during the harsh winter months when it wouldn't be able to support the leaves anyway.\n\n***\n\n### Why do some years have brighter colors than others?\nThe intensity of the color depends on the weather:\n*   **The best autumn colors** happen when there are warm, sunny days and cool (but not freezing) nights. The sunny days help produce sugars (which create reds), and the cool nights prevent the sugars from moving out of the leaves.\n*   **Dull autumn colors** can occur if there is a long period of cloudy, rainy weather, which limits the production of sugar and slows down the chemical changes in the leaf."
+            "content": "The change in leaf color during autumn is a fascinating biological process triggered by the changing environment. It is essentially a \"shutdown\" sequence that prepares trees for winter.\n\nHere is the step-by-step breakdown of why it happens:\n\n### 1. The Role of Chlorophyll\nDuring spring and summer, leaves act as food factories. They are filled with **chlorophyll**, the pigment that captures sunlight to perform photosynthesis. Chlorophyll is green, and because trees produce it in such high quantities, it masks all other pigments in the leaf.\n\n### 2. The Trigger: Less Daylight\nAs autumn approaches, the days get shorter and the nights get longer. Trees are highly sensitive to these changes in light. When the days shorten, the tree receives a signal that winter is coming. It begins to prepare for the cold by slowing down and eventually stopping its food-making process.\n\n### 3. The Breakdown\nAs the tree prepares for winter, it stops producing new chlorophyll. The existing chlorophyll begins to break down and fade away. As the green color disappears, the other pigments that have been hidden underneath all summer are finally revealed.\n\n### 4. The Colors Revealed\nThe colors you see in autumn have been in the leaf all along, just hidden by the green:\n*   **Carotenoids (Yellows and Oranges):** These pigments are responsible for the bright yellow of birch leaves and the orange of sugar maples. They are also responsible for the color of carrots and corn.\n*   **Anthocyanins (Reds and Purples):** Unlike yellow and orange pigments, these are not present in the leaf all summer. They are actually produced in the autumn as the leaf begins to close off. When sugars become trapped in the leaf as it prepares to drop, they react with sunlight to create these vibrant red and purple hues.\n\n### 5. Why do they fall off?\nOnce the tree stops producing chlorophyll, it forms a layer of cells called the **abscission layer** at the base of the leaf stem. This layer acts like a cork, cutting off the flow of water and nutrients to the leaf. Eventually, the connection becomes so weak that a gust of wind or the weight of the leaf itself causes it to break off and drift to the ground.\n\n### Summary: Why bother changing color?\nIt is a survival mechanism. If a tree kept its broad, thin leaves during winter, the water inside them would freeze, and the leaves would be damaged. Furthermore, the tree would lose precious water through the leaves when the ground is frozen and the roots can\u2019t pull up more moisture. By dropping their leaves, trees go dormant, conserving energy and water to survive the harsh winter months."
           }
         ],
-        "total_time_ms": 23158.45
+        "total_time_ms": 23690.34
       },
       "comparison": {
         "best_single_model": "mistral-small",
         "best_single_model_score": 1.0,
         "fused_response_scores": {
-          "request_id": "score_47209d1d562b",
+          "request_id": "score_212ac72c8bec",
           "query": "Why do leaves change color in autumn?",
-          "response": "Leaves change color in autumn due to the breakdown of chlorophyll, the green pigment responsible for photosynthesis. As daylight decreases and temperatures drop, trees prepare for winter by slowing down photosynthesis. Chlorophyll breaks down, revealing other pigments that were present but masked during the growing season:\n\n1. **Carotenoids** (yellow, orange) \u2013 Present year-round but become visible as chlorophyll fades.\n2. **Anthocyanins** (red, purple) \u2013 Produced in some trees (like maples) in response to sunlight and excess sugars trapped in leaves.\n\nOther factors, such as weather conditions and tree species, influence the vibrancy and timing of fall colors.\n\n### Additional Insights\n* Chlorophyll is the chemical that allows plants to perform photosynthesis\u2014turning sunlight into food (glucose).\n* Because the plant is actively producing chlorophyll all summer, the green color is dominant.\n\n### 2.\n* The Trigger: Less Sunlight\nAs autumn approaches, the days get shorter and the nights get longer.\n* Trees perceive these changes as a signal to prepare for winter.\n* They become visible as the chlorophyll content decreases.\n2.\n* They are responsible for the red, purple, and crimson colors of some leaves.\n3.\n* **Betalains**: These are pigments that are responsible for the red and yellow colors of some leaves, particularly in beets and certain trees like the sugar maple.\n\n**How does the color change occur?**\n\nAs the trees stop producing chlorophyll and start to seal off the connections between the leaves and the rest of the tree, the following process occurs:\n\n1.\n* The carotenoids and anthocyanins become more prominent, producing the characteristic autumn colors.\n3.",
+          "response": "Leaves change color in autumn due to the breakdown of chlorophyll, the green pigment responsible for photosynthesis. As days shorten and temperatures drop, chlorophyll production slows and eventually stops. This reveals other pigments that were present but masked by chlorophyll:\n\n1. **Carotenoids** (yellows and oranges) \u2013 These pigments are present in leaves all year but become visible when chlorophyll fades.\n2. **Anthocyanins** (reds and purples) \u2013 These pigments are produced in some leaves in response to bright light and excess sugars trapped in the leaves as photosynthesis declines.\n\nThe vibrant fall foliage is a result of these pigments being unmasked and, in some cases, newly produced.\n\n### Additional Insights\n* It is essentially a \"shutdown\" sequence that prepares trees for winter.\n\nHere is the step-by-step breakdown of why it happens:\n\n### 1.\n* The Role of Chlorophyll\nDuring spring and summer, leaves act as food factories.\n* Chlorophyll is green, and because trees produce it in such high quantities, it masks all other pigments in the leaf.\n\n### 2.\n* Trees are highly sensitive to these changes in light.\n* As the days get shorter, the trees prepare for the winter by slowing down their food-making process, and the production of chlorophyll decreases.\n\n**What happens to the chlorophyll?**\n\nAs the chlorophyll content decreases, the hidden pigments in the leaf become visible.\n* **Betalains**: These are responsible for the red and purple colors in some plants, like beets and bougainvillea.\n\n**The color-changing process**\n\nAs the chlorophyll content decreases, the carotenoids and anthocyanins become more visible, creating the characteristic autumn colors:\n\n* Yellow: Carotenoids are responsible for the yellow color, which is often seen in birch, beech, and aspen trees.\n* Orange: A combination of carotenoids and anthocyanins produces the orange color, commonly seen in sugar maples and hickories.\n* Red: Anthocyanins produce the red color, often seen in maple, oak, and sweetgum trees.\n* Brown: The combination of all pigments, along with the breakdown of cellular structures, can produce a brown color, which is often seen in oak and beech trees.\n\n**Other factors that influence color change**\n\nWeather conditions, soil moisture, and tree health can also impact the intensity and duration of the color change.",
           "task_type": "factual",
           "scores": {
             "model_id": "manual_test_case",
             "relevance": 1.0,
             "coherence": 1.0,
             "completeness": 1.0,
-            "consistency": 0.8,
-            "weighted_score": 0.97,
+            "consistency": 0.4,
+            "weighted_score": 0.91,
             "confidence_tier": "HIGH",
             "latency_ms": 0.0,
             "success": true,
@@ -867,7 +867,7 @@
               "hedge_count": 0,
               "numerical_conflict_count": 0
             },
-            "content": "Leaves change color in autumn due to the breakdown of chlorophyll, the green pigment responsible for photosynthesis. As daylight decreases and temperatures drop, trees prepare for winter by slowing down photosynthesis. Chlorophyll breaks down, revealing other pigments that were present but masked during the growing season:\n\n1. **Carotenoids** (yellow, orange) \u2013 Present year-round but become visible as chlorophyll fades.\n2. **Anthocyanins** (red, purple) \u2013 Produced in some trees (like maples) in response to sunlight and excess sugars trapped in leaves.\n\nOther factors, such as weather conditions and tree species, influence the vibrancy and timing of fall colors.\n\n### Additional Insights\n* Chlorophyll is the chemical that allows plants to perform photosynthesis\u2014turning sunlight into food (glucose).\n* Because the plant is actively producing chlorophyll all summer, the green color is dominant.\n\n### 2.\n* The Trigger: Less Sunlight\nAs autumn approaches, the days get shorter and the nights get longer.\n* Trees perceive these changes as a signal to prepare for winter.\n* They become visible as the chlorophyll content decreases.\n2.\n* They are responsible for the red, purple, and crimson colors of some leaves.\n3.\n* **Betalains**: These are pigments that are responsible for the red and yellow colors of some leaves, particularly in beets and certain trees like the sugar maple.\n\n**How does the color change occur?**\n\nAs the trees stop producing chlorophyll and start to seal off the connections between the leaves and the rest of the tree, the following process occurs:\n\n1.\n* The carotenoids and anthocyanins become more prominent, producing the characteristic autumn colors.\n3."
+            "content": "Leaves change color in autumn due to the breakdown of chlorophyll, the green pigment responsible for photosynthesis. As days shorten and temperatures drop, chlorophyll production slows and eventually stops. This reveals other pigments that were present but masked by chlorophyll:\n\n1. **Carotenoids** (yellows and oranges) \u2013 These pigments are present in leaves all year but become visible when chlorophyll fades.\n2. **Anthocyanins** (reds and purples) \u2013 These pigments are produced in some leaves in response to bright light and excess sugars trapped in the leaves as photosynthesis declines.\n\nThe vibrant fall foliage is a result of these pigments being unmasked and, in some cases, newly produced.\n\n### Additional Insights\n* It is essentially a \"shutdown\" sequence that prepares trees for winter.\n\nHere is the step-by-step breakdown of why it happens:\n\n### 1.\n* The Role of Chlorophyll\nDuring spring and summer, leaves act as food factories.\n* Chlorophyll is green, and because trees produce it in such high quantities, it masks all other pigments in the leaf.\n\n### 2.\n* Trees are highly sensitive to these changes in light.\n* As the days get shorter, the trees prepare for the winter by slowing down their food-making process, and the production of chlorophyll decreases.\n\n**What happens to the chlorophyll?**\n\nAs the chlorophyll content decreases, the hidden pigments in the leaf become visible.\n* **Betalains**: These are responsible for the red and purple colors in some plants, like beets and bougainvillea.\n\n**The color-changing process**\n\nAs the chlorophyll content decreases, the carotenoids and anthocyanins become more visible, creating the characteristic autumn colors:\n\n* Yellow: Carotenoids are responsible for the yellow color, which is often seen in birch, beech, and aspen trees.\n* Orange: A combination of carotenoids and anthocyanins produces the orange color, commonly seen in sugar maples and hickories.\n* Red: Anthocyanins produce the red color, often seen in maple, oak, and sweetgum trees.\n* Brown: The combination of all pigments, along with the breakdown of cellular structures, can produce a brown color, which is often seen in oak and beech trees.\n\n**Other factors that influence color change**\n\nWeather conditions, soil moisture, and tree health can also impact the intensity and duration of the color change."
           }
         }
       }

@@ -605,6 +605,13 @@ def check_format_constraint(query: str, response: str) -> tuple[float, list[str]
 
     for kind, required in requirements:
         actual = _COUNTERS[kind](response)
+        
+        # --- TEMPORARY LOGS ADDED HERE ---
+        print(f"\n[K-LOG] Constraint Detected: {required} {kind}")
+        print(f"[K-LOG] Measured Actual: {actual} {kind}")
+        print(f"[K-LOG] Raw Text Processed: {repr(response)}")
+        # ---------------------------------
+
         tolerance = _FORMAT_TOLERANCE.get(kind, 0)
         diff = max(0, abs(actual - required) - tolerance)
 
@@ -765,9 +772,18 @@ def _nli_contradiction_penalty(sentences: list[str]) -> float:
         NLI_PENALTY   = 0.20
         MAX_PENALTY   = 0.60
 
-        for score_row in scores:
+        for i, score_row in enumerate(scores):
             probs           = softmax(score_row)
             contradiction_p = float(probs[0])   # index 0 = contradiction
+            
+            # --- TEMPORARY S-LOGS ---
+            if contradiction_p > 0.50:  # Log anything remotely suspicious
+                print(f"\n[S-LOG] Contradiction Flagged!")
+                print(f"        Score: {contradiction_p:.4f} (Threshold: {NLI_THRESHOLD})")
+                print(f"        Sent A: {pairs[i][0]}")
+                print(f"        Sent B: {pairs[i][1]}")
+            # ------------------------
+
             if contradiction_p > NLI_THRESHOLD:
                 penalty += NLI_PENALTY
                 if penalty >= MAX_PENALTY:

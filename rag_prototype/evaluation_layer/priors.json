@@ -1,7 +1,7 @@
 {
   "groq-llama3": {
     "factual": {
-      "prior": 0.2876609135404661,
+      "prior": 0.26153813788706515,
       "update_history": [
         {
           "query_id": "req_6bba439050ea",
@@ -44,11 +44,39 @@
           "old_prior": 0.296,
           "eval_score": 0.8404,
           "new_prior": 0.2877
+        },
+        {
+          "query_id": "req_53be0657c9c3",
+          "timestamp": "2026-07-26T23:48:25.712022",
+          "old_prior": 0.2877,
+          "eval_score": 0.8404,
+          "new_prior": 0.281
+        },
+        {
+          "query_id": "req_f705e064846e",
+          "timestamp": "2026-07-26T23:49:54.738802",
+          "old_prior": 0.281,
+          "eval_score": 0.8404,
+          "new_prior": 0.2734
+        },
+        {
+          "query_id": "req_416c7db9fef4",
+          "timestamp": "2026-07-27T00:03:25.356235",
+          "old_prior": 0.2734,
+          "eval_score": 0.8404,
+          "new_prior": 0.2672
+        },
+        {
+          "query_id": "req_91f1ec5d63fb",
+          "timestamp": "2026-07-27T00:03:43.064276",
+          "old_prior": 0.2672,
+          "eval_score": 0.8404,
+          "new_prior": 0.2615
         }
       ]
     },
     "summary": {
-      "prior": 0.2996140067358248,
+      "prior": 0.2882631881576659,
       "update_history": [
         {
           "query_id": "req_0ce5f7401b94",
@@ -91,11 +119,39 @@
           "old_prior": 0.3058,
           "eval_score": 0.8535,
           "new_prior": 0.2996
+        },
+        {
+          "query_id": "req_ed81ab3770bf",
+          "timestamp": "2026-07-26T23:48:27.381437",
+          "old_prior": 0.2996,
+          "eval_score": 0.8527,
+          "new_prior": 0.295
+        },
+        {
+          "query_id": "req_bb2b993db45c",
+          "timestamp": "2026-07-26T23:49:56.978722",
+          "old_prior": 0.295,
+          "eval_score": 0.8535,
+          "new_prior": 0.2918
+        },
+        {
+          "query_id": "req_feea2a7aa8d8",
+          "timestamp": "2026-07-27T00:05:19.139013",
+          "old_prior": 0.2918,
+          "eval_score": 0.8535,
+          "new_prior": 0.2897
+        },
+        {
+          "query_id": "req_8e42eb47cd24",
+          "timestamp": "2026-07-27T00:05:29.379293",
+          "old_prior": 0.2897,
+          "eval_score": 0.8511,
+          "new_prior": 0.2883
         }
       ]
     },
     "creative": {
-      "prior": 0.22989585271351964,
+      "prior": 0.23954683170325392,
       "update_history": [
         {
           "query_id": "req_e84200dbfcd0",
@@ -180,11 +236,53 @@
           "old_prior": 0.2221,
           "eval_score": 0.8535,
           "new_prior": 0.2299
+        },
+        {
+          "query_id": "req_0a2763b48616",
+          "timestamp": "2026-07-26T23:48:43.055933",
+          "old_prior": 0.2299,
+          "eval_score": 0.8725,
+          "new_prior": 0.2263
+        },
+        {
+          "query_id": "req_77be82a83044",
+          "timestamp": "2026-07-26T23:49:03.432788",
+          "old_prior": 0.2263,
+          "eval_score": 0.8548,
+          "new_prior": 0.2285
+        },
+        {
+          "query_id": "req_fa9b02273f30",
+          "timestamp": "2026-07-26T23:50:10.803562",
+          "old_prior": 0.2285,
+          "eval_score": 1.0,
+          "new_prior": 0.231
+        },
+        {
+          "query_id": "req_8af5ec90eefa",
+          "timestamp": "2026-07-26T23:50:30.203716",
+          "old_prior": 0.231,
+          "eval_score": 0.8548,
+          "new_prior": 0.2425
+        },
+        {
+          "query_id": "req_2d2a757e3505",
+          "timestamp": "2026-07-27T00:10:48.825526",
+          "old_prior": 0.2425,
+          "eval_score": 0.8605,
+          "new_prior": 0.2408
+        },
+        {
+          "query_id": "req_e12acab3feeb",
+          "timestamp": "2026-07-27T00:25:37.225691",
+          "old_prior": 0.2408,
+          "eval_score": 0.8725,
+          "new_prior": 0.2395
         }
       ]
     },
     "reasoning": {
-      "prior": 0.2971303041491117,
+      "prior": 0.28379966348140323,
       "update_history": [
         {
           "query_id": "req_a181802632b6",
@@ -227,13 +325,27 @@
           "old_prior": 0.3044,
           "eval_score": 0.97,
           "new_prior": 0.2971
+        },
+        {
+          "query_id": "req_cec08e70feed",
+          "timestamp": "2026-07-26T23:49:23.486248",
+          "old_prior": 0.2971,
+          "eval_score": 1.0,
+          "new_prior": 0.2924
+        },
+        {
+          "query_id": "req_61dc4e7dbdba",
+          "timestamp": "2026-07-26T23:50:46.139365",
+          "old_prior": 0.2924,
+          "eval_score": 0.88,
+          "new_prior": 0.2838
         }
       ]
     }
   },
   "mistral-small": {
     "factual": {
-      "prior": 0.4297412553328207,
+      "prior": 0.4160448938446058,
       "update_history": [
         {
           "query_id": "req_6bba439050ea",
@@ -276,11 +388,39 @@
           "old_prior": 0.4422,
           "eval_score": 0.8404,
           "new_prior": 0.4297
+        },
+        {
+          "query_id": "req_53be0657c9c3",
+          "timestamp": "2026-07-26T23:48:25.712037",
+          "old_prior": 0.4297,
+          "eval_score": 0.8404,
+          "new_prior": 0.4198
+        },
+        {
+          "query_id": "req_f705e064846e",
+          "timestamp": "2026-07-26T23:49:54.738774",
+          "old_prior": 0.4198,
+          "eval_score": 0.9436,
+          "new_prior": 0.4173
+        },
+        {
+          "query_id": "req_416c7db9fef4",
+          "timestamp": "2026-07-27T00:03:25.356252",
+          "old_prior": 0.4173,
+          "eval_score": 0.9268,
+          "new_prior": 0.4156
+        },
+        {
+          "query_id": "req_91f1ec5d63fb",
+          "timestamp": "2026-07-27T00:03:43.064292",
+          "old_prior": 0.4156,
+          "eval_score": 0.9462,
+          "new_prior": 0.416
         }
       ]
     },
     "summary": {
-      "prior": 0.44349051580704935,
+      "prior": 0.42607204167505475,
       "update_history": [
         {
           "query_id": "req_0ce5f7401b94",
@@ -323,11 +463,39 @@
           "old_prior": 0.4529,
           "eval_score": 0.8503,
           "new_prior": 0.4435
+        },
+        {
+          "query_id": "req_ed81ab3770bf",
+          "timestamp": "2026-07-26T23:48:27.381456",
+          "old_prior": 0.4435,
+          "eval_score": 0.8519,
+          "new_prior": 0.4366
+        },
+        {
+          "query_id": "req_bb2b993db45c",
+          "timestamp": "2026-07-26T23:49:56.978738",
+          "old_prior": 0.4366,
+          "eval_score": 0.8519,
+          "new_prior": 0.4317
+        },
+        {
+          "query_id": "req_feea2a7aa8d8",
+          "timestamp": "2026-07-27T00:05:19.139030",
+          "old_prior": 0.4317,
+          "eval_score": 0.8503,
+          "new_prior": 0.4282
+        },
+        {
+          "query_id": "req_8e42eb47cd24",
+          "timestamp": "2026-07-27T00:05:29.379308",
+          "old_prior": 0.4282,
+          "eval_score": 0.8503,
+          "new_prior": 0.4261
         }
       ]
     },
     "creative": {
-      "prior": 0.45645616665778715,
+      "prior": 0.4636385161464342,
       "update_history": [
         {
           "query_id": "req_e84200dbfcd0",
@@ -412,11 +580,53 @@
           "old_prior": 0.4651,
           "eval_score": 0.6585,
           "new_prior": 0.4565
+        },
+        {
+          "query_id": "req_0a2763b48616",
+          "timestamp": "2026-07-26T23:48:43.055951",
+          "old_prior": 0.4565,
+          "eval_score": 0.97,
+          "new_prior": 0.4587
+        },
+        {
+          "query_id": "req_77be82a83044",
+          "timestamp": "2026-07-26T23:49:03.432809",
+          "old_prior": 0.4587,
+          "eval_score": 0.8574,
+          "new_prior": 0.4635
+        },
+        {
+          "query_id": "req_fa9b02273f30",
+          "timestamp": "2026-07-26T23:50:10.803581",
+          "old_prior": 0.4635,
+          "eval_score": 1.0,
+          "new_prior": 0.4686
+        },
+        {
+          "query_id": "req_8af5ec90eefa",
+          "timestamp": "2026-07-26T23:50:30.203733",
+          "old_prior": 0.4686,
+          "eval_score": 0.6041,
+          "new_prior": 0.4576
+        },
+        {
+          "query_id": "req_2d2a757e3505",
+          "timestamp": "2026-07-27T00:10:48.825569",
+          "old_prior": 0.4576,
+          "eval_score": 0.8881,
+          "new_prior": 0.4572
+        },
+        {
+          "query_id": "req_e12acab3feeb",
+          "timestamp": "2026-07-27T00:25:37.225716",
+          "old_prior": 0.4572,
+          "eval_score": 0.9593,
+          "new_prior": 0.4636
         }
       ]
     },
     "reasoning": {
-      "prior": 0.4303465234110947,
+      "prior": 0.41558093433450877,
       "update_history": [
         {
           "query_id": "req_a181802632b6",
@@ -459,13 +669,27 @@
           "old_prior": 0.4384,
           "eval_score": 1.0,
           "new_prior": 0.4303
+        },
+        {
+          "query_id": "req_cec08e70feed",
+          "timestamp": "2026-07-26T23:49:23.486277",
+          "old_prior": 0.4303,
+          "eval_score": 0.9325,
+          "new_prior": 0.4181
+        },
+        {
+          "query_id": "req_61dc4e7dbdba",
+          "timestamp": "2026-07-26T23:50:46.139347",
+          "old_prior": 0.4181,
+          "eval_score": 1.0,
+          "new_prior": 0.4156
         }
       ]
     }
   },
   "gemini-3.1-flash-lite": {
     "factual": {
-      "prior": 0.41366983112671324,
+      "prior": 0.37610405946832903,
       "update_history": [
         {
           "query_id": "req_6bba439050ea",
@@ -508,11 +732,39 @@
           "old_prior": 0.4257,
           "eval_score": 0.8404,
           "new_prior": 0.4137
+        },
+        {
+          "query_id": "req_53be0657c9c3",
+          "timestamp": "2026-07-26T23:48:25.712047",
+          "old_prior": 0.4137,
+          "eval_score": 0.8404,
+          "new_prior": 0.4041
+        },
+        {
+          "query_id": "req_f705e064846e",
+          "timestamp": "2026-07-26T23:49:54.738790",
+          "old_prior": 0.4041,
+          "eval_score": 0.8404,
+          "new_prior": 0.3932
+        },
+        {
+          "query_id": "req_416c7db9fef4",
+          "timestamp": "2026-07-27T00:03:25.356264",
+          "old_prior": 0.3932,
+          "eval_score": 0.8404,
+          "new_prior": 0.3843
+        },
+        {
+          "query_id": "req_91f1ec5d63fb",
+          "timestamp": "2026-07-27T00:03:43.064303",
+          "old_prior": 0.3843,
+          "eval_score": 0.8404,
+          "new_prior": 0.3761
         }
       ]
     },
     "summary": {
-      "prior": 0.3879674774571259,
+      "prior": 0.3393518613672794,
       "update_history": [
         {
           "query_id": "req_0ce5f7401b94",
@@ -555,11 +807,39 @@
           "old_prior": 0.4051,
           "eval_score": 0.7487,
           "new_prior": 0.388
+        },
+        {
+          "query_id": "req_ed81ab3770bf",
+          "timestamp": "2026-07-26T23:48:27.381469",
+          "old_prior": 0.388,
+          "eval_score": 0.7487,
+          "new_prior": 0.3733
+        },
+        {
+          "query_id": "req_bb2b993db45c",
+          "timestamp": "2026-07-26T23:49:56.978748",
+          "old_prior": 0.3733,
+          "eval_score": 0.7479,
+          "new_prior": 0.3604
+        },
+        {
+          "query_id": "req_feea2a7aa8d8",
+          "timestamp": "2026-07-27T00:05:19.139042",
+          "old_prior": 0.3604,
+          "eval_score": 0.7479,
+          "new_prior": 0.3492
+        },
+        {
+          "query_id": "req_8e42eb47cd24",
+          "timestamp": "2026-07-27T00:05:29.379318",
+          "old_prior": 0.3492,
+          "eval_score": 0.7487,
+          "new_prior": 0.3394
         }
       ]
     },
     "creative": {
-      "prior": 0.3480077189966932,
+      "prior": 0.30582185140505286,
       "update_history": [
         {
           "query_id": "req_e84200dbfcd0",
@@ -644,11 +924,53 @@
           "old_prior": 0.3557,
           "eval_score": 0.6473,
           "new_prior": 0.348
+        },
+        {
+          "query_id": "req_0a2763b48616",
+          "timestamp": "2026-07-26T23:48:43.055964",
+          "old_prior": 0.348,
+          "eval_score": 0.8725,
+          "new_prior": 0.3425
+        },
+        {
+          "query_id": "req_77be82a83044",
+          "timestamp": "2026-07-26T23:49:03.432821",
+          "old_prior": 0.3425,
+          "eval_score": 0.6664,
+          "new_prior": 0.33
+        },
+        {
+          "query_id": "req_fa9b02273f30",
+          "timestamp": "2026-07-26T23:50:10.803593",
+          "old_prior": 0.33,
+          "eval_score": 0.775,
+          "new_prior": 0.318
+        },
+        {
+          "query_id": "req_8af5ec90eefa",
+          "timestamp": "2026-07-26T23:50:30.203744",
+          "old_prior": 0.318,
+          "eval_score": 0.6407,
+          "new_prior": 0.314
+        },
+        {
+          "query_id": "req_2d2a757e3505",
+          "timestamp": "2026-07-27T00:10:48.825553",
+          "old_prior": 0.314,
+          "eval_score": 0.8826,
+          "new_prior": 0.3133
+        },
+        {
+          "query_id": "req_e12acab3feeb",
+          "timestamp": "2026-07-27T00:25:37.225730",
+          "old_prior": 0.3133,
+          "eval_score": 0.7891,
+          "new_prior": 0.3058
         }
       ]
     },
     "reasoning": {
-      "prior": 0.4035951724397936,
+      "prior": 0.384505482184088,
       "update_history": [
         {
           "query_id": "req_a181802632b6",
@@ -691,6 +1013,20 @@
           "old_prior": 0.4211,
           "eval_score": 0.8725,
           "new_prior": 0.4036
+        },
+        {
+          "query_id": "req_cec08e70feed",
+          "timestamp": "2026-07-26T23:49:23.486265",
+          "old_prior": 0.4036,
+          "eval_score": 0.9625,
+          "new_prior": 0.3944
+        },
+        {
+          "query_id": "req_61dc4e7dbdba",
+          "timestamp": "2026-07-26T23:50:46.139377",
+          "old_prior": 0.3944,
+          "eval_score": 0.9025,
+          "new_prior": 0.3845
         }
       ]
     }
