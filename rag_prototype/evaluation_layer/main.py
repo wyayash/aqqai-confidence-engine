@@ -88,9 +88,15 @@ def shutdown_event():
 # REQUEST / RESPONSE SCHEMAS
 # ──────────────────────────────────────────────────────────
 
-class QueryRequest(BaseModel):
-    query:   str
-    user_id: Optional[str] = "anonymous"
+class QueryResponse(BaseModel):
+    request_id:      str
+    query:           str
+    task_type:       str
+    final_response:  str
+    fusion_weights:  dict
+    agreement_score: float   # <--- 1. ADD THIS LINE
+    model_responses: list[dict]
+    total_time_ms:   float
 
 
 class QueryResponse(BaseModel):
@@ -136,7 +142,7 @@ def _call_model(adapter: BaseModelAdapter, query: str) -> ModelResponse:
         )
 
 
-def orchestrate(query: str, request_id: str) -> tuple[list[ScoredResponse], str, str, dict, float]:
+def orchestrate(query: str, request_id: str) -> tuple[list[ScoredResponse], str, str, dict, float, float]:
     """
     Full orchestration flow:
       1. Task Analyzer classifies the query
@@ -206,9 +212,10 @@ def orchestrate(query: str, request_id: str) -> tuple[list[ScoredResponse], str,
     )
 
     fusion_weights = bayes_result["weights"]
+    agreement_score = float(bayes_result.get('agreement_score', 0.0))  # <--- 2. ADD THIS LINE
     log.debug(
         f"[{request_id}] Fusion weights | {fusion_weights} | "
-        f"agreement={bayes_result.get('agreement_score')}"
+        f"agreement={agreement_score}"
     )
 
     # ── Step 6: Fuse ──────────────────────────────────────
@@ -238,7 +245,7 @@ def orchestrate(query: str, request_id: str) -> tuple[list[ScoredResponse], str,
         f"total={total_ms}ms"
     )
 
-    return scored, final_response, task_type, fusion_weights, total_ms
+    return scored, final_response, task_type, fusion_weights, total_ms, agreement_score
 
 
 # ──────────────────────────────────────────────────────────
@@ -251,7 +258,7 @@ def submit_query(body: QueryRequest):
     log.info(f"[{request_id}] Incoming query | user={body.user_id} | query={body.query[:80]!r}")
 
     try:
-        scored, final_response, task_type, fusion_weights, total_ms = orchestrate(
+        scored, final_response, task_type, fusion_weights, total_ms, agreement_score = orchestrate(
             query      = body.query,
             request_id = request_id,
         )
@@ -276,6 +283,7 @@ def submit_query(body: QueryRequest):
         task_type       = task_type,
         final_response  = final_response,
         fusion_weights  = fusion_weights,
+        agreement_score = agreement_score,
         model_responses = all_responses,
         total_time_ms   = total_ms,
     )
@@ -366,11 +374,10 @@ def get_evaluation(request_id: str):
         "task_type":       data["task_type"],
         "final_response":  data["final_response"],
         "fusion_weights":  data["fusion_weights"],
+        "agreement_score": data.get("agreement_score", 0.0), # <--- 4. ADD THIS LINE
         "model_responses": data["scored"],
         "total_time_ms":   data["total_ms"],
     }
-
-
 @app.get("/health")
 def health():
     log.debug("Health check called")

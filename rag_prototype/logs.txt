@@ -1,0 +1,23 @@
+RAW LOG OUTPUTS
+
+investigation 1: p4 non deterministic logs
+[K-LOG] Constraint Detected: 3 lines
+[K-LOG] Measured Actual: 3 lines
+[K-LOG] Raw Text Processed: 'Waves crash in endless, salty song,\nBlue horizons stretch so wide and long,\nThe ocean hums its ancient tune.'
+Run 1 | Poem 1 Completeness (K) Score: 0.7331
+
+[K-LOG] Constraint Detected: 3 lines
+[K-LOG] Measured Actual: 3 lines
+[K-LOG] Raw Text Processed: "Waves whisper secrets to the shore,\nBlue horizons, forevermore,\nTides dance with the moon's soft glow."
+Run 1 | Poem 2 Completeness (K) Score: 0.07
+
+investigation 2: s score logs
+[S-LOG] Contradiction Flagged!
+        Score: 0.9885 (Threshold: 0.9)
+        Sent A: Here’s a step-by-step breakdown of what happens: 1.
+        Sent B: Chlorophyll Breakdown (The Green Fade).
+
+[S-LOG] Contradiction Flagged!
+        Score: 0.7021 (Threshold: 0.9)
+        Sent A: Chlorophyll is the pigment responsible for the green color in leaves, and it plays a crucial role in photosynthesis.
+        Sent B: As days shorten and temperatures drop, plants slow down chlorophyll production and begin breaking it down.

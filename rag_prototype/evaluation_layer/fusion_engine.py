@@ -61,7 +61,7 @@ def _clean_complete_sentences(text: str) -> str:
     match = re.search(r"^(.*[.!?])", text, re.DOTALL)
     if match:
         return match.group(1).strip()
-    return text
+    return ""  # <--- Changed this so it drops the fragment if no punctuation exists
 
 def _normalize_query(query: str) -> str:
     q = query.lower()
@@ -223,7 +223,7 @@ def blend_responses(scored_responses: dict, weights: dict) -> str:
                     fused_embeddings.append(candidate_emb[0].tolist())
                     additions += 1
                     
-    added_sentences = fused_sentences[base_sentence_count:]
+    added_sentences = [cleaned for s in fused_sentences[base_sentence_count:] if (cleaned := _clean_complete_sentences(s))]
     
     if added_sentences:
         insights = "\n* " + "\n* ".join(added_sentences)

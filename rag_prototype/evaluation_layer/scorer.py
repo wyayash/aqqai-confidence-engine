@@ -819,14 +819,16 @@ def score_consistency(response: str) -> float:
 
     score     = 1.0
     lower     = response.lower()
-    sentences = _split_sentences(response)
+    #Strip markdown headers and list markers (e.g., "1.", "-", "###") 
+    clean_response = re.sub(r"(?m)^\s*(?:#+\s*)?(?:[-*•]|\d+[.)])\s+", "", response)
+    sentences = _split_sentences(clean_response)
 
-    # ── Primary: NLI contradiction check ─────────────────
+    # Primary: NLI contradiction check 
     if _NLI_AVAILABLE and _NLI_MODEL is not None:
         score -= _nli_contradiction_penalty(sentences)
 
     else:
-        # ── Fallback: keyword contradiction pairs ─────────
+        # ── Fallback: keyword contradiction pairs 
         for w1, w2 in CONTRADICTION_PAIRS:
             if re.search(rf"\b{w1}\b", lower) and re.search(rf"\b{w2}\b", lower):
                 score -= 0.08
