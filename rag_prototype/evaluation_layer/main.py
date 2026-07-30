@@ -42,6 +42,7 @@ from scorer import HeuristicScorer, ModelResponse, ScoredResponse
 from fusion_engine import fuse_responses
 from task_analyzer import analyze_task
 from pipeline_logger import log
+from skill_selector_client import get_enriched_prompt_with_metadata, send_skill_feedback
 import bayesian_confidence_layer2 as bayesian
 
 # ──────────────────────────────────────────────────────────
@@ -88,15 +89,9 @@ def shutdown_event():
 # REQUEST / RESPONSE SCHEMAS
 # ──────────────────────────────────────────────────────────
 
-class QueryResponse(BaseModel):
-    request_id:      str
-    query:           str
-    task_type:       str
-    final_response:  str
-    fusion_weights:  dict
-    agreement_score: float   # <--- 1. ADD THIS LINE
-    model_responses: list[dict]
-    total_time_ms:   float
+class QueryRequest(BaseModel):
+    query:   str
+    user_id: Optional[str] = "anonymous"
 
 
 class QueryResponse(BaseModel):
@@ -105,6 +100,7 @@ class QueryResponse(BaseModel):
     task_type:       str
     final_response:  str
     fusion_weights:  dict
+    agreement_score: Optional[float] = None
     model_responses: list[dict]
     total_time_ms:   float
 
@@ -142,7 +138,7 @@ def _call_model(adapter: BaseModelAdapter, query: str) -> ModelResponse:
         )
 
 
-def orchestrate(query: str, request_id: str) -> tuple[list[ScoredResponse], str, str, dict, float, float]:
+def orchestrate(query: str, request_id: str) -> tuple[list[ScoredResponse], str, str, dict, float, Optional[float]]:
     """
     Full orchestration flow:
       1. Task Analyzer classifies the query
@@ -156,13 +152,20 @@ def orchestrate(query: str, request_id: str) -> tuple[list[ScoredResponse], str,
     # ── Step 1: Classify ──────────────────────────────────
     task_type = analyze_task(query)
     log.info(f"[{request_id}] Task classified | task_type={task_type} | query={query[:80]!r}")
+    
+    # ── NEW: Skill Selector enrichment (no-op unless SKILL_INJECTION=on) ──
+    # Only the text sent to the models changes. `query` itself is left
+    # untouched for scoring, fusion, and logging below — the response
+    # record should always reflect what the user actually typed.
+    
+    enriched_query, skill_used = get_enriched_prompt_with_metadata(query, task_type)
 
     # ── Step 2+3: Parallel model calls ───────────────────
     log.info(f"[{request_id}] Calling {len(ALL_ADAPTERS)} models in parallel")
     raw_responses: list[ModelResponse] = []
     with ThreadPoolExecutor(max_workers=len(ALL_ADAPTERS)) as pool:
         futures = {
-            pool.submit(_call_model, adapter, query): adapter.model_id
+            pool.submit(_call_model, adapter, enriched_query): adapter.model_id
             for adapter in ALL_ADAPTERS
         }
         for future in as_completed(futures):
@@ -212,7 +215,7 @@ def orchestrate(query: str, request_id: str) -> tuple[list[ScoredResponse], str,
     )
 
     fusion_weights = bayes_result["weights"]
-    agreement_score = float(bayes_result.get('agreement_score', 0.0))  # <--- 2. ADD THIS LINE
+    agreement_score = bayes_result.get("agreement_score")
     log.debug(
         f"[{request_id}] Fusion weights | {fusion_weights} | "
         f"agreement={agreement_score}"
@@ -233,6 +236,19 @@ def orchestrate(query: str, request_id: str) -> tuple[list[ScoredResponse], str,
     if not final_response:
         log.error(f"[{request_id}] Fusion produced empty response — all models failed")
         raise ValueError("All model responses failed — cannot produce fused response.")
+    
+    # ── NEW: fire-and-forget skill feedback (no-op unless SKILL_INJECTION=on) ──
+    # Uses the top-weighted model's RCKS score as the quality signal for
+    # whichever skill was injected for this query. Never blocks the response.
+    if scored:
+        top_model = max(fusion_weights, key=fusion_weights.get, default=None)
+        top_score = next((s.weighted_score for s in scored if s.model_id == top_model), None)
+        if top_score is not None:
+            send_skill_feedback(
+                skill_used=skill_used,
+                task_type=task_type,
+                final_rcks_score=top_score,
+            )
 
     bayesian.store.save()
 
@@ -269,12 +285,13 @@ def submit_query(body: QueryRequest):
     all_responses = [s.to_dict_with_content() for s in scored]
 
     store[request_id] = {
-        "query":          body.query,
-        "task_type":      task_type,
-        "scored":         all_responses,
-        "final_response": final_response,
-        "fusion_weights": fusion_weights,
-        "total_ms":       total_ms,
+        "query":           body.query,
+        "task_type":       task_type,
+        "scored":          all_responses,
+        "final_response":  final_response,
+        "fusion_weights":  fusion_weights,
+        "agreement_score": agreement_score,
+        "total_ms":        total_ms,
     }
 
     return QueryResponse(
@@ -374,10 +391,12 @@ def get_evaluation(request_id: str):
         "task_type":       data["task_type"],
         "final_response":  data["final_response"],
         "fusion_weights":  data["fusion_weights"],
-        "agreement_score": data.get("agreement_score", 0.0), # <--- 4. ADD THIS LINE
+        "agreement_score": data.get("agreement_score"),
         "model_responses": data["scored"],
         "total_time_ms":   data["total_ms"],
     }
+
+
 @app.get("/health")
 def health():
     log.debug("Health check called")
@@ -390,4 +409,4 @@ def health():
         "bayesian_engine": "active",
         "model_priors":    bayesian.store.priors,
         "version":         "4.0.0",
-    }   
+    }
