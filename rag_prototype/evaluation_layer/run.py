@@ -18,10 +18,10 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from adapters import ALL_ADAPTERS, BaseModelAdapter
 from scorer import HeuristicScorer, ModelResponse
-from fusion_engine import fuse_responses
+from fusion import fuse_responses
 from task_analyzer import analyze_task, analyze_task_detailed
 from pipeline_logger import log
-import bayesian_confidence_layer2
+import bayesian
 
 scorer = HeuristicScorer()
 os.makedirs("outputs", exist_ok=True)
@@ -111,8 +111,8 @@ def run_pipeline(query: str) -> dict:
         for s in scored
     }
 
-    bayes_result = bayesian_confidence_layer2.process_confidence_request(
-        store   = bayesian_confidence_layer2.store,
+    bayes_result = bayesian.process_confidence_request(
+        store   = bayesian.store,
         payload = {
             "task_type":   task_type,
             "eval_scores": eval_scores,
@@ -123,13 +123,13 @@ def run_pipeline(query: str) -> dict:
 
     updated_priors = bayes_result["updated_priors"]
     for model_id, new_prior in updated_priors.items():
-        history = bayesian_confidence_layer2.store.get_history(model_id, task_type)
+        history = bayesian.store.get_history(model_id, task_type)
         if history:
             old_prior = history[-1]["old_prior"]
             delta     = new_prior - old_prior
             direction = "↑" if delta > 0 else "↓" if delta < 0 else "→"
         else:
-            old_prior = bayesian_confidence_layer2.DEFAULT_PRIOR
+            old_prior = bayesian.DEFAULT_PRIOR
             delta     = 0.0
             direction = "→"
         print(
@@ -158,7 +158,7 @@ def run_pipeline(query: str) -> dict:
 
     total_ms = round((time.time() - start) * 1000, 2)
 
-    bayesian_confidence_layer2.store.save()
+    bayesian.store.save()
 
     log.info(
         f"[{request_id}] Pipeline complete | "
