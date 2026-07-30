@@ -36,12 +36,14 @@ print('Models ready') \
 # ── Copy source code ──────────────────────────────────────
 COPY adapters.py .
 COPY scorer.py .
-COPY fusion.py .
+COPY fusion_engine.py .
 COPY task_analyzer.py .
-COPY bayesian.py .
+COPY bayesian_confidence_layer2.py .
 COPY pipeline_logger.py .
 COPY main.py .
 COPY run.py .
+COPY model_registry.py .
+COPY skill_selector_client.py .
 
 # ── Runtime directories ───────────────────────────────────
 # logs/pipeline.log (Loguru) and outputs/ (--save results) need to exist.
