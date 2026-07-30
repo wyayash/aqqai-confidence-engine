@@ -123,11 +123,24 @@ def contains_code_block(response: str) -> bool:
            or response.strip().startswith('import ')
 
 def blend_non_code_sections(scored_responses: dict, weights: dict) -> str:
-    """Strips out code blocks and blends only the remaining text explanations."""
+    """
+    Strips out the PRIMARY code block only, and blends the rest.
+
+    FIX (Vineet's baseline.json finding): the old version stripped ALL
+    ``` fences from every model's text via a single regex.sub, which also
+    deleted secondary/example fences (e.g. under an "### Example Usage"
+    header). That left orphaned headers with nothing under them, since
+    their content had already been stripped here (and separately dumped,
+    stacked with every other fence, at the top by fuse_responses()).
+    Only stripping the FIRST fence per model — the primary implementation,
+    which is the one already pulled out to the top separately — leaves
+    any secondary/example fences intact in the explanation text, attached
+    to their own headers where they belong.
+    """
     text_only_responses = {}
     for model, text in scored_responses.items():
-        # Remove markdown code blocks using regex before blending
-        clean_text = re.sub(r'```.*?```', '', text, flags=re.DOTALL)
+        # count=1 — strip only the first fenced block, not every one
+        clean_text = re.sub(r'```.*?```', '', text, count=1, flags=re.DOTALL)
         text_only_responses[model] = clean_text.strip()
         
     return blend_responses(text_only_responses, weights)
@@ -226,10 +239,27 @@ def blend_responses(scored_responses: dict, weights: dict) -> str:
     added_sentences = [cleaned for s in fused_sentences[base_sentence_count:] if (cleaned := _clean_complete_sentences(s))]
     
     if added_sentences:
-        insights = "\n* " + "\n* ".join(added_sentences)
-        return base_text.strip() + "\n\n### Additional Insights" + insights
+        # FIX (Vineet's decision, mail 2 item 4): clean trailing incomplete
+        # sentences on the APPENDED insights only — the base stays
+        # untouched by this same rule, as designed (extract_base_sentences
+        # deliberately preserves structure). If a candidate insight has no
+        # terminal punctuation, it's a fragment cut off by the model's
+        # token limit — clean or drop it here rather than let it dangle.
+        cleaned_additions = []
+        for s in added_sentences:
+            cleaned = _clean_complete_sentences(s)
+            if cleaned:
+                cleaned_additions.append(cleaned)
+        if cleaned_additions:
+            insights = "\n* " + "\n* ".join(cleaned_additions)
+            return base_text.strip() + "\n\n### Additional Insights" + insights
+        return base_text.strip()
         
-    return base_text.strip()
+    # FIX (Vineet's finding, mail 3): even with the raised max_tokens
+    # adapter fix above, trim any dangling incomplete final sentence on
+    # the base response itself as a safety net, so a truncated base_text
+    # never ships mid-sentence even if a model still hits its cap.
+    return _clean_complete_sentences(base_text.strip())
 
 # MASTER FUSION ROUTER
 def fuse_responses(scored_responses: dict, weights: dict, query: str, task_type: str = "general") -> str:
@@ -257,11 +287,17 @@ def fuse_responses(scored_responses: dict, weights: dict, query: str, task_type:
         best_model = max(code_models, key=lambda m: weights.get(m, 0.0))
         best_full_text = valid_responses[best_model]
         
-        # Extract ONLY the markdown code block
+        # Extract ONLY the PRIMARY markdown code block — the first one.
+        # FIX (Vineet's baseline.json finding): re.findall() previously
+        # grabbed EVERY fenced block (main implementation + any secondary
+        # "Example Usage" snippets) and stacked them all here, which is
+        # what caused 4 code blocks to appear stacked at the top while
+        # their own headers were left hollow further down (see
+        # blend_non_code_sections() above for the other half of this fix).
         code_blocks = re.findall(r'```.*?```', best_full_text, flags=re.DOTALL)
         
         if code_blocks:
-            best_code_only = "\n\n".join(code_blocks)
+            best_code_only = code_blocks[0]
             
             # Pass ALL models to the blender so the winning model acts as the base_text
             # This ensures cosine similarity filters out redundant sentences
