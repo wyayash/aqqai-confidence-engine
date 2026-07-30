@@ -631,7 +631,7 @@ def check_format_constraint(query: str, response: str) -> tuple[float, list[str]
     return worst, details
 
 
-def score_completeness(query: str, response: str) -> float:
+def score_completeness(query: str, response: str, task_type: str = "general") -> float:
     """
     K — Completeness
     0.65 × sub-part coverage + 0.35 × length signal,
@@ -663,21 +663,35 @@ def score_completeness(query: str, response: str) -> float:
     narrows the overcounting gap but won't perfectly replicate a
     human's judgment of thoroughness. Worth re-checking with actual
     word counts in the next validation pass.
+
+    FIX (Creative Task Bug): For task_type == "creative" (e.g. poems,
+    haikus, short creative prompts), keyword coverage from query
+    decomposition is bypassed. Creative responses naturally use
+    artistic vocabulary and metaphors rather than verbatim keyword
+    repetition. For creative tasks, coverage is set to 1.0 and expected
+    length is scaled down (floor 20 words) so haikus and short poems
+    are not penalized for not repeating the query's literal words.
     """
     if not response.strip():
         return 0.0
 
-    sub_parts  = _decompose_query(query)
-    resp_lower = response.lower()
+    sub_parts = _decompose_query(query)
 
-    covered = sum(
-        1 for part in sub_parts
-        if any(kw in resp_lower for kw in _clean_tokens(part) if kw not in STOPWORDS)
-    )
+    if task_type == "creative":
+        # Creative path: bypass literal keyword overlap check
+        coverage = 1.0
+        expected_words = 20  # Lower floor to accommodate short creative outputs (e.g. haikus)
+    else:
+        # Standard path: sub-part keyword coverage
+        resp_lower = response.lower()
+        covered = sum(
+            1 for part in sub_parts
+            if any(kw in resp_lower for kw in _clean_tokens(part) if kw not in STOPWORDS)
+        )
+        coverage = covered / max(len(sub_parts), 1)
+        expected_words = max(len(sub_parts) * 65, 80)
 
-    coverage      = covered / max(len(sub_parts), 1)
-    expected_words = max(len(sub_parts) * 65, 80)
-    length_signal  = min(1.0, len(response.split()) / expected_words)
+    length_signal = min(1.0, len(response.split()) / expected_words)
 
     base = 0.65 * coverage + 0.35 * length_signal
 
@@ -768,7 +782,9 @@ def _nli_contradiction_penalty(sentences: list[str]) -> float:
             return e / e.sum()
 
         penalty       = 0.0
-        NLI_THRESHOLD = 0.90   # was 0.80 — see docstring for reasoning
+        # NLI entailment threshold agreed between Yashveer & Jeet Tanwar: 
+        # Strict 0.90 cutoff ensures high semantic alignment and prevents subtle factual contradictions.
+        NLI_THRESHOLD = 0.90
         NLI_PENALTY   = 0.20
         MAX_PENALTY   = 0.60
 
@@ -1160,7 +1176,7 @@ class HeuristicScorer:
         # ── Layer 1: RCKS ─────────────────────────────────
         r = score_relevance(query, response.content)
         c = score_coherence(response.content)
-        k = score_completeness(query, response.content)
+        k = score_completeness(query, response.content, task_type=task_type)
         s = score_consistency(response.content)
 
         weighted = round(
