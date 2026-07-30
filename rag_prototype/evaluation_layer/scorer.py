@@ -138,9 +138,20 @@ def _clean_tokens(text: str) -> list[str]:
     return [w for w in text.split() if len(w) > 1 and w not in STOPWORDS]
 
 
+_BULLET_LINE_RE = re.compile(r"^\s*(?:[-*•]|\d+[.)])\s+")
+
 def _split_sentences(text: str) -> list[str]:
-    """Split text into sentences. Filters out very short fragments."""
-    parts = re.split(r"(?<=[.!?])\s+", text.strip())
+    """Split text into sentences, stripping structural markers to prevent NLI fragmentation."""
+    clean_lines = []
+    for line in text.split("\n"):
+        line = re.sub(r"^(?:#+\s*)", "", line)
+        line = _BULLET_LINE_RE.sub("", line)
+        if line.strip():
+            clean_lines.append(line.strip())
+        
+    clean_text = " ".join(clean_lines)
+    parts = re.split(r"(?<=[.!?])\s+", clean_text.strip())
+    
     return [s.strip() for s in parts if len(s.strip()) > 12]
 
 
@@ -605,12 +616,6 @@ def check_format_constraint(query: str, response: str) -> tuple[float, list[str]
 
     for kind, required in requirements:
         actual = _COUNTERS[kind](response)
-        
-        # --- TEMPORARY LOGS ADDED HERE ---
-        print(f"\n[K-LOG] Constraint Detected: {required} {kind}")
-        print(f"[K-LOG] Measured Actual: {actual} {kind}")
-        print(f"[K-LOG] Raw Text Processed: {repr(response)}")
-        # ---------------------------------
 
         tolerance = _FORMAT_TOLERANCE.get(kind, 0)
         diff = max(0, abs(actual - required) - tolerance)
@@ -790,15 +795,7 @@ def _nli_contradiction_penalty(sentences: list[str]) -> float:
 
         for i, score_row in enumerate(scores):
             probs           = softmax(score_row)
-            contradiction_p = float(probs[0])   # index 0 = contradiction
-            
-            # --- TEMPORARY S-LOGS ---
-            if contradiction_p > 0.50:  # Log anything remotely suspicious
-                print(f"\n[S-LOG] Contradiction Flagged!")
-                print(f"        Score: {contradiction_p:.4f} (Threshold: {NLI_THRESHOLD})")
-                print(f"        Sent A: {pairs[i][0]}")
-                print(f"        Sent B: {pairs[i][1]}")
-            # ------------------------
+            contradiction_p = float(probs[0]) 
 
             if contradiction_p > NLI_THRESHOLD:
                 penalty += NLI_PENALTY
@@ -835,9 +832,7 @@ def score_consistency(response: str) -> float:
 
     score     = 1.0
     lower     = response.lower()
-    #Strip markdown headers and list markers (e.g., "1.", "-", "###") 
-    clean_response = re.sub(r"(?m)^\s*(?:#+\s*)?(?:[-*•]|\d+[.)])\s+", "", response)
-    sentences = _split_sentences(clean_response)
+    sentences = _split_sentences(response)
 
     # Primary: NLI contradiction check 
     if _NLI_AVAILABLE and _NLI_MODEL is not None:
@@ -849,7 +844,7 @@ def score_consistency(response: str) -> float:
             if re.search(rf"\b{w1}\b", lower) and re.search(rf"\b{w2}\b", lower):
                 score -= 0.08
 
-        # ── Fallback: named entity consistency ────────────
+        # ── Fallback: named entity consistency 
         entity_attributes: dict[str, list[str]] = {}
         for sent in sentences:
             for entity, attribute in re.findall(
