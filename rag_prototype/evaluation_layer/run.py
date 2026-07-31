@@ -18,10 +18,10 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from adapters import ALL_ADAPTERS, BaseModelAdapter
 from scorer import HeuristicScorer, ModelResponse
-from fusion import fuse_responses
-from task_analyzer import analyze_task, analyze_task_detailed
+from fusion_engine import fuse_responses
+from task_analyzer import analyze_task_detailed
 from pipeline_logger import log
-import bayesian
+import bayesian_confidence_layer2 as bayesian
 
 scorer = HeuristicScorer()
 os.makedirs("outputs", exist_ok=True)
@@ -103,7 +103,7 @@ def run_pipeline(query: str) -> dict:
             f"score={s.weighted_score:.4f} | tier={s.confidence_tier}"
         )
 
-    # ── Step 4 + 5: Bayesian update + fusion weights ──────
+    # ── Step 4: Bayesian update ───────────────────────────
     print(f"\n  📊 Bayesian update (task_type={task_type})...")
 
     eval_scores = {
@@ -118,33 +118,16 @@ def run_pipeline(query: str) -> dict:
             "eval_scores": eval_scores,
             "query_id":    request_id
         },
-        verbose = False
     )
 
-    updated_priors = bayes_result["updated_priors"]
+    updated_priors = bayes_result.get("updated_priors", {})
     for model_id, new_prior in updated_priors.items():
-        history = bayesian.store.get_history(model_id, task_type)
-        if history:
-            old_prior = history[-1]["old_prior"]
-            delta     = new_prior - old_prior
-            direction = "↑" if delta > 0 else "↓" if delta < 0 else "→"
-        else:
-            old_prior = bayesian.DEFAULT_PRIOR
-            delta     = 0.0
-            direction = "→"
-        print(
-            f"     {model_id:<25} "
-            f"eval={eval_scores[model_id]:.3f}  "
-            f"prior {old_prior:.3f} → {new_prior:.3f}  "
-            f"Δ={delta:+.3f} {direction}"
-        )
-        log.debug(
-            f"[{request_id}] Bayesian | model={model_id} | "
-            f"old={old_prior:.3f} new={new_prior:.3f} delta={delta:+.3f}"
-        )
+        print(f"     {model_id:<25} updated_prior={new_prior:.3f}")
 
     # ── Step 5: Show fusion weights ────────────────────────
-    fusion_weights = bayes_result["weights"]
+    # Handle variations in dictionary keys
+    fusion_weights = bayes_result.get("weights", bayes_result.get("adjusted_weights", {}))
+        
     log.debug(f"[{request_id}] Fusion weights | {fusion_weights}")
 
     print(f"\n  ⚖️  Fusion weights (Bayesian, normalised to 1.0):")
@@ -154,7 +137,31 @@ def run_pipeline(query: str) -> dict:
 
     # ── Step 6: Fuse responses ────────────────────────────
     print(f"\n  🔀 Fusing responses using Bayesian weights...")
-    final_response = fuse_responses(query, scored, fusion_weights)
+    
+    # FIX: Convert the list of objects into the strict dictionary fusion_engine requires
+    response_dict = {s.model_id: s.content for s in scored if s.success}
+    
+    # Safely call the fusion engine with strict keyword arguments
+    try:
+        fusion_result = fuse_responses(
+            query=query, 
+            scored_responses=response_dict, 
+            weights=fusion_weights,
+            task_type=task_type
+        )
+    except TypeError:
+        # Fallback if task_type was removed from the signature
+        fusion_result = fuse_responses(
+            query=query, 
+            scored_responses=response_dict, 
+            weights=fusion_weights
+        )
+
+    # Handle both tuple returns (content, insights, path) and standard string returns
+    if isinstance(fusion_result, tuple):
+        final_response = fusion_result[0]
+    else:
+        final_response = fusion_result
 
     total_ms = round((time.time() - start) * 1000, 2)
 
@@ -185,10 +192,17 @@ def run_pipeline(query: str) -> dict:
             f"{s.confidence_tier:<8}"
         )
 
-    # ── All model responses JSON ───────────────────────────
+    # ── Final Fused Response ───────────────────────────────
     print(f"\n{'─'*60}")
-    print("ALL MODEL RESPONSES (JSON)")
+    print("FINAL RESPONSE (Bayesian-weighted fusion)")
     print(f"{'─'*60}")
+    print(final_response)
+
+    print(f"\nTask type      : {task_type.upper()}")
+    print(f"Total pipeline : {total_ms}ms")
+    print(f"{'='*60}\n")
+
+    # Reconstruct JSON dump for saving to file if --save is passed
     all_responses_json = [
         {
             "model_id":        s.model_id,
@@ -204,18 +218,6 @@ def run_pipeline(query: str) -> dict:
         }
         for s in ranked
     ]
-    print(json.dumps(all_responses_json, indent=2))
-
-    # ── Final Fused Response ───────────────────────────────
-    print(f"\n{'─'*60}")
-    print("FINAL RESPONSE (Bayesian-weighted fusion)")
-    print(f"{'─'*60}")
-    print(final_response)
-
-    print(f"\nTask type      : {task_type.upper()}")
-    print(f"Fusion weights : {fusion_weights}")
-    print(f"Total pipeline : {total_ms}ms")
-    print(f"{'='*60}\n")
 
     result = {
         "request_id":      request_id,
