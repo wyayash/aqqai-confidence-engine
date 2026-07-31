@@ -140,16 +140,26 @@ def _clean_tokens(text: str) -> list[str]:
 
 _BULLET_LINE_RE = re.compile(r"^\s*(?:[-*•]|\d+[.)])\s+")
 
+_BULLET_LINE_RE = re.compile(r"^\s*(?:[-*•]|\d+[.)])\s+")
+
 def _split_sentences(text: str) -> list[str]:
     """Split text into sentences, stripping structural markers to prevent NLI fragmentation."""
+    # NEW: Normalize inline lists (e.g., "...happens: 1. Chlorophyll") to new lines first
+    text = re.sub(r'(?<=[:.])\s+(\d+[.)])\s+', r'\n\1 ', text)
+    
+    # Reuse C's format awareness: strip bullets and markdown headers first
     clean_lines = []
     for line in text.split("\n"):
+        # Strip markdown headers (e.g., "### ")
         line = re.sub(r"^(?:#+\s*)", "", line)
+        # Strip bullet points and list numbers using C's regex
         line = _BULLET_LINE_RE.sub("", line)
         if line.strip():
             clean_lines.append(line.strip())
         
     clean_text = " ".join(clean_lines)
+    
+    # Now split the clean prose on punctuation
     parts = re.split(r"(?<=[.!?])\s+", clean_text.strip())
     
     return [s.strip() for s in parts if len(s.strip()) > 12]
